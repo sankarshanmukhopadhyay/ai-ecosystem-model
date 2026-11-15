@@ -16,7 +16,7 @@ The sense-making / insight deriving purpose of this model is its core value prop
 
 ### Use
 
-We want to be able to ask powerful questions of the model and have the explanation be derived from the model - ASSUMING THAT THE MODEL CAN CORRECTLY AND ADEQUATELY answer the question. It is entirely possible that questions may surface gaps or errors in the model. In which case the model will need to be corrected.
+We want to be able to ask powerful questions of the model and have the explanation be derived from the model - ASSUMING THAT THE MODEL CAN CORRECTLY AND ADEQUATELY answer the question. It is entirely possible that questions may surface gaps or errors in the model. In which case the model will need to be improved through updates to the model itself.
 
 An example of the kind of question we want the model to help answer and understand is:
 
@@ -25,7 +25,7 @@ An example of the kind of question we want the model to help answer and understa
 ### Contributing Inquiries & Sense-Making Pages
 
 To explore a new question or generate an inquiry page:
-1. Open your LLM environment of choice (e.g., Google AI Studio, Claude, ChatGPT).
+1. Open your LLM environment of choice (e.g., Google AI Studio, Claude, ChatGPT etc.).
 2. Load the system instructions from [`prompts/inquiry_protocol.md`](./prompts/inquiry_protocol.md).
 3. Provide the canonical model [`model/ai_ecosystem.yaml`](./model/ai_ecosystem.yaml) as context
 4. Explore your question conversationally, "how does the model ... ?"
@@ -34,4 +34,6 @@ To explore a new question or generate an inquiry page:
    2. Save the output to `docs/inquiries/<inquiry-id>.md` and submit a Pull Request.
 6. If the analysis shows that there is a gap, then flag an update request as an issue. 
 
-**WARNING:** Be careful with step 3, some A prompt dialogues struggle with attached YAML files and get caught in a loop. If in doubt, use place the content of the file(s) in the prompt within fences (sequences of three back ticks placed at the start of a line). A fence start for a YAML block is "\`\`\`yaml" and end fence is "\`\`\`".
+**WARNING:** Be careful with step 3, some A prompt dialogues struggle with attached YAML files and get caught in a loop (Google Gemini does at present). If in doubt, use place the content of the file(s) in the prompt within "fences"  - a sequence of three back ticks placed at the start of a line. 
+
+A fence start for a YAML block is "\`\`\`yaml" and end fence is "\`\`\`".
