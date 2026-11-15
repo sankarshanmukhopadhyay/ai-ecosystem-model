@@ -34,6 +34,6 @@ To explore a new question or generate an inquiry page:
    2. Save the output to `docs/inquiries/<inquiry-id>.md` and submit a Pull Request.
 6. If the analysis shows that there is a gap, then flag an update request as an issue. 
 
-**WARNING:** Be careful with step 3, some A prompt dialogues struggle with attached YAML files and get caught in a loop (Google Gemini does at present). If in doubt, use place the content of the file(s) in the prompt within "fences"  - a sequence of three back ticks placed at the start of a line. 
+**WARNING:** Be careful with step 3, some AI prompt dialogues struggle with attached YAML files and get caught in a loop (Google Gemini does at present). If in doubt, use place the content of the file(s) in the prompt within "fences"  - a sequence of three back ticks placed at the start of a line. 
 
 A fence start for a YAML block is "\`\`\`yaml" and end fence is "\`\`\`".
