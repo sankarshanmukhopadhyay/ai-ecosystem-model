@@ -4,20 +4,21 @@
       "id": "N_REGULATOR",
       "label": "Statutory & Trade Authorities",
       "type": "Governance",
-      "description": "EU AI Office & national authorities, FTC/state AGs & courts, BIS export controls, China CAC, UK & APAC regulators",
+      "description": "EU AI Office & national authorities, FTC/state AGs, BIS export controls, China CAC, UK & APAC regulators",
       "tags": [
         "governance"
       ],
-      "Kind": "statutory_authority",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Statutory Authority",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s3_control",
+      "Jurisdictions": "eu, us, china, uk, apac",
       "Ashby Variety": "10^1–10^2 jurisdictions",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
+      "GPAI Fine Powers": "Commission fining powers over GPAI providers apply from 2 Aug 2026 (GPAI obligations since 2 Aug 2025)",
       "Enforcement Powers": "EU: fines up to 7% of global turnover for prohibited practices (Art. 99), up to 3% for GPAI providers (Art. 101); US: ex-post enforcement, litigation, export-control sanctions; China: registration and licensing regimes; stop orders."
     },
     {
@@ -29,16 +30,16 @@
         "governance",
         "technical"
       ],
-      "Kind": "private_oversight_body",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Private Oversight Body",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s2_coordination",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^1–10^1.5 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Harmonization Role": "Harmonised European standards (hENs) and ISO/IEC 42001 AIMS controls",
       "Variety Function": "Attenuates technical variety into standardised conformity benchmarks"
     },
@@ -51,16 +52,16 @@
         "governance",
         "technical"
       ],
-      "Kind": "public_authority",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Public Authority",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s4_intelligence",
+      "Jurisdictions": "us, uk, apac",
       "Ashby Variety": "10^1–10^1.5 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "measure",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Red Team Role": "Pre-deployment red-teaming, bio/cyber capability evaluations, systemic-risk thresholds"
     },
     {
@@ -71,16 +72,16 @@
       "tags": [
         "governance"
       ],
-      "Kind": "private_oversight_body",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Private Oversight Body",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s3_star_audit",
+      "Jurisdictions": "eu, global",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "measure",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Role": "EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification"
     },
     {
@@ -92,16 +93,16 @@
         "economic",
         "governance"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s3_control",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "manage",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Underwriting Gate": "Requires verifiable audit trail and human oversight"
     },
     {
@@ -112,17 +113,78 @@
       "tags": [
         "economic"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Financing Role": "Funds fab capex, compute campuses, lab compute credits and long-dated power purchase agreements"
+    },
+    {
+      "id": "N_LEGISLATURE",
+      "label": "Legislatures & Executive Policy-Makers",
+      "type": "Governance",
+      "description": "EU Parliament & Council, US Congress & executive, national parliaments, ministries",
+      "tags": [
+        "governance"
+      ],
+      "Kind": "Statutory Authority",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s5_policy",
+      "Jurisdictions": "eu, us, china, uk, apac",
+      "Ashby Variety": "10^1–10^2 jurisdictions",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
+      "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
+      "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "Not Applicable",
+      "Role": "Sets objectives, statutory mandates and funding; ultimate policy closure for each regime"
+    },
+    {
+      "id": "N_COURTS",
+      "label": "Courts & Dispute Resolution",
+      "type": "Governance",
+      "description": "National and EU courts, arbitration, class-action mechanisms",
+      "tags": [
+        "governance",
+        "economic"
+      ],
+      "Kind": "Statutory Authority",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s3_control",
+      "Jurisdictions": "eu, us, china, uk, apac",
+      "Ashby Variety": "10^1–10^2 jurisdictions",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
+      "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
+      "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "Not Applicable",
+      "Role": "Interprets statute and adjudicates liability and redress"
+    },
+    {
+      "id": "N_CIVIL_SOCIETY",
+      "label": "Civil Society, Researchers & Media",
+      "type": "Governance",
+      "description": "NGOs, journalists, academic researchers, incident databases, advocacy groups",
+      "tags": [
+        "governance"
+      ],
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
+      "Ashby Variety": "10^4–10^6 entities",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
+      "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
+      "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "Not Applicable",
+      "Role": "Surfaces harm and holds institutions to account; the public alarm channel when formal channels are slow"
     },
     {
       "id": "N_SILICON",
@@ -133,13 +195,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^0–10^1 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "custom_built",
@@ -155,13 +217,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "multi_jurisdictional",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "commodity",
@@ -177,13 +239,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^1–10^1.3 clusters",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "product",
@@ -199,13 +261,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s1_operations",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^0.5–10^0.8 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "commodity",
@@ -222,16 +284,16 @@
         "economic",
         "governance"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^5–10^7 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Legal Exposure": "Copyright, licensing and data-protection claims against model training"
     },
     {
@@ -244,16 +306,16 @@
         "technical",
         "governance"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s1_operations",
+      "Jurisdictions": "us, china, eu, uk",
       "Ashby Variety": "10^1–10^1.3 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "provider_gpai",
+      "NIST Functions": "map, measure",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Liability Posture": "Disclaimed via ToS ('as-is')",
       "Safety Governance": "Published frontier-safety frameworks, staged release gating, external red-team access"
     },
@@ -266,13 +328,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "software_service",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Software Service",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^1–10^2 model_families",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "product",
@@ -287,13 +349,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "commons",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Commons",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^3–10^5 model_families",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "provider_gpai",
+      "NIST Functions": "None",
       "Cluster": "1. Upstream Silicon, Energy, Cloud, Data & Model Supply",
       "Cluster ID": "cluster_supply",
       "Evolution Stage": "commodity",
@@ -309,13 +371,13 @@
         "economic",
         "technical"
       ],
-      "Kind": "software_service",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Software Service",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "s1_operations",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "provider_system",
+      "NIST Functions": "map",
       "Cluster": "2. Application & Agent Domain",
       "Cluster ID": "cluster_product",
       "Evolution Stage": "product",
@@ -329,13 +391,13 @@
       "tags": [
         "technical"
       ],
-      "Kind": "software_service",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Software Service",
+      "VSM Enterprise": "s1_operations",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^7–10^9 invocations_per_year",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "2. Application & Agent Domain",
       "Cluster ID": "cluster_product",
       "Evolution Stage": "custom_built",
@@ -350,13 +412,13 @@
         "technical",
         "governance"
       ],
-      "Kind": "control_component",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Control Component",
+      "VSM Enterprise": "s3_control",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^5–10^6 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "manage",
       "Cluster": "2. Application & Agent Domain",
       "Cluster ID": "cluster_product",
       "Evolution Stage": "custom_built",
@@ -371,13 +433,13 @@
         "technical",
         "governance"
       ],
-      "Kind": "data_store",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Data Store",
+      "VSM Enterprise": "s3_control",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "measure",
       "Cluster": "2. Application & Agent Domain",
       "Cluster ID": "cluster_product",
       "Evolution Stage": "product",
@@ -393,13 +455,13 @@
         "governance",
         "economic"
       ],
-      "Kind": "software_service",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Software Service",
+      "VSM Enterprise": "s3_star_audit",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "measure",
       "Cluster": "2. Application & Agent Domain",
       "Cluster ID": "cluster_product",
       "Evolution Stage": "product",
@@ -414,16 +476,16 @@
         "economic",
         "governance"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "s5_policy",
+      "VSM Societal": "s1_operations",
+      "Jurisdictions": "multi_jurisdictional",
       "Ashby Variety": "10^5–10^6 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "deployer",
+      "NIST Functions": "govern",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Liability Posture": "Holds vicarious and strict legal liability"
     },
     {
@@ -434,16 +496,16 @@
       "tags": [
         "governance"
       ],
-      "Kind": "organisation",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Organisation",
+      "VSM Enterprise": "s4_intelligence",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "multi_jurisdictional",
       "Ashby Variety": "10^4–10^5.5 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "govern, map",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Role": "Scans models, vendors, regulation and incidents; refines policy for the guardrail layer"
     },
     {
@@ -455,13 +517,13 @@
         "technical",
         "governance"
       ],
-      "Kind": "control_component",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Control Component",
+      "VSM Enterprise": "s2_coordination",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^5–10^6 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "manage",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
       "Evolution Stage": "commodity",
@@ -475,13 +537,13 @@
       "tags": [
         "technical"
       ],
-      "Kind": "data_store",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Data Store",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^5–10^6 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
       "Evolution Stage": "product",
@@ -496,16 +558,16 @@
         "technical",
         "governance"
       ],
-      "Kind": "person",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Person",
+      "VSM Enterprise": "s3_control",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^7–10^8.5 natural_persons",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "govern",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Control Mode": "Prompting, Art. 14 human oversight, override"
     },
     {
@@ -517,13 +579,13 @@
         "technical",
         "governance"
       ],
-      "Kind": "control_component",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Control Component",
+      "VSM Enterprise": "s2_coordination",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "manage",
       "Cluster": "4. Execution Environment, Blast Radius & Adversaries",
       "Cluster ID": "cluster_environment",
       "Evolution Stage": "product",
@@ -538,13 +600,13 @@
         "technical",
         "governance"
       ],
-      "Kind": "data_store",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Data Store",
+      "VSM Enterprise": "s1_operations",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^6–10^7 instances",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "4. Execution Environment, Blast Radius & Adversaries",
       "Cluster ID": "cluster_environment",
       "Evolution Stage": "product",
@@ -559,16 +621,16 @@
         "economic",
         "governance"
       ],
-      "Kind": "person",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Person",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^9–10^10 natural_persons",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "affected_subject",
+      "NIST Functions": "None",
       "Cluster": "4. Execution Environment, Blast Radius & Adversaries",
       "Cluster ID": "cluster_environment",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Legal Standing": "Private right of action, tort plaintiff, data subject"
     },
     {
@@ -579,16 +641,16 @@
       "tags": [
         "technical"
       ],
-      "Kind": "threat_actor",
-      "VSM System": "",
-      "VSM Recursion Level": "",
-      "Jurisdiction": "Global",
+      "Kind": "Threat Actor",
+      "VSM Enterprise": "Environment / Resource",
+      "VSM Societal": "Environment / Resource",
+      "Jurisdictions": "global",
       "Ashby Variety": "10^3–10^5 entities",
-      "EU AI Act Role": "Not Specified",
-      "NIST Function": "Not Specified",
+      "EU AI Act Roles": "None",
+      "NIST Functions": "None",
       "Cluster": "4. Execution Environment, Blast Radius & Adversaries",
       "Cluster ID": "cluster_environment",
-      "Evolution Stage": "Not Specified",
+      "Evolution Stage": "Not Applicable",
       "Variety Role": "Main source of adversarial environmental variety the control layers must absorb"
     }
   ],
@@ -600,12 +662,15 @@
       "label": "$$$ Fab capex & lithography tool procurement",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
-      "Switching Cost": "prohibitive"
+      "Affects": "silicon capex capacity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: silicon capex capacity"
     },
     {
       "id": "E_CAPITAL_TO_ENERGY",
@@ -614,12 +679,15 @@
       "label": "$$$ Clean-energy PPAs & grid upgrades",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
-      "Switching Cost": "prohibitive"
+      "Affects": "generation and grid capex",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: generation and grid capex"
     },
     {
       "id": "E_REG_TO_SILICON_EXPORT",
@@ -628,10 +696,15 @@
       "label": "Export controls, entity listings & technology sanctions",
       "type": "statutory_mandate",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: statutory_mandate | Protocol: NONE | Polarity: negative"
+      "Affects": "market access",
+      "Normative Status": "binding",
+      "Delay": "Immediate",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: market access"
     },
     {
       "id": "E_SILICON_TO_TRAIN",
@@ -640,11 +713,17 @@
       "label": "Leading-edge GPU allocation & advanced packaging (CoWoS)",
       "type": "resource_supply",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic",
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: resource_supply | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "campus compute capacity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: resource_supply | Polarity: positive | Affects: campus compute capacity",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "prohibitive"
     },
     {
@@ -654,10 +733,16 @@
       "label": "Physical GW power & transformer bottleneck",
       "type": "physical_constraint",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical",
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: physical_constraint | Protocol: NONE | Polarity: negative"
+      "Affects": "usable compute capacity",
+      "Normative Status": "None",
+      "Delay": "years",
+      "description": "Kind: physical_constraint | Polarity: negative | Affects: usable compute capacity"
     },
     {
       "id": "E_CAPITAL_TO_LAB",
@@ -666,11 +751,16 @@
       "label": "$$$ Equity subsidies & compute credits",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "lab capital",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: lab capital",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "high"
     },
     {
@@ -680,10 +770,15 @@
       "label": "$$$ Campus project debt & equity",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "campus capital",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: campus capital",
       "Power Asymmetry": "balanced",
       "Switching Cost": "high"
     },
@@ -694,10 +789,15 @@
       "label": "$ Compute commitments & offtake contracts",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "campus revenue",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: campus revenue",
       "Power Asymmetry": "balanced",
       "Switching Cost": "high"
     },
@@ -708,10 +808,16 @@
       "label": "Training & inference compute capacity",
       "type": "resource_supply",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic",
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: resource_supply | Protocol: NONE | Polarity: positive",
+      "Affects": "lab training capacity",
+      "Normative Status": "None",
+      "Delay": "years",
+      "description": "Kind: resource_supply | Polarity: positive | Affects: lab training capacity",
       "Power Asymmetry": "balanced",
       "Switching Cost": "high"
     },
@@ -722,10 +828,15 @@
       "label": "Cluster hosting & bare-metal capacity resold via cloud",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "cloud capacity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: cloud capacity",
       "Power Asymmetry": "balanced",
       "Switching Cost": "high"
     },
@@ -736,10 +847,16 @@
       "label": "Hyperscale inference fleet hosting & orchestration",
       "type": "resource_supply",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic",
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: resource_supply | Protocol: NONE | Polarity: positive",
+      "Affects": "model serving capacity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: resource_supply | Polarity: positive | Affects: model serving capacity",
       "Power Asymmetry": "balanced",
       "Switching Cost": "high"
     },
@@ -750,10 +867,15 @@
       "label": "Trains, gates and releases the model",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "model capability under release gating",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: model capability under release gating"
     },
     {
       "id": "E_LAB_TO_OPEN_RELEASE",
@@ -762,10 +884,15 @@
       "label": "Open-weight release of sunk-cost models",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "open commons capability",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: data_flow | Polarity: positive | Affects: open commons capability"
     },
     {
       "id": "E_OPEN_DEFLATION_LAB",
@@ -774,11 +901,16 @@
       "label": "Inference price deflation & compression",
       "type": "competitive_pressure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "buyer_dominant",
+      "Affects": "lab inference margin",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: competitive_pressure | Polarity: negative | Affects: lab inference margin",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "low"
     },
     {
@@ -788,10 +920,16 @@
       "label": "Training corpus, licensed content & annotation labour",
       "type": "resource_supply",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic",
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: resource_supply | Protocol: NONE | Polarity: positive"
+      "Affects": "training corpus scale and quality",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: resource_supply | Polarity: positive | Affects: training corpus scale and quality"
     },
     {
       "id": "E_RIGHTS_TO_LAB_CLAIMS",
@@ -800,10 +938,16 @@
       "label": "Copyright, licensing & data-protection claims",
       "type": "liability_exposure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance",
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative"
+      "Affects": "freedom to train on unlicensed data",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: liability_exposure | Polarity: negative | Affects: freedom to train on unlicensed data"
     },
     {
       "id": "E_LAB_TO_CAPITAL_RETURN",
@@ -812,10 +956,15 @@
       "label": "Valuation uplift & investor returns",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "capital-market returns",
+      "Normative Status": "None",
+      "Delay": "years",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: capital-market returns",
       "Power Asymmetry": "balanced",
       "Switching Cost": "moderate"
     },
@@ -826,10 +975,15 @@
       "label": "$$$ SaaS subscription / outcome fee",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "ISV revenue",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: ISV revenue",
       "Power Asymmetry": "balanced",
       "Switching Cost": "moderate"
     },
@@ -840,11 +994,16 @@
       "label": "$$ Wholesale token consumption cost",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "lab revenue",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: lab revenue",
+      "Power Asymmetry": "target_dominant",
       "Switching Cost": "high"
     },
     {
@@ -854,11 +1013,16 @@
       "label": "$$$ Cloud spend commitments & enterprise tenancy",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "cloud revenue",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: cloud revenue",
+      "Power Asymmetry": "target_dominant",
       "Switching Cost": "high"
     },
     {
@@ -868,10 +1032,15 @@
       "label": "$ Policy premiums & risk transfer",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Affects": "insurer premium income",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: insurer premium income",
       "Power Asymmetry": "balanced",
       "Switching Cost": "moderate"
     },
@@ -882,11 +1051,16 @@
       "label": "Native tools, prompt cache & hosted state absorb wrapper value",
       "type": "competitive_pressure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "captive",
+      "Affects": "ISV margin",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: competitive_pressure | Polarity: negative | Affects: ISV margin",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "high"
     },
     {
@@ -896,11 +1070,16 @@
       "label": "Platform-native AI services commoditise vertical features",
       "type": "competitive_pressure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "ISV margin",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: competitive_pressure | Polarity: negative | Affects: ISV margin",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "high"
     },
     {
@@ -910,11 +1089,16 @@
       "label": "Self-hosted / private inference (zero token toll)",
       "type": "protocol_call",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "mip",
       "Polarity": "positive",
-      "description": "Kind: protocol_call | Protocol: mip | Polarity: positive",
-      "Power Asymmetry": "buyer_dominant",
+      "Affects": "ISV cost position",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: ISV cost position",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "low"
     },
     {
@@ -924,11 +1108,16 @@
       "label": "Direct consumer subscriptions & usage",
       "type": "commercial_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
-      "Power Asymmetry": "buyer_dominant",
+      "Affects": "ISV consumer revenue",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: commercial_flow | Polarity: positive | Affects: ISV consumer revenue",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "low"
     },
     {
@@ -938,10 +1127,15 @@
       "label": "Direct-to-consumer AI interaction",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "consumer access to AI services",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: consumer access to AI services"
     },
     {
       "id": "E_AFFECTED_CHURN_ENT",
@@ -950,24 +1144,34 @@
       "label": "Market resistance, churn & social-licence revocation",
       "type": "competitive_pressure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "buyer_dominant",
+      "Affects": "enterprise revenue and social licence",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: competitive_pressure | Polarity: negative | Affects: enterprise revenue and social licence",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "low"
     },
     {
       "id": "E_SAFETY_TO_REG",
       "from": "N_SAFETY_INSTITUTE",
       "to": "N_REGULATOR",
-      "label": "Evaluations & systemic-risk alerts (macro S4 to S5)",
+      "label": "Evaluations & systemic-risk alerts (S4 to S3)",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "regulator situational awareness",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: regulator situational awareness"
     },
     {
       "id": "E_STANDARDS_TO_AUDITOR",
@@ -976,10 +1180,15 @@
       "label": "Harmonised standards & audit specifications",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "audit assurance baseline",
+      "Normative Status": "voluntary_standard",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: audit assurance baseline"
     },
     {
       "id": "E_STANDARDS_TO_GUARDRAIL",
@@ -988,10 +1197,15 @@
       "label": "Technical control standards & interoperability profiles",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "control specification",
+      "Normative Status": "voluntary_standard",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: control specification"
     },
     {
       "id": "E_LAB_TO_SAFETY_EVAL",
@@ -1000,10 +1214,15 @@
       "label": "Pre-release model access for red-teaming",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "evaluator access to frontier capability",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: evaluator access to frontier capability"
     },
     {
       "id": "E_REG_TO_ENT",
@@ -1012,10 +1231,15 @@
       "label": "Statutory penalties & enforcement",
       "type": "statutory_mandate",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: statutory_mandate | Protocol: NONE | Polarity: negative"
+      "Affects": "freedom to deploy non-compliant AI",
+      "Normative Status": "binding",
+      "Delay": "years",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: freedom to deploy non-compliant AI"
     },
     {
       "id": "E_REG_TO_LAB_GPAI",
@@ -1024,10 +1248,15 @@
       "label": "GPAI codes of practice & transparency duties",
       "type": "statutory_mandate",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: statutory_mandate | Protocol: NONE | Polarity: negative"
+      "Affects": "freedom to release without risk and transparency duties",
+      "Normative Status": "binding",
+      "Delay": "Immediate",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: freedom to release without risk and transparency duties"
     },
     {
       "id": "E_REG_TO_ISV_HIGH_RISK",
@@ -1036,10 +1265,15 @@
       "label": "High-risk system compliance & surveillance",
       "type": "statutory_mandate",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: statutory_mandate | Protocol: NONE | Polarity: negative"
+      "Affects": "freedom to market non-conformant systems",
+      "Normative Status": "binding",
+      "Delay": "Immediate",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: freedom to market non-conformant systems"
     },
     {
       "id": "E_AUDITOR_TO_ENT",
@@ -1048,10 +1282,15 @@
       "label": "Conformity audits & certification",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "enterprise assurance evidence",
+      "Normative Status": "voluntary_standard",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: enterprise assurance evidence"
     },
     {
       "id": "E_LAB_DISCLAIMS_ENT",
@@ -1060,11 +1299,17 @@
       "label": "Disclaims liability (ToS as-is / recourse gap)",
       "type": "contractual_term",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "economic",
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: contractual_term | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "enterprise recourse against supplier",
+      "Normative Status": "contractual",
+      "Delay": "Immediate",
+      "description": "Kind: contractual_term | Polarity: negative | Affects: enterprise recourse against supplier",
+      "Power Asymmetry": "source_dominant",
       "Switching Cost": "high"
     },
     {
@@ -1074,22 +1319,33 @@
       "label": "Vicarious liability for harm (respondeat superior)",
       "type": "liability_exposure",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance",
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: positive"
+      "Affects": "affected party recourse",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: liability_exposure | Polarity: positive | Affects: affected party recourse"
     },
     {
       "id": "E_AFFECTED_TO_REG_COMPLAINT",
       "from": "N_AFFECTED_PARTY",
       "to": "N_REGULATOR",
       "label": "Complaints & redress demands (Art. 85)",
-      "type": "algedonic_signal",
+      "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: algedonic_signal | Protocol: NONE | Polarity: positive"
+      "Affects": "regulator awareness of harm",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: data_flow | Polarity: positive | Affects: regulator awareness of harm"
     },
     {
       "id": "E_INSURER_TO_ENT_GATE",
@@ -1098,10 +1354,15 @@
       "label": "Underwriting gate: audit trail & human oversight required",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: negative"
+      "Affects": "freedom to run uninsured autonomous agents",
+      "Normative Status": "contractual",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: negative | Affects: freedom to run uninsured autonomous agents"
     },
     {
       "id": "E_ENT_TO_GOV",
@@ -1110,10 +1371,15 @@
       "label": "Mandate & resourcing of AI governance",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "governance mandate",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: governance mandate"
     },
     {
       "id": "E_ENT_TO_GUARDRAIL",
@@ -1122,10 +1388,15 @@
       "label": "Delegates authority & safety boundaries (S5 to S3)",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "delegated authority and boundaries",
+      "Normative Status": "practice",
+      "Delay": "months",
+      "description": "Kind: governance_control | Polarity: positive | Affects: delegated authority and boundaries"
     },
     {
       "id": "E_GOV_TO_GUARDRAIL",
@@ -1134,10 +1405,15 @@
       "label": "Policy refinement from horizon scanning (S4 to S3)",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "policy currency",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: policy currency"
     },
     {
       "id": "E_USER_TO_AGENT_HITL",
@@ -1146,10 +1422,15 @@
       "label": "Art. 14 human oversight & kill switch",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: negative"
+      "Affects": "agent autonomy",
+      "Normative Status": "binding",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: negative | Affects: agent autonomy"
     },
     {
       "id": "E_GUARDRAIL_TO_AGENT",
@@ -1158,10 +1439,15 @@
       "label": "Policy envelope & runtime constraints (S3 to S1)",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: negative"
+      "Affects": "agent autonomy",
+      "Normative Status": "practice",
+      "Delay": "immediate",
+      "description": "Kind: governance_control | Polarity: negative | Affects: agent autonomy"
     },
     {
       "id": "E_AGENT_TO_GUARDRAIL",
@@ -1170,10 +1456,15 @@
       "label": "Action proposals for pre-execution authorisation",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "guardrail awareness of intended actions",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: guardrail awareness of intended actions"
     },
     {
       "id": "E_GUARDRAIL_TO_AUDIT",
@@ -1182,10 +1473,15 @@
       "label": "Tamper-evident decision & action trail (Art. 12)",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "audit evidence completeness",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: audit evidence completeness"
     },
     {
       "id": "E_AUDIT_TO_AUDITOR",
@@ -1194,10 +1490,15 @@
       "label": "Forensic evidence for compliance verification",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "auditor evidence base",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: auditor evidence base"
     },
     {
       "id": "E_GUARDRAIL_TO_GATEWAY",
@@ -1206,22 +1507,171 @@
       "label": "Enforces least-privilege scopes (S3 to S2)",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: negative"
+      "Affects": "tool-call scope",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: negative | Affects: tool-call scope"
     },
     {
       "id": "E_TARGET_HARM_AFFECTED",
       "from": "N_TARGET_SYS",
       "to": "N_AFFECTED_PARTY",
       "label": "Direct impact & real-world blast radius",
-      "type": "liability_exposure",
+      "type": "impact",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance",
+        "economic"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative"
+      "Affects": "affected party welfare",
+      "Normative Status": "None",
+      "Delay": "immediate",
+      "description": "Kind: impact | Polarity: negative | Affects: affected party welfare"
+    },
+    {
+      "id": "E_LEG_TO_REG_MANDATE",
+      "from": "N_LEGISLATURE",
+      "to": "N_REGULATOR",
+      "label": "Statutory mandates, powers & funding (S5 to S3)",
+      "type": "statutory_mandate",
+      "direction": "directed",
+      "tags": [
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "regulator statutory powers",
+      "Normative Status": "binding",
+      "Delay": "years",
+      "description": "Kind: statutory_mandate | Polarity: positive | Affects: regulator statutory powers"
+    },
+    {
+      "id": "E_SAFETY_TO_LEG",
+      "from": "N_SAFETY_INSTITUTE",
+      "to": "N_LEGISLATURE",
+      "label": "Capability and risk assessments informing policy (S4 to S5)",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "policy-maker understanding of frontier risk",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: policy-maker understanding of frontier risk"
+    },
+    {
+      "id": "E_STANDARDS_TO_ISV",
+      "from": "N_STANDARDS_BODY",
+      "to": "N_ISV_PRODUCT",
+      "label": "Harmonised standards & presumption-of-conformity pathway",
+      "type": "governance_control",
+      "direction": "directed",
+      "tags": [
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "provider conformity pathway",
+      "Normative Status": "voluntary_standard",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: provider conformity pathway"
+    },
+    {
+      "id": "E_AFFECTED_TO_COURTS_CLAIM",
+      "from": "N_AFFECTED_PARTY",
+      "to": "N_COURTS",
+      "label": "Tort, statutory & class claims",
+      "type": "liability_exposure",
+      "direction": "directed",
+      "tags": [
+        "governance",
+        "economic"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "court docket of harm claims",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: liability_exposure | Polarity: positive | Affects: court docket of harm claims"
+    },
+    {
+      "id": "E_COURTS_TO_ENT_REDRESS",
+      "from": "N_COURTS",
+      "to": "N_ENTERPRISE",
+      "label": "Adjudicates liability & orders redress",
+      "type": "statutory_mandate",
+      "direction": "directed",
+      "tags": [
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "negative",
+      "Affects": "enterprise freedom from liability",
+      "Normative Status": "binding",
+      "Delay": "years",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: enterprise freedom from liability"
+    },
+    {
+      "id": "E_AFFECTED_TO_CIVIL",
+      "from": "N_AFFECTED_PARTY",
+      "to": "N_CIVIL_SOCIETY",
+      "label": "Reports harm to advocates, researchers & media",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "public visibility of harm",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: data_flow | Polarity: positive | Affects: public visibility of harm"
+    },
+    {
+      "id": "E_CIVIL_TO_LEG_ALARM",
+      "from": "N_CIVIL_SOCIETY",
+      "to": "N_LEGISLATURE",
+      "label": "Public alarm: investigations, advocacy & media pressure bypassing regulators",
+      "type": "algedonic_signal",
+      "direction": "directed",
+      "tags": [
+        "governance",
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "policy-maker awareness of systemic harm",
+      "Normative Status": "None",
+      "Delay": "months",
+      "description": "Kind: algedonic_signal | Polarity: positive | Affects: policy-maker awareness of systemic harm"
+    },
+    {
+      "id": "E_GOV_TO_ENT_ADVICE",
+      "from": "N_AI_GOVERNANCE",
+      "to": "N_ENTERPRISE",
+      "label": "Risk assessments & policy recommendations (S4 to S5)",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "enterprise strategic awareness of AI risk",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: enterprise strategic awareness of AI risk"
     },
     {
       "id": "E_OBSERVE_PROBE_TARGET",
@@ -1230,10 +1680,15 @@
       "label": "S3* independent behavioural probe & red-teaming",
       "type": "governance_control",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: governance_control | Protocol: NONE | Polarity: positive"
+      "Affects": "behavioural assurance evidence",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: behavioural assurance evidence"
     },
     {
       "id": "E_ALGEDONIC_TARGET_ENT",
@@ -1242,10 +1697,16 @@
       "label": "Algedonic alarm: direct S1 to S5 circuit breaker",
       "type": "algedonic_signal",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "governance",
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: algedonic_signal | Protocol: NONE | Polarity: positive"
+      "Affects": "enterprise awareness of critical failure",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: algedonic_signal | Polarity: positive | Affects: enterprise awareness of critical failure"
     },
     {
       "id": "E_THREAT_TO_AGENT",
@@ -1254,10 +1715,15 @@
       "label": "Prompt injection, tool poisoning, credential abuse",
       "type": "adversarial_attack",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: adversarial_attack | Protocol: NONE | Polarity: negative"
+      "Affects": "agent integrity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: adversarial_attack | Polarity: negative | Affects: agent integrity"
     },
     {
       "id": "E_THREAT_TO_MODEL",
@@ -1266,10 +1732,15 @@
       "label": "Jailbreaks & capability misuse",
       "type": "adversarial_attack",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: adversarial_attack | Protocol: NONE | Polarity: negative"
+      "Affects": "model safeguards",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: adversarial_attack | Polarity: negative | Affects: model safeguards"
     },
     {
       "id": "E_USER_TO_ISV_PROMPT",
@@ -1278,10 +1749,15 @@
       "label": "Prompt intent & working context",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "task context",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: task context"
     },
     {
       "id": "E_IDP_TO_AGENT_A2E",
@@ -1290,10 +1766,15 @@
       "label": "A2E workload identity delegation (OAuth/OIDC)",
       "type": "protocol_call",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "a2e",
       "Polarity": "positive",
-      "description": "Kind: protocol_call | Protocol: a2e | Polarity: positive"
+      "Affects": "agent delegated authority",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: agent delegated authority"
     },
     {
       "id": "E_ISV_TO_AGENT_INIT",
@@ -1302,10 +1783,15 @@
       "label": "Initiates autonomous loop",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "agent task activation",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: agent task activation"
     },
     {
       "id": "E_AGENT_TO_MODEL_MIP",
@@ -1314,11 +1800,16 @@
       "label": "MIP inference API (tokens & directives)",
       "type": "protocol_call",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "mip",
       "Polarity": "positive",
-      "description": "Kind: protocol_call | Protocol: mip | Polarity: positive",
-      "Power Asymmetry": "supplier_dominant",
+      "Affects": "agent reasoning capability",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: agent reasoning capability",
+      "Power Asymmetry": "target_dominant",
       "Switching Cost": "high"
     },
     {
@@ -1328,10 +1819,15 @@
       "label": "RAG semantic retrieval & working context (CoALA)",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "agent working-context grounding",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: agent working-context grounding"
     },
     {
       "id": "E_AGENT_TO_AGENT_A2A",
@@ -1340,10 +1836,15 @@
       "label": "A2A multi-agent delegation & peer protocol",
       "type": "protocol_call",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "a2a",
       "Polarity": "positive",
-      "description": "Kind: protocol_call | Protocol: a2a | Polarity: positive"
+      "Affects": "multi-agent task capacity",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: multi-agent task capacity"
     },
     {
       "id": "E_AGENT_TO_OBSERVE",
@@ -1352,10 +1853,15 @@
       "label": "Traces & LLM evaluation metrics",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "evaluation evidence",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: evaluation evidence"
     },
     {
       "id": "E_OBSERVE_TO_ENT_FINOPS",
@@ -1364,10 +1870,15 @@
       "label": "Real-time cost & token telemetry",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "enterprise cost visibility",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: enterprise cost visibility"
     },
     {
       "id": "E_OBSERVE_TO_GOV",
@@ -1376,10 +1887,15 @@
       "label": "Evaluation results & incident telemetry",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "governance situational awareness",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: governance situational awareness"
     },
     {
       "id": "E_AGENT_TO_GATEWAY_A2T",
@@ -1388,10 +1904,15 @@
       "label": "A2T tool calling & context protocol (MCP / OpenAPI)",
       "type": "protocol_call",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "a2t",
       "Polarity": "positive",
-      "description": "Kind: protocol_call | Protocol: a2t | Polarity: positive"
+      "Affects": "agent tool reach",
+      "Normative Status": "None",
+      "Delay": "immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: agent tool reach"
     },
     {
       "id": "E_GATEWAY_TO_TARGET",
@@ -1400,10 +1921,15 @@
       "label": "Authenticated operations execution",
       "type": "data_flow",
       "direction": "directed",
-      "tags": [],
+      "tags": [
+        "technical"
+      ],
       "Protocol Plane": "NONE",
       "Polarity": "positive",
-      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
+      "Affects": "target system state (actuation)",
+      "Normative Status": "None",
+      "Delay": "immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: target system state (actuation)"
     }
   ]
 }

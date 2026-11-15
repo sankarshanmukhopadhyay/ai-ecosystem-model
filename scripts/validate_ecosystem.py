@@ -62,7 +62,8 @@ for n in M["nodes"]:
 
 # ---------------- edges ----------------
 no_market = {"statutory_mandate", "governance_control", "liability_exposure", "physical_constraint",
-             "adversarial_attack", "data_flow", "algedonic_signal"}
+             "adversarial_attack", "impact", "data_flow", "algedonic_signal"}
+needs_norm = {"statutory_mandate", "governance_control", "contractual_term"}
 deg = Counter()
 for e in M["edges"]:
     w = f"edge {e['id']}"
@@ -75,13 +76,16 @@ for e in M["edges"]:
     check_enum(f"{w}.relation_kind", rk, "RelationKindEnum")
     check_enum(f"{w}.polarity", e.get("polarity"), "PolarityEnum")
     for slot, enum in (("protocol_plane", "ProtocolPlaneEnum"), ("power_asymmetry", "PowerAsymmetryEnum"),
-                       ("switching_cost", "SwitchingCostEnum")):
+                       ("switching_cost", "SwitchingCostEnum"), ("normative_status", "NormativeStatusEnum"),
+                       ("delay", "DelayEnum")):
         if slot in e:
             check_enum(f"{w}.{slot}", e[slot], enum)
     if (rk == "protocol_call") != ("protocol_plane" in e):
         err(f"{w}: protocol_plane must be present iff relation_kind == protocol_call")
     if rk in no_market and ("power_asymmetry" in e or "switching_cost" in e):
         err(f"{w}: market fields not allowed on {rk}")
+    if (rk in needs_norm) != ("normative_status" in e):
+        err(f"{w}: normative_status must be present iff relation_kind in {sorted(needs_norm)}")
     pol = e.get("polarity")
     if pol in ("positive", "negative") and not e.get("affects"):
         err(f"{w}: signed polarity requires 'affects'")
@@ -100,6 +104,10 @@ for nid in nodes:
 for lp in M.get("loops", []):
     w = f"loop {lp['id']}"
     check_enum(f"{w}.loop_type", lp["loop_type"], "LoopTypeEnum")
+    if not lp.get("key_variable"):
+        warn(f"{w}: no key_variable")
+    if not any("delay" in edges[x] for x in lp["loop_edges"] if x in edges):
+        warn(f"{w}: no delay recorded on any edge")
     es = []
     for eid in lp["loop_edges"]:
         if eid not in edges:
@@ -127,6 +135,9 @@ frames = {f["id"]: f for f in M.get("frames", [])}
 role_of = {}
 for fid, f in frames.items():
     seen = {}
+    for field in ("system_boundary", "viability_question"):
+        if not f.get(field):
+            warn(f"frame {fid}: missing {field}")
     for r in f["roles"]:
         w = f"frame {fid}"
         if r["node"] not in nodes:

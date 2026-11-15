@@ -110,12 +110,15 @@ flowchart TB
     classDef default fill:#F8FAFC,stroke:#64748B,stroke-width:1.5px;
 
     subgraph cluster_regulatory ["0. Jurisdictional, Capital & Regulatory Sphere"]
-        N_REGULATOR{{"Statutory &amp; Trade Authorities<br/><small><i>EU AI Office &amp; national authorities, FTC/state AGs &amp; courts, BIS export controls, China CAC, UK &amp; APAC regulators</i></small>"}}:::gov
+        N_REGULATOR{{"Statutory &amp; Trade Authorities<br/><small><i>EU AI Office &amp; national authorities, FTC/state AGs, BIS export controls, China CAC, UK &amp; APAC regulators</i></small>"}}:::gov
         N_STANDARDS_BODY(["Standards Setting Organisations<br/><small><i>ISO/IEC JTC 1/SC 42, NIST, CEN-CENELEC, IEEE</i></small>"]):::gov
         N_SAFETY_INSTITUTE{{"AI Safety &amp; Security Institutes<br/><small><i>US CAISI (formerly AISI), UK AI Security Institute, Japan AISI, frontier evaluators</i></small>"}}:::gov
         N_AUDITOR(["Conformity &amp; Certification Bodies<br/><small><i>EU notified bodies, ISO/IEC 42001 certifiers</i></small>"]):::gov
         N_INSURER["AI Risk Underwriter &amp; Insurer<br/><small><i>Algorithmic liability and cyber risk carriers</i></small>"]:::gov
         N_CAPITAL["Capital Markets &amp; Venture Underwriters<br/><small><i>VC syndicates, hyperscaler equity, sovereign wealth</i></small>"]:::econ
+        N_LEGISLATURE{{"Legislatures &amp; Executive Policy-Makers<br/><small><i>EU Parliament &amp; Council, US Congress &amp; executive, national parliaments, ministries</i></small>"}}:::gov
+        N_COURTS{{"Courts &amp; Dispute Resolution<br/><small><i>National and EU courts, arbitration, class-action mechanisms</i></small>"}}:::gov
+        N_CIVIL_SOCIETY["Civil Society, Researchers &amp; Media<br/><small><i>NGOs, journalists, academic researchers, incident databases, advocacy groups</i></small>"]:::gov
     end
 
     subgraph cluster_supply ["1. Upstream Silicon, Energy, Cloud, Data & Model Supply"]
@@ -179,7 +182,7 @@ flowchart TB
     N_AFFECTED_PARTY == "Direct consumer subscriptions & usage" ==> N_ISV_PRODUCT
     N_ISV_PRODUCT -->|"Direct-to-consumer AI interaction"| N_AFFECTED_PARTY
     N_AFFECTED_PARTY -. "Market resistance, churn & social-licence revocation" .-> N_ENTERPRISE
-    N_SAFETY_INSTITUTE -->|"Evaluations & systemic-risk alerts (macro S4 to S5)"| N_REGULATOR
+    N_SAFETY_INSTITUTE -->|"Evaluations & systemic-risk alerts (S4 to S3)"| N_REGULATOR
     N_STANDARDS_BODY -. "Harmonised standards & audit specifications" .-> N_AUDITOR
     N_STANDARDS_BODY -. "Technical control standards & interoperability profiles" .-> N_GUARDRAIL
     N_FRONTIER_LAB -->|"Pre-release model access for red-teaming"| N_SAFETY_INSTITUTE
@@ -189,7 +192,7 @@ flowchart TB
     N_AUDITOR -. "Conformity audits & certification" .-> N_ENTERPRISE
     N_FRONTIER_LAB -. "Disclaims liability (ToS as-is / recourse gap)" .-> N_ENTERPRISE
     N_ENTERPRISE -. "Vicarious liability for harm (respondeat superior)" .-> N_AFFECTED_PARTY
-    N_AFFECTED_PARTY == "🚨 Complaints & redress demands (Art. 85)" ==> N_REGULATOR
+    N_AFFECTED_PARTY -->|"Complaints & redress demands (Art. 85)"| N_REGULATOR
     N_INSURER -. "Underwriting gate: audit trail & human oversight required" .-> N_ENTERPRISE
     N_ENTERPRISE -. "Mandate & resourcing of AI governance" .-> N_AI_GOVERNANCE
     N_ENTERPRISE -. "Delegates authority & safety boundaries (S5 to S3)" .-> N_GUARDRAIL
@@ -200,7 +203,15 @@ flowchart TB
     N_GUARDRAIL -->|"Tamper-evident decision & action trail (Art. 12)"| N_AUDIT_STORE
     N_AUDIT_STORE -->|"Forensic evidence for compliance verification"| N_AUDITOR
     N_GUARDRAIL -. "Enforces least-privilege scopes (S3 to S2)" .-> N_TOOL_GATEWAY
-    N_TARGET_SYS -. "Direct impact & real-world blast radius" .-> N_AFFECTED_PARTY
+    N_TARGET_SYS -->|"Direct impact & real-world blast radius"| N_AFFECTED_PARTY
+    N_LEGISLATURE == "Statutory mandates, powers & funding (S5 to S3)" ==> N_REGULATOR
+    N_SAFETY_INSTITUTE -->|"Capability and risk assessments informing policy (S4 to S5)"| N_LEGISLATURE
+    N_STANDARDS_BODY -. "Harmonised standards & presumption-of-conformity pathway" .-> N_ISV_PRODUCT
+    N_AFFECTED_PARTY -. "Tort, statutory & class claims" .-> N_COURTS
+    N_COURTS == "Adjudicates liability & orders redress" ==> N_ENTERPRISE
+    N_AFFECTED_PARTY -->|"Reports harm to advocates, researchers & media"| N_CIVIL_SOCIETY
+    N_CIVIL_SOCIETY == "🚨 Public alarm: investigations, advocacy & media pressure bypassing regulators" ==> N_LEGISLATURE
+    N_AI_GOVERNANCE -->|"Risk assessments & policy recommendations (S4 to S5)"| N_ENTERPRISE
     N_OBSERVE -. "S3* independent behavioural probe & red-teaming" .-> N_TARGET_SYS
     N_TARGET_SYS == "🚨 Algedonic alarm: direct S1 to S5 circuit breaker" ==> N_ENTERPRISE
     N_THREAT_ACTOR -. "⚡ Prompt injection, tool poisoning, credential abuse" .-> N_AGENT
@@ -226,8 +237,9 @@ The model formalizes feedback loops with explicit state variables and mathematic
 | :--- | :---: | :--- | :--- | :--- |
 | `L_R1_CAPITAL_COMPUTE_FLYWHEEL` | **Reinforcing (R)** | **Capital-compute-valuation flywheel** | Capital funds lab compute commitments; compute yields capability and valuation uplift, which attracts more capital. Drives concentration. | `E_CAPITAL_TO_LAB` $\to$<br/>`E_LAB_TO_TRAIN_CAPEX` $\to$<br/>`E_TRAIN_TO_LAB_COMPUTE` $\to$<br/>`E_LAB_TO_CAPITAL_RETURN` |
 | `L_B1_OPEN_RELEASE_BRAKE` | *Balancing (B)* | **Open-release margin brake** | Labs that release open weights seed commodity inference, which compresses their own premium margins. | `E_LAB_TO_OPEN_RELEASE` $\to$<br/>`E_OPEN_DEFLATION_LAB` |
-| `L_B2_HARM_REGULATION` | *Balancing (B)* | **Harm-redress-regulation loop** | Harm triggers complaints and enforcement, the enterprise tightens guardrails, constraining agent actions on target systems. | `E_TARGET_HARM_AFFECTED` $\to$<br/>`E_AFFECTED_TO_REG_COMPLAINT` $\to$<br/>`E_REG_TO_ENT` $\to$<br/>`E_ENT_TO_GUARDRAIL` $\to$<br/>`E_GUARDRAIL_TO_AGENT` $\to$<br/>`E_AGENT_TO_GATEWAY_A2T` $\to$<br/>`E_GATEWAY_TO_TARGET` |
+| `L_B2_HARM_REGULATION` | *Balancing (B)* | **Harm-complaint-enforcement loop** | Harm triggers complaints and enforcement, the enterprise tightens guardrails, constraining agent actions on target systems. | `E_TARGET_HARM_AFFECTED` $\to$<br/>`E_AFFECTED_TO_REG_COMPLAINT` $\to$<br/>`E_REG_TO_ENT` $\to$<br/>`E_ENT_TO_GUARDRAIL` $\to$<br/>`E_GUARDRAIL_TO_AGENT` $\to$<br/>`E_AGENT_TO_GATEWAY_A2T` $\to$<br/>`E_GATEWAY_TO_TARGET` |
 | `L_B3_SOCIAL_LICENCE` | *Balancing (B)* | **Social-licence loop** | Harm drives churn and reputational cost; the enterprise tightens guardrails without waiting for the regulator. | `E_TARGET_HARM_AFFECTED` $\to$<br/>`E_AFFECTED_CHURN_ENT` $\to$<br/>`E_ENT_TO_GUARDRAIL` $\to$<br/>`E_GUARDRAIL_TO_AGENT` $\to$<br/>`E_AGENT_TO_GATEWAY_A2T` $\to$<br/>`E_GATEWAY_TO_TARGET` |
+| `L_B4_HARM_ALARM_POLICY` | *Balancing (B)* | **Harm-alarm-policy loop** | Systemic harm reaches the legislature through the algedonic channel, widening mandates and enforcement. Slow, but it bypasses regulatory capture. | `E_TARGET_HARM_AFFECTED` $\to$<br/>`E_AFFECTED_TO_CIVIL` $\to$<br/>`E_CIVIL_TO_LEG_ALARM` $\to$<br/>`E_LEG_TO_REG_MANDATE` $\to$<br/>`E_REG_TO_ENT` $\to$<br/>`E_ENT_TO_GUARDRAIL` $\to$<br/>`E_GUARDRAIL_TO_AGENT` $\to$<br/>`E_AGENT_TO_GATEWAY_A2T` $\to$<br/>`E_GATEWAY_TO_TARGET` |
 
 ## 2. Viewpoint-Relative VSM Control Frames
 
@@ -235,25 +247,24 @@ In Beer's Viable System Model (VSM), Systems 1–5 are not intrinsic node tags; 
 
 ### Enterprise AI operations (recursion level 0) — `Recursion Level +0 (Enterprise)`
 
-> System-in-focus: one enterprise's AI-enabled operations. Frontier model, cloud, regulators and affected parties are environment.
+> One enterprise's AI-enabled operations. The knowledge store is a resource of S1 and is not given a role.
 
 | VSM Role | Node | Architectural Rationale |
 | :--- | :--- | :--- |
-| `s1_operations` | `N_AGENT` | Performs the primary operational activity |
-| `s1_operations` | `N_KNOWLEDGE_STORE` | Operational memory of the agent |
-| `s1_operations` | `N_TARGET_SYS` | Operational substrate where activity lands; source of algedonic signals |
+| `s1_operations` | `N_AGENT` | Performs the primary operational activity; stands for any number of S1 units, each recursively viable |
+| `s1_operations` | `N_TARGET_SYS` | Operational substrate where activity lands; source of algedonic signals. Debatable: could be treated as environment |
 | `s2_coordination` | `N_TOOL_GATEWAY` | Arbitrates tool and protocol access across agents |
 | `s2_coordination` | `N_IDP` | Arbitrates identity and delegation across agents |
 | `s3_control` | `N_GUARDRAIL` | Operational control, scope enforcement, accountability |
 | `s3_control` | `N_AUDIT_STORE` | Accountability record for S3 |
-| `s3_control` | `N_HUMAN_USER` | Human oversight authority with override |
+| `s3_control` | `N_HUMAN_USER` | In its oversight capacity only: human override and supervision |
 | `s3_star_audit` | `N_OBSERVE` | Independent probing outside the S3 command line |
 | `s4_intelligence` | `N_AI_GOVERNANCE` | Scans models, vendors, regulation and incidents |
 | `s5_policy` | `N_ENTERPRISE` | Legal principal; holds identity and ultimate policy |
 
-### Societal governance of AI deployment (recursion level +1) — `Recursion Level +1 (Jurisdiction Meta-System)`
+### Global AI governance as a network of regimes (recursion level +1) — `Recursion Level +1 (Jurisdiction Meta-System)`
 
-> System-in-focus: the jurisdictional meta-system governing AI deployment. Capital, silicon, energy, compute, data and adversaries are resource suppliers or environment; affected parties are the environment whose harm is the algedonic trigger.
+> Treated as one meta-system of interacting regimes (EU, US, China, UK, APAC). Per-regime frames are a possible extension.
 
 | VSM Role | Node | Architectural Rationale |
 | :--- | :--- | :--- |
@@ -262,21 +273,26 @@ In Beer's Viable System Model (VSM), Systems 1–5 are not intrinsic node tags; 
 | `s1_operations` | `N_FRONTIER_LAB` | Produces frontier capability |
 | `s1_operations` | `N_CLOUD_HYPERSCALER` | Provides platform capacity |
 | `s2_coordination` | `N_STANDARDS_BODY` | Damps divergence via shared standards |
-| `s3_control` | `N_INSURER` | Market-based control through pricing and underwriting conditions |
+| `s3_control` | `N_REGULATOR` | Supervision and enforcement against the mandate |
+| `s3_control` | `N_COURTS` | Adjudication and redress; accountability for S1 |
+| `s3_control` | `N_INSURER` | Market-based control supplementing the regulatory line, through pricing and underwriting conditions |
 | `s3_star_audit` | `N_AUDITOR` | Independent conformity checks |
 | `s4_intelligence` | `N_SAFETY_INSTITUTE` | Horizon scanning and capability evaluation |
-| `s5_policy` | `N_REGULATOR` | Statutory policy closure |
+| `s5_policy` | `N_LEGISLATURE` | Sets objectives and mandates; ultimate policy closure |
 
 ## 3. Canonical Element Dictionary
 
 | Element | Cluster | Kind | Wardley Stage | Ashby Variety | Jurisdictions |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Statutory & Trade Authorities**<br/><small>EU AI Office & national authorities, FTC/state AGs & courts, BIS export controls, China CAC, UK & APAC regulators</small><br/>`N_REGULATOR` | 0. Jurisdictional, Capital & Regulatory Sphere | `statutory_authority` | — | 10^1–10^2 jurisdictions | `eu, us, china, uk, apac` |
+| **Statutory & Trade Authorities**<br/><small>EU AI Office & national authorities, FTC/state AGs, BIS export controls, China CAC, UK & APAC regulators</small><br/>`N_REGULATOR` | 0. Jurisdictional, Capital & Regulatory Sphere | `statutory_authority` | — | 10^1–10^2 jurisdictions | `eu, us, china, uk, apac` |
 | **Standards Setting Organisations**<br/><small>ISO/IEC JTC 1/SC 42, NIST, CEN-CENELEC, IEEE</small><br/>`N_STANDARDS_BODY` | 0. Jurisdictional, Capital & Regulatory Sphere | `private_oversight_body` | — | 10^1–10^1.5 entities | `global` |
 | **AI Safety & Security Institutes**<br/><small>US CAISI (formerly AISI), UK AI Security Institute, Japan AISI, frontier evaluators</small><br/>`N_SAFETY_INSTITUTE` | 0. Jurisdictional, Capital & Regulatory Sphere | `public_authority` | — | 10^1–10^1.5 entities | `us, uk, apac` |
 | **Conformity & Certification Bodies**<br/><small>EU notified bodies, ISO/IEC 42001 certifiers</small><br/>`N_AUDITOR` | 0. Jurisdictional, Capital & Regulatory Sphere | `private_oversight_body` | — | 10^2–10^3 entities | `eu, global` |
 | **AI Risk Underwriter & Insurer**<br/><small>Algorithmic liability and cyber risk carriers</small><br/>`N_INSURER` | 0. Jurisdictional, Capital & Regulatory Sphere | `organisation` | — | 10^2–10^3 entities | `global` |
 | **Capital Markets & Venture Underwriters**<br/><small>VC syndicates, hyperscaler equity, sovereign wealth</small><br/>`N_CAPITAL` | 0. Jurisdictional, Capital & Regulatory Sphere | `organisation` | — | 10^2–10^3 entities | `global` |
+| **Legislatures & Executive Policy-Makers**<br/><small>EU Parliament & Council, US Congress & executive, national parliaments, ministries</small><br/>`N_LEGISLATURE` | 0. Jurisdictional, Capital & Regulatory Sphere | `statutory_authority` | — | 10^1–10^2 jurisdictions | `eu, us, china, uk, apac` |
+| **Courts & Dispute Resolution**<br/><small>National and EU courts, arbitration, class-action mechanisms</small><br/>`N_COURTS` | 0. Jurisdictional, Capital & Regulatory Sphere | `statutory_authority` | — | 10^1–10^2 jurisdictions | `eu, us, china, uk, apac` |
+| **Civil Society, Researchers & Media**<br/><small>NGOs, journalists, academic researchers, incident databases, advocacy groups</small><br/>`N_CIVIL_SOCIETY` | 0. Jurisdictional, Capital & Regulatory Sphere | `organisation` | — | 10^4–10^6 entities | `global` |
 | **Leading-Edge Silicon & Lithography**<br/><small>ASML (EUV), TSMC (foundry), Nvidia, HBM memory</small><br/>`N_SILICON` | 1. Upstream Silicon, Energy, Cloud, Data & Model Supply | `organisation` | `custom_built` | 10^0–10^1 entities | `global` |
 | **Energy Grids & Power Generation**<br/><small>Nuclear PPAs, substation transformers, cooling</small><br/>`N_ENERGY_GRID` | 1. Upstream Silicon, Energy, Cloud, Data & Model Supply | `organisation` | `commodity` | 10^2–10^3 entities | `multi_jurisdictional` |
 | **Training Compute Campuses**<br/><small>Mega data centers, GW-scale cluster fabric, power substations</small><br/>`N_TRAIN` | 1. Upstream Silicon, Energy, Cloud, Data & Model Supply | `organisation` | `product` | 10^1–10^1.3 clusters | `global` |

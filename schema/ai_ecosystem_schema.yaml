@@ -6,7 +6,7 @@ description: >-
   directed edges. Analytical lenses sit on top of the core and are detachable: viewpoint-relative
   VSM frames, named feedback loops, Wardley evolution stage, and optional framework tags
   (EU AI Act, NIST AI RMF). Views are the queryable entry points (each carries the question it answers).
-version: "3.0.0"
+version: "3.1.0"
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -88,8 +88,9 @@ classes:
         required: true
       evolution_stage:
         description: >-
-          Wardley evolution stage. Apply ONLY to value-chain components (things that are built,
-          bought or consumed); leave unset for authorities, people and adversaries.
+          Wardley evolution stage of the node's dominant offering. Apply ONLY to value-chain
+          components (things that are built, bought or consumed); leave unset for authorities,
+          people and adversaries. Split a node only when an inquiry needs finer stages.
         range: EvolutionStageEnum
       jurisdictions:
         range: JurisdictionEnum
@@ -136,6 +137,8 @@ classes:
       - protocol_plane
       - polarity
       - affects
+      - normative_status
+      - delay
       - power_asymmetry
       - switching_cost
       - confidence
@@ -176,6 +179,7 @@ classes:
                 - competitive_pressure
                 - physical_constraint
                 - adversarial_attack
+                - impact
                 - contractual_term
                 - data_flow
                 - algedonic_signal
@@ -193,6 +197,7 @@ classes:
                 - liability_exposure
                 - physical_constraint
                 - adversarial_attack
+                - impact
                 - data_flow
                 - algedonic_signal
         postconditions:
@@ -200,6 +205,34 @@ classes:
             power_asymmetry:
               value_presence: ABSENT
             switching_cost:
+              value_presence: ABSENT
+      - description: "normative_status is required for mandates, controls and contracts."
+        preconditions:
+          slot_conditions:
+            relation_kind:
+              equals_string_in: [statutory_mandate, governance_control, contractual_term]
+        postconditions:
+          slot_conditions:
+            normative_status:
+              required: true
+      - description: "normative_status is absent for all other relation kinds."
+        preconditions:
+          slot_conditions:
+            relation_kind:
+              equals_string_in:
+                - commercial_flow
+                - resource_supply
+                - liability_exposure
+                - competitive_pressure
+                - physical_constraint
+                - adversarial_attack
+                - impact
+                - protocol_call
+                - data_flow
+                - algedonic_signal
+        postconditions:
+          slot_conditions:
+            normative_status:
               value_presence: ABSENT
       - description: "A signed polarity must name the state variable it acts on."
         preconditions:
@@ -229,6 +262,7 @@ classes:
       - id
       - label
       - loop_type
+      - key_variable
       - loop_edges
       - description
     slot_usage:
@@ -246,6 +280,8 @@ classes:
       - id
       - label
       - description
+      - system_boundary
+      - viability_question
       - recursion_offset
       - roles
     slot_usage:
@@ -351,6 +387,18 @@ slots:
     range: PowerAsymmetryEnum
   switching_cost:
     range: SwitchingCostEnum
+  normative_status:
+    range: NormativeStatusEnum
+    description: "Normative force of a mandate, control or contract."
+  delay:
+    range: DelayEnum
+    description: "Typical lag between the source acting and the effect on the target. Record it on loop edges."
+  key_variable:
+    description: "The state variable a loop reinforces or stabilises."
+  system_boundary:
+    description: "What is inside and outside the system-in-focus."
+  viability_question:
+    description: "What viability means for this system-in-focus."
   loop_type:
     range: LoopTypeEnum
   loop_edges:
@@ -439,7 +487,7 @@ enums:
   NodeKindEnum:
     permissible_values:
       statutory_authority:
-        description: "Regulators, enforcement agencies, courts, market surveillance."
+        description: "Bodies with statutory powers: legislatures, regulators, courts, market surveillance."
       public_authority:
         description: "Non-statutory public bodies: national AI safety/security institutes, horizon-scanning units."
       private_oversight_body:
@@ -558,6 +606,9 @@ enums:
       physical_constraint:
         description: "Hard physical, electrical, thermodynamic or geographic ceilings."
         annotations: {domains: "technical,economic"}
+      impact:
+        description: "Real-world effect of an operation on an affected party (harm, benefit). Liability and redress are separate relations."
+        annotations: {domains: "governance,economic"}
       adversarial_attack:
         description: "Hostile action against a component or model (injection, poisoning, jailbreak, misuse)."
         annotations: {domains: "technical"}
@@ -600,12 +651,30 @@ enums:
       balancing: {}
 
   PowerAsymmetryEnum:
+    description: "Which end of the edge holds the bargaining power. Pair with switching_cost to express captivity."
     permissible_values:
-      supplier_dominant: {}
-      buyer_dominant: {}
+      source_dominant:
+        description: "The edge's source dictates terms."
+      target_dominant:
+        description: "The edge's target dictates terms."
       balanced: {}
-      captive:
-        description: "Target is structurally captive with near-zero alternatives."
+
+  NormativeStatusEnum:
+    permissible_values:
+      binding:
+        description: "Legal obligation or statutory power."
+      contractual:
+        description: "Bilateral contract, SLA or insurance condition."
+      voluntary_standard:
+        description: "Technical or management standard, code of practice, certification scheme."
+      practice:
+        description: "Internal policy or de facto industry practice."
+
+  DelayEnum:
+    permissible_values:
+      immediate: {}
+      months: {}
+      years: {}
 
   SwitchingCostEnum:
     permissible_values:

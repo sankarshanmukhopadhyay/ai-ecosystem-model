@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../schema/ai_ecosystem.json
 metadata:
   title: "AI Ecosystem Governance, Economic & Architecture Model"
-  version: "3.0"
-  schema_version: "3.0.0"
+  version: "3.1"
+  schema_version: "3.1.0"
   as_of: 2026-11-15
   description: "Property graph of the AI ecosystem: value chain, control structure (viewpoint-relative VSM frames), liability, adversaries and named feedback loops, with Wardley evolution stage on value-chain components."
-  provenance_note: "Cardinalities are order-of-magnitude estimates and no sources are attached yet; nodes with weaker estimates are flagged confidence: low. EU AI Act article references follow Regulation (EU) 2024/1689 as adopted; verify against the current consolidated text before relying on them."
+  provenance_note: "Cardinalities are order-of-magnitude estimates and are unsourced; weaker ones are flagged confidence: low. Sources are attached only to claims checked on 2026-11-15 (EU AI Act fine tiers, GPAI fining powers, safety-institute names). Other EU AI Act article references (e.g. Art. 12, 14, 43, 85) are unverified; check against the current consolidated text."
 
 clusters:
   - id: cluster_regulatory
@@ -28,7 +28,7 @@ nodes:
   # ============================ Cluster 0 ============================
   - id: N_REGULATOR
     label: "Statutory & Trade Authorities"
-    sublabel: "EU AI Office & national authorities, FTC/state AGs & courts, BIS export controls, China CAC, UK & APAC regulators"
+    sublabel: "EU AI Office & national authorities, FTC/state AGs, BIS export controls, China CAC, UK & APAC regulators"
     cluster: cluster_regulatory
     domains: [governance]
     kind: statutory_authority
@@ -37,7 +37,12 @@ nodes:
     cardinality_log10_min: 1.0
     cardinality_log10_max: 2.0
     cardinality_unit: jurisdictions
+    sources:
+      - "https://artificialintelligenceact.eu/article/101/"
+      - "https://www.euaiact.com/blog/eu-ai-act-penalties-enforcement"
+      - "https://forklog.com/en/eu-enforces-fines-for-ai-model-developers/"
     properties:
+      gpai_fine_powers: "Commission fining powers over GPAI providers apply from 2 Aug 2026 (GPAI obligations since 2 Aug 2025)"
       enforcement_powers: "EU: fines up to 7% of global turnover for prohibited practices (Art. 99), up to 3% for GPAI providers (Art. 101); US: ex-post enforcement, litigation, export-control sanctions; China: registration and licensing regimes; stop orders."
 
   - id: N_STANDARDS_BODY
@@ -65,6 +70,8 @@ nodes:
     cardinality_log10_min: 1.0
     cardinality_log10_max: 1.5
     cardinality_unit: entities
+    sources:
+      - "https://casrai.org/guides/what-is-caisi"
     properties:
       red_team_role: "Pre-deployment red-teaming, bio/cyber capability evaluations, systemic-risk thresholds"
 
@@ -108,6 +115,46 @@ nodes:
     cardinality_unit: entities
     properties:
       financing_role: "Funds fab capex, compute campuses, lab compute credits and long-dated power purchase agreements"
+
+  - id: N_LEGISLATURE
+    label: "Legislatures & Executive Policy-Makers"
+    sublabel: "EU Parliament & Council, US Congress & executive, national parliaments, ministries"
+    cluster: cluster_regulatory
+    domains: [governance]
+    kind: statutory_authority
+    jurisdictions: [eu, us, china, uk, apac]
+    cardinality_log10_min: 1.0
+    cardinality_log10_max: 2.0
+    cardinality_unit: jurisdictions
+    properties:
+      role: "Sets objectives, statutory mandates and funding; ultimate policy closure for each regime"
+
+  - id: N_COURTS
+    label: "Courts & Dispute Resolution"
+    sublabel: "National and EU courts, arbitration, class-action mechanisms"
+    cluster: cluster_regulatory
+    domains: [governance, economic]
+    kind: statutory_authority
+    jurisdictions: [eu, us, china, uk, apac]
+    cardinality_log10_min: 1.0
+    cardinality_log10_max: 2.0
+    cardinality_unit: jurisdictions
+    properties:
+      role: "Interprets statute and adjudicates liability and redress"
+
+  - id: N_CIVIL_SOCIETY
+    label: "Civil Society, Researchers & Media"
+    sublabel: "NGOs, journalists, academic researchers, incident databases, advocacy groups"
+    cluster: cluster_regulatory
+    domains: [governance]
+    kind: organisation
+    jurisdictions: [global]
+    cardinality_log10_min: 4.0
+    cardinality_log10_max: 6.0
+    cardinality_unit: entities
+    confidence: low
+    properties:
+      role: "Surfaces harm and holds institutions to account; the public alarm channel when formal channels are slow"
 
   # ============================ Cluster 1 ============================
   - id: N_SILICON
@@ -445,64 +492,73 @@ nodes:
 # ===================================================================
 edges:
   # ---- Silicon, energy, compute, cloud ----
-  - {id: E_CAPITAL_TO_SILICON, from: N_CAPITAL, to: N_SILICON, label: "$$$ Fab capex & lithography tool procurement", relation_kind: commercial_flow, polarity: positive, affects: "silicon capex capacity", power_asymmetry: supplier_dominant, switching_cost: prohibitive}
-  - {id: E_CAPITAL_TO_ENERGY, from: N_CAPITAL, to: N_ENERGY_GRID, label: "$$$ Clean-energy PPAs & grid upgrades", relation_kind: commercial_flow, polarity: positive, affects: "generation and grid capex", power_asymmetry: supplier_dominant, switching_cost: prohibitive}
-  - {id: E_REG_TO_SILICON_EXPORT, from: N_REGULATOR, to: N_SILICON, label: "Export controls, entity listings & technology sanctions", relation_kind: statutory_mandate, polarity: negative, affects: "market access"}
-  - {id: E_SILICON_TO_TRAIN, from: N_SILICON, to: N_TRAIN, label: "Leading-edge GPU allocation & advanced packaging (CoWoS)", relation_kind: resource_supply, polarity: positive, affects: "campus compute capacity", power_asymmetry: supplier_dominant, switching_cost: prohibitive}
-  - {id: E_ENERGY_TO_TRAIN, from: N_ENERGY_GRID, to: N_TRAIN, label: "Physical GW power & transformer bottleneck", relation_kind: physical_constraint, polarity: negative, affects: "usable compute capacity"}
-  - {id: E_CAPITAL_TO_LAB, from: N_CAPITAL, to: N_FRONTIER_LAB, label: "$$$ Equity subsidies & compute credits", relation_kind: commercial_flow, polarity: positive, affects: "lab capital", power_asymmetry: supplier_dominant, switching_cost: high}
+  - {id: E_CAPITAL_TO_SILICON, from: N_CAPITAL, to: N_SILICON, label: "$$$ Fab capex & lithography tool procurement", relation_kind: commercial_flow, polarity: positive, affects: "silicon capex capacity"}
+  - {id: E_CAPITAL_TO_ENERGY, from: N_CAPITAL, to: N_ENERGY_GRID, label: "$$$ Clean-energy PPAs & grid upgrades", relation_kind: commercial_flow, polarity: positive, affects: "generation and grid capex"}
+  - {id: E_REG_TO_SILICON_EXPORT, from: N_REGULATOR, to: N_SILICON, label: "Export controls, entity listings & technology sanctions", relation_kind: statutory_mandate, polarity: negative, affects: "market access", normative_status: binding}
+  - {id: E_SILICON_TO_TRAIN, from: N_SILICON, to: N_TRAIN, label: "Leading-edge GPU allocation & advanced packaging (CoWoS)", relation_kind: resource_supply, polarity: positive, affects: "campus compute capacity", power_asymmetry: source_dominant, switching_cost: prohibitive}
+  - {id: E_ENERGY_TO_TRAIN, from: N_ENERGY_GRID, to: N_TRAIN, label: "Physical GW power & transformer bottleneck", relation_kind: physical_constraint, polarity: negative, affects: "usable compute capacity", delay: years}
+  - {id: E_CAPITAL_TO_LAB, from: N_CAPITAL, to: N_FRONTIER_LAB, label: "$$$ Equity subsidies & compute credits", relation_kind: commercial_flow, polarity: positive, affects: "lab capital", power_asymmetry: source_dominant, switching_cost: high, delay: months}
   - {id: E_CAPITAL_TO_TRAIN, from: N_CAPITAL, to: N_TRAIN, label: "$$$ Campus project debt & equity", relation_kind: commercial_flow, polarity: positive, affects: "campus capital", power_asymmetry: balanced, switching_cost: high}
-  - {id: E_LAB_TO_TRAIN_CAPEX, from: N_FRONTIER_LAB, to: N_TRAIN, label: "$ Compute commitments & offtake contracts", relation_kind: commercial_flow, polarity: positive, affects: "campus revenue", power_asymmetry: balanced, switching_cost: high}
-  - {id: E_TRAIN_TO_LAB_COMPUTE, from: N_TRAIN, to: N_FRONTIER_LAB, label: "Training & inference compute capacity", relation_kind: resource_supply, polarity: positive, affects: "lab training capacity", power_asymmetry: balanced, switching_cost: high}
+  - {id: E_LAB_TO_TRAIN_CAPEX, from: N_FRONTIER_LAB, to: N_TRAIN, label: "$ Compute commitments & offtake contracts", relation_kind: commercial_flow, polarity: positive, affects: "campus revenue", power_asymmetry: balanced, switching_cost: high, delay: months}
+  - {id: E_TRAIN_TO_LAB_COMPUTE, from: N_TRAIN, to: N_FRONTIER_LAB, label: "Training & inference compute capacity", relation_kind: resource_supply, polarity: positive, affects: "lab training capacity", power_asymmetry: balanced, switching_cost: high, delay: years}
   - {id: E_TRAIN_TO_CLOUD, from: N_TRAIN, to: N_CLOUD_HYPERSCALER, label: "Cluster hosting & bare-metal capacity resold via cloud", relation_kind: commercial_flow, polarity: positive, affects: "cloud capacity", power_asymmetry: balanced, switching_cost: high}
   - {id: E_CLOUD_TO_MODEL_HOSTING, from: N_CLOUD_HYPERSCALER, to: N_FRONTIER_MODEL, label: "Hyperscale inference fleet hosting & orchestration", relation_kind: resource_supply, polarity: positive, affects: "model serving capacity", power_asymmetry: balanced, switching_cost: high}
 
   # ---- Labs, models, data ----
-  - {id: E_LAB_TO_MODEL_RELEASE, from: N_FRONTIER_LAB, to: N_FRONTIER_MODEL, label: "Trains, gates and releases the model", relation_kind: governance_control, polarity: positive, affects: "model capability under release gating"}
-  - {id: E_LAB_TO_OPEN_RELEASE, from: N_FRONTIER_LAB, to: N_OPEN_MODEL, label: "Open-weight release of sunk-cost models", relation_kind: data_flow, polarity: positive, affects: "open commons capability"}
-  - {id: E_OPEN_DEFLATION_LAB, from: N_OPEN_MODEL, to: N_FRONTIER_LAB, label: "Inference price deflation & compression", relation_kind: competitive_pressure, polarity: negative, affects: "lab inference margin", power_asymmetry: buyer_dominant, switching_cost: low}
+  - {id: E_LAB_TO_MODEL_RELEASE, from: N_FRONTIER_LAB, to: N_FRONTIER_MODEL, label: "Trains, gates and releases the model", relation_kind: governance_control, polarity: positive, affects: "model capability under release gating", normative_status: practice}
+  - {id: E_LAB_TO_OPEN_RELEASE, from: N_FRONTIER_LAB, to: N_OPEN_MODEL, label: "Open-weight release of sunk-cost models", relation_kind: data_flow, polarity: positive, affects: "open commons capability", delay: months}
+  - {id: E_OPEN_DEFLATION_LAB, from: N_OPEN_MODEL, to: N_FRONTIER_LAB, label: "Inference price deflation & compression", relation_kind: competitive_pressure, polarity: negative, affects: "lab inference margin", power_asymmetry: source_dominant, switching_cost: low, delay: months}
   - {id: E_DATA_TO_LAB_CORPUS, from: N_DATA_RIGHTS, to: N_FRONTIER_LAB, label: "Training corpus, licensed content & annotation labour", relation_kind: resource_supply, polarity: positive, affects: "training corpus scale and quality"}
   - {id: E_RIGHTS_TO_LAB_CLAIMS, from: N_DATA_RIGHTS, to: N_FRONTIER_LAB, label: "Copyright, licensing & data-protection claims", relation_kind: liability_exposure, polarity: negative, affects: "freedom to train on unlicensed data"}
-  - {id: E_LAB_TO_CAPITAL_RETURN, from: N_FRONTIER_LAB, to: N_CAPITAL, label: "Valuation uplift & investor returns", relation_kind: commercial_flow, polarity: positive, affects: "capital-market returns", power_asymmetry: balanced, switching_cost: moderate}
+  - {id: E_LAB_TO_CAPITAL_RETURN, from: N_FRONTIER_LAB, to: N_CAPITAL, label: "Valuation uplift & investor returns", relation_kind: commercial_flow, polarity: positive, affects: "capital-market returns", power_asymmetry: balanced, switching_cost: moderate, delay: years}
 
   # ---- Downstream economics ----
   - {id: E_ENT_TO_ISV_SUB, from: N_ENTERPRISE, to: N_ISV_PRODUCT, label: "$$$ SaaS subscription / outcome fee", relation_kind: commercial_flow, polarity: positive, affects: "ISV revenue", power_asymmetry: balanced, switching_cost: moderate}
-  - {id: E_ISV_TO_LAB_TOKENS, from: N_ISV_PRODUCT, to: N_FRONTIER_LAB, label: "$$ Wholesale token consumption cost", relation_kind: commercial_flow, polarity: positive, affects: "lab revenue", power_asymmetry: supplier_dominant, switching_cost: high}
-  - {id: E_ENT_TO_CLOUD, from: N_ENTERPRISE, to: N_CLOUD_HYPERSCALER, label: "$$$ Cloud spend commitments & enterprise tenancy", relation_kind: commercial_flow, polarity: positive, affects: "cloud revenue", power_asymmetry: supplier_dominant, switching_cost: high}
+  - {id: E_ISV_TO_LAB_TOKENS, from: N_ISV_PRODUCT, to: N_FRONTIER_LAB, label: "$$ Wholesale token consumption cost", relation_kind: commercial_flow, polarity: positive, affects: "lab revenue", power_asymmetry: target_dominant, switching_cost: high}
+  - {id: E_ENT_TO_CLOUD, from: N_ENTERPRISE, to: N_CLOUD_HYPERSCALER, label: "$$$ Cloud spend commitments & enterprise tenancy", relation_kind: commercial_flow, polarity: positive, affects: "cloud revenue", power_asymmetry: target_dominant, switching_cost: high}
   - {id: E_ENT_TO_INSURER_PREMIUM, from: N_ENTERPRISE, to: N_INSURER, label: "$ Policy premiums & risk transfer", relation_kind: commercial_flow, polarity: positive, affects: "insurer premium income", power_asymmetry: balanced, switching_cost: moderate}
-  - {id: E_LAB_ABSORBS_ISV, from: N_FRONTIER_LAB, to: N_ISV_PRODUCT, label: "Native tools, prompt cache & hosted state absorb wrapper value", relation_kind: competitive_pressure, polarity: negative, affects: "ISV margin", power_asymmetry: captive, switching_cost: high}
-  - {id: E_CLOUD_ABSORBS_ISV, from: N_CLOUD_HYPERSCALER, to: N_ISV_PRODUCT, label: "Platform-native AI services commoditise vertical features", relation_kind: competitive_pressure, polarity: negative, affects: "ISV margin", power_asymmetry: supplier_dominant, switching_cost: high}
-  - {id: E_ISV_TO_OPEN_MODEL, from: N_ISV_PRODUCT, to: N_OPEN_MODEL, label: "Self-hosted / private inference (zero token toll)", relation_kind: protocol_call, protocol_plane: mip, polarity: positive, affects: "ISV cost position", power_asymmetry: buyer_dominant, switching_cost: low}
-  - {id: E_AFFECTED_TO_ISV_DEMAND, from: N_AFFECTED_PARTY, to: N_ISV_PRODUCT, label: "Direct consumer subscriptions & usage", relation_kind: commercial_flow, polarity: positive, affects: "ISV consumer revenue", power_asymmetry: buyer_dominant, switching_cost: low}
+  - {id: E_LAB_ABSORBS_ISV, from: N_FRONTIER_LAB, to: N_ISV_PRODUCT, label: "Native tools, prompt cache & hosted state absorb wrapper value", relation_kind: competitive_pressure, polarity: negative, affects: "ISV margin", power_asymmetry: source_dominant, switching_cost: high}
+  - {id: E_CLOUD_ABSORBS_ISV, from: N_CLOUD_HYPERSCALER, to: N_ISV_PRODUCT, label: "Platform-native AI services commoditise vertical features", relation_kind: competitive_pressure, polarity: negative, affects: "ISV margin", power_asymmetry: source_dominant, switching_cost: high}
+  - {id: E_ISV_TO_OPEN_MODEL, from: N_ISV_PRODUCT, to: N_OPEN_MODEL, label: "Self-hosted / private inference (zero token toll)", relation_kind: protocol_call, protocol_plane: mip, polarity: positive, affects: "ISV cost position", power_asymmetry: source_dominant, switching_cost: low}
+  - {id: E_AFFECTED_TO_ISV_DEMAND, from: N_AFFECTED_PARTY, to: N_ISV_PRODUCT, label: "Direct consumer subscriptions & usage", relation_kind: commercial_flow, polarity: positive, affects: "ISV consumer revenue", power_asymmetry: source_dominant, switching_cost: low}
   - {id: E_ISV_TO_AFFECTED_DTC, from: N_ISV_PRODUCT, to: N_AFFECTED_PARTY, label: "Direct-to-consumer AI interaction", relation_kind: data_flow, polarity: positive, affects: "consumer access to AI services"}
-  - {id: E_AFFECTED_CHURN_ENT, from: N_AFFECTED_PARTY, to: N_ENTERPRISE, label: "Market resistance, churn & social-licence revocation", relation_kind: competitive_pressure, polarity: negative, affects: "enterprise revenue and social licence", power_asymmetry: buyer_dominant, switching_cost: low}
+  - {id: E_AFFECTED_CHURN_ENT, from: N_AFFECTED_PARTY, to: N_ENTERPRISE, label: "Market resistance, churn & social-licence revocation", relation_kind: competitive_pressure, polarity: negative, affects: "enterprise revenue and social licence", power_asymmetry: source_dominant, switching_cost: low, delay: months}
 
   # ---- Governance, regulation, liability ----
-  - {id: E_SAFETY_TO_REG, from: N_SAFETY_INSTITUTE, to: N_REGULATOR, label: "Evaluations & systemic-risk alerts (macro S4 to S5)", relation_kind: data_flow, polarity: positive, affects: "regulator situational awareness"}
-  - {id: E_STANDARDS_TO_AUDITOR, from: N_STANDARDS_BODY, to: N_AUDITOR, label: "Harmonised standards & audit specifications", relation_kind: governance_control, polarity: positive, affects: "audit assurance baseline"}
-  - {id: E_STANDARDS_TO_GUARDRAIL, from: N_STANDARDS_BODY, to: N_GUARDRAIL, label: "Technical control standards & interoperability profiles", relation_kind: governance_control, polarity: positive, affects: "control specification"}
+  - {id: E_SAFETY_TO_REG, from: N_SAFETY_INSTITUTE, to: N_REGULATOR, label: "Evaluations & systemic-risk alerts (S4 to S3)", relation_kind: data_flow, polarity: positive, affects: "regulator situational awareness"}
+  - {id: E_STANDARDS_TO_AUDITOR, from: N_STANDARDS_BODY, to: N_AUDITOR, label: "Harmonised standards & audit specifications", relation_kind: governance_control, polarity: positive, affects: "audit assurance baseline", normative_status: voluntary_standard}
+  - {id: E_STANDARDS_TO_GUARDRAIL, from: N_STANDARDS_BODY, to: N_GUARDRAIL, label: "Technical control standards & interoperability profiles", relation_kind: governance_control, polarity: positive, affects: "control specification", normative_status: voluntary_standard}
   - {id: E_LAB_TO_SAFETY_EVAL, from: N_FRONTIER_LAB, to: N_SAFETY_INSTITUTE, label: "Pre-release model access for red-teaming", relation_kind: data_flow, polarity: positive, affects: "evaluator access to frontier capability"}
-  - {id: E_REG_TO_ENT, from: N_REGULATOR, to: N_ENTERPRISE, label: "Statutory penalties & enforcement", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to deploy non-compliant AI"}
-  - {id: E_REG_TO_LAB_GPAI, from: N_REGULATOR, to: N_FRONTIER_LAB, label: "GPAI codes of practice & transparency duties", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to release without risk and transparency duties"}
-  - {id: E_REG_TO_ISV_HIGH_RISK, from: N_REGULATOR, to: N_ISV_PRODUCT, label: "High-risk system compliance & surveillance", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to market non-conformant systems"}
-  - {id: E_AUDITOR_TO_ENT, from: N_AUDITOR, to: N_ENTERPRISE, label: "Conformity audits & certification", relation_kind: governance_control, polarity: positive, affects: "enterprise assurance evidence"}
-  - {id: E_LAB_DISCLAIMS_ENT, from: N_FRONTIER_LAB, to: N_ENTERPRISE, label: "Disclaims liability (ToS as-is / recourse gap)", relation_kind: contractual_term, polarity: negative, affects: "enterprise recourse against supplier", power_asymmetry: supplier_dominant, switching_cost: high}
+  - {id: E_REG_TO_ENT, from: N_REGULATOR, to: N_ENTERPRISE, label: "Statutory penalties & enforcement", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to deploy non-compliant AI", normative_status: binding, delay: years}
+  - {id: E_REG_TO_LAB_GPAI, from: N_REGULATOR, to: N_FRONTIER_LAB, label: "GPAI codes of practice & transparency duties", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to release without risk and transparency duties", normative_status: binding, sources: ["https://artificialintelligenceact.eu/article/101/"]}
+  - {id: E_REG_TO_ISV_HIGH_RISK, from: N_REGULATOR, to: N_ISV_PRODUCT, label: "High-risk system compliance & surveillance", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to market non-conformant systems", normative_status: binding}
+  - {id: E_AUDITOR_TO_ENT, from: N_AUDITOR, to: N_ENTERPRISE, label: "Conformity audits & certification", relation_kind: governance_control, polarity: positive, affects: "enterprise assurance evidence", normative_status: voluntary_standard}
+  - {id: E_LAB_DISCLAIMS_ENT, from: N_FRONTIER_LAB, to: N_ENTERPRISE, label: "Disclaims liability (ToS as-is / recourse gap)", relation_kind: contractual_term, polarity: negative, affects: "enterprise recourse against supplier", power_asymmetry: source_dominant, switching_cost: high, normative_status: contractual}
   - {id: E_ENT_LIABILITY_AFFECTED, from: N_ENTERPRISE, to: N_AFFECTED_PARTY, label: "Vicarious liability for harm (respondeat superior)", relation_kind: liability_exposure, polarity: positive, affects: "affected party recourse"}
-  - {id: E_AFFECTED_TO_REG_COMPLAINT, from: N_AFFECTED_PARTY, to: N_REGULATOR, label: "Complaints & redress demands (Art. 85)", relation_kind: algedonic_signal, polarity: positive, affects: "regulator awareness of harm"}
-  - {id: E_INSURER_TO_ENT_GATE, from: N_INSURER, to: N_ENTERPRISE, label: "Underwriting gate: audit trail & human oversight required", relation_kind: governance_control, polarity: negative, affects: "freedom to run uninsured autonomous agents"}
-  - {id: E_ENT_TO_GOV, from: N_ENTERPRISE, to: N_AI_GOVERNANCE, label: "Mandate & resourcing of AI governance", relation_kind: governance_control, polarity: positive, affects: "governance mandate"}
-  - {id: E_ENT_TO_GUARDRAIL, from: N_ENTERPRISE, to: N_GUARDRAIL, label: "Delegates authority & safety boundaries (S5 to S3)", relation_kind: governance_control, polarity: positive, affects: "delegated authority and boundaries"}
-  - {id: E_GOV_TO_GUARDRAIL, from: N_AI_GOVERNANCE, to: N_GUARDRAIL, label: "Policy refinement from horizon scanning (S4 to S3)", relation_kind: governance_control, polarity: positive, affects: "policy currency"}
-  - {id: E_USER_TO_AGENT_HITL, from: N_HUMAN_USER, to: N_AGENT, label: "Art. 14 human oversight & kill switch", relation_kind: governance_control, polarity: negative, affects: "agent autonomy"}
-  - {id: E_GUARDRAIL_TO_AGENT, from: N_GUARDRAIL, to: N_AGENT, label: "Policy envelope & runtime constraints (S3 to S1)", relation_kind: governance_control, polarity: negative, affects: "agent autonomy"}
+  - {id: E_AFFECTED_TO_REG_COMPLAINT, from: N_AFFECTED_PARTY, to: N_REGULATOR, label: "Complaints & redress demands (Art. 85)", relation_kind: data_flow, polarity: positive, affects: "regulator awareness of harm", delay: months}
+  - {id: E_INSURER_TO_ENT_GATE, from: N_INSURER, to: N_ENTERPRISE, label: "Underwriting gate: audit trail & human oversight required", relation_kind: governance_control, polarity: negative, affects: "freedom to run uninsured autonomous agents", normative_status: contractual}
+  - {id: E_ENT_TO_GOV, from: N_ENTERPRISE, to: N_AI_GOVERNANCE, label: "Mandate & resourcing of AI governance", relation_kind: governance_control, polarity: positive, affects: "governance mandate", normative_status: practice}
+  - {id: E_ENT_TO_GUARDRAIL, from: N_ENTERPRISE, to: N_GUARDRAIL, label: "Delegates authority & safety boundaries (S5 to S3)", relation_kind: governance_control, polarity: positive, affects: "delegated authority and boundaries", normative_status: practice, delay: months}
+  - {id: E_GOV_TO_GUARDRAIL, from: N_AI_GOVERNANCE, to: N_GUARDRAIL, label: "Policy refinement from horizon scanning (S4 to S3)", relation_kind: governance_control, polarity: positive, affects: "policy currency", normative_status: practice}
+  - {id: E_USER_TO_AGENT_HITL, from: N_HUMAN_USER, to: N_AGENT, label: "Art. 14 human oversight & kill switch", relation_kind: governance_control, polarity: negative, affects: "agent autonomy", normative_status: binding}
+  - {id: E_GUARDRAIL_TO_AGENT, from: N_GUARDRAIL, to: N_AGENT, label: "Policy envelope & runtime constraints (S3 to S1)", relation_kind: governance_control, polarity: negative, affects: "agent autonomy", normative_status: practice, delay: immediate}
   - {id: E_AGENT_TO_GUARDRAIL, from: N_AGENT, to: N_GUARDRAIL, label: "Action proposals for pre-execution authorisation", relation_kind: data_flow, polarity: positive, affects: "guardrail awareness of intended actions"}
   - {id: E_GUARDRAIL_TO_AUDIT, from: N_GUARDRAIL, to: N_AUDIT_STORE, label: "Tamper-evident decision & action trail (Art. 12)", relation_kind: data_flow, polarity: positive, affects: "audit evidence completeness"}
   - {id: E_AUDIT_TO_AUDITOR, from: N_AUDIT_STORE, to: N_AUDITOR, label: "Forensic evidence for compliance verification", relation_kind: data_flow, polarity: positive, affects: "auditor evidence base"}
-  - {id: E_GUARDRAIL_TO_GATEWAY, from: N_GUARDRAIL, to: N_TOOL_GATEWAY, label: "Enforces least-privilege scopes (S3 to S2)", relation_kind: governance_control, polarity: negative, affects: "tool-call scope"}
-  - {id: E_TARGET_HARM_AFFECTED, from: N_TARGET_SYS, to: N_AFFECTED_PARTY, label: "Direct impact & real-world blast radius", relation_kind: liability_exposure, polarity: negative, affects: "affected party welfare"}
+  - {id: E_GUARDRAIL_TO_GATEWAY, from: N_GUARDRAIL, to: N_TOOL_GATEWAY, label: "Enforces least-privilege scopes (S3 to S2)", relation_kind: governance_control, polarity: negative, affects: "tool-call scope", normative_status: practice}
+  - {id: E_TARGET_HARM_AFFECTED, from: N_TARGET_SYS, to: N_AFFECTED_PARTY, label: "Direct impact & real-world blast radius", relation_kind: impact, polarity: negative, affects: "affected party welfare", delay: immediate}
+
+  - {id: E_LEG_TO_REG_MANDATE, from: N_LEGISLATURE, to: N_REGULATOR, label: "Statutory mandates, powers & funding (S5 to S3)", relation_kind: statutory_mandate, polarity: positive, affects: "regulator statutory powers", normative_status: binding, delay: years}
+  - {id: E_SAFETY_TO_LEG, from: N_SAFETY_INSTITUTE, to: N_LEGISLATURE, label: "Capability and risk assessments informing policy (S4 to S5)", relation_kind: data_flow, polarity: positive, affects: "policy-maker understanding of frontier risk"}
+  - {id: E_STANDARDS_TO_ISV, from: N_STANDARDS_BODY, to: N_ISV_PRODUCT, label: "Harmonised standards & presumption-of-conformity pathway", relation_kind: governance_control, polarity: positive, affects: "provider conformity pathway", normative_status: voluntary_standard}
+  - {id: E_AFFECTED_TO_COURTS_CLAIM, from: N_AFFECTED_PARTY, to: N_COURTS, label: "Tort, statutory & class claims", relation_kind: liability_exposure, polarity: positive, affects: "court docket of harm claims"}
+  - {id: E_COURTS_TO_ENT_REDRESS, from: N_COURTS, to: N_ENTERPRISE, label: "Adjudicates liability & orders redress", relation_kind: statutory_mandate, polarity: negative, affects: "enterprise freedom from liability", normative_status: binding, delay: years}
+  - {id: E_AFFECTED_TO_CIVIL, from: N_AFFECTED_PARTY, to: N_CIVIL_SOCIETY, label: "Reports harm to advocates, researchers & media", relation_kind: data_flow, polarity: positive, affects: "public visibility of harm", delay: months}
+  - {id: E_CIVIL_TO_LEG_ALARM, from: N_CIVIL_SOCIETY, to: N_LEGISLATURE, label: "Public alarm: investigations, advocacy & media pressure bypassing regulators", relation_kind: algedonic_signal, polarity: positive, affects: "policy-maker awareness of systemic harm", delay: months}
+  - {id: E_GOV_TO_ENT_ADVICE, from: N_AI_GOVERNANCE, to: N_ENTERPRISE, label: "Risk assessments & policy recommendations (S4 to S5)", relation_kind: data_flow, polarity: positive, affects: "enterprise strategic awareness of AI risk"}
 
   # ---- Cybernetic channels and adversaries ----
-  - {id: E_OBSERVE_PROBE_TARGET, from: N_OBSERVE, to: N_TARGET_SYS, label: "S3* independent behavioural probe & red-teaming", relation_kind: governance_control, polarity: positive, affects: "behavioural assurance evidence"}
+  - {id: E_OBSERVE_PROBE_TARGET, from: N_OBSERVE, to: N_TARGET_SYS, label: "S3* independent behavioural probe & red-teaming", relation_kind: governance_control, polarity: positive, affects: "behavioural assurance evidence", normative_status: practice}
   - {id: E_ALGEDONIC_TARGET_ENT, from: N_TARGET_SYS, to: N_ENTERPRISE, label: "Algedonic alarm: direct S1 to S5 circuit breaker", relation_kind: algedonic_signal, polarity: positive, affects: "enterprise awareness of critical failure"}
   - {id: E_THREAT_TO_AGENT, from: N_THREAT_ACTOR, to: N_AGENT, label: "Prompt injection, tool poisoning, credential abuse", relation_kind: adversarial_attack, polarity: negative, affects: "agent integrity"}
   - {id: E_THREAT_TO_MODEL, from: N_THREAT_ACTOR, to: N_FRONTIER_MODEL, label: "Jailbreaks & capability misuse", relation_kind: adversarial_attack, polarity: negative, affects: "model safeguards"}
@@ -511,14 +567,14 @@ edges:
   - {id: E_USER_TO_ISV_PROMPT, from: N_HUMAN_USER, to: N_ISV_PRODUCT, label: "Prompt intent & working context", relation_kind: data_flow, polarity: positive, affects: "task context"}
   - {id: E_IDP_TO_AGENT_A2E, from: N_IDP, to: N_AGENT, label: "A2E workload identity delegation (OAuth/OIDC)", relation_kind: protocol_call, protocol_plane: a2e, polarity: positive, affects: "agent delegated authority"}
   - {id: E_ISV_TO_AGENT_INIT, from: N_ISV_PRODUCT, to: N_AGENT, label: "Initiates autonomous loop", relation_kind: data_flow, polarity: positive, affects: "agent task activation"}
-  - {id: E_AGENT_TO_MODEL_MIP, from: N_AGENT, to: N_FRONTIER_MODEL, label: "MIP inference API (tokens & directives)", relation_kind: protocol_call, protocol_plane: mip, polarity: positive, affects: "agent reasoning capability", power_asymmetry: supplier_dominant, switching_cost: high}
+  - {id: E_AGENT_TO_MODEL_MIP, from: N_AGENT, to: N_FRONTIER_MODEL, label: "MIP inference API (tokens & directives)", relation_kind: protocol_call, protocol_plane: mip, polarity: positive, affects: "agent reasoning capability", power_asymmetry: target_dominant, switching_cost: high}
   - {id: E_AGENT_TO_KNOWLEDGE_RAG, from: N_AGENT, to: N_KNOWLEDGE_STORE, label: "RAG semantic retrieval & working context (CoALA)", relation_kind: data_flow, polarity: positive, affects: "agent working-context grounding"}
   - {id: E_AGENT_TO_AGENT_A2A, from: N_AGENT, to: N_AGENT, label: "A2A multi-agent delegation & peer protocol", relation_kind: protocol_call, protocol_plane: a2a, polarity: positive, affects: "multi-agent task capacity"}
   - {id: E_AGENT_TO_OBSERVE, from: N_AGENT, to: N_OBSERVE, label: "Traces & LLM evaluation metrics", relation_kind: data_flow, polarity: positive, affects: "evaluation evidence"}
   - {id: E_OBSERVE_TO_ENT_FINOPS, from: N_OBSERVE, to: N_ENTERPRISE, label: "Real-time cost & token telemetry", relation_kind: data_flow, polarity: positive, affects: "enterprise cost visibility"}
   - {id: E_OBSERVE_TO_GOV, from: N_OBSERVE, to: N_AI_GOVERNANCE, label: "Evaluation results & incident telemetry", relation_kind: data_flow, polarity: positive, affects: "governance situational awareness"}
-  - {id: E_AGENT_TO_GATEWAY_A2T, from: N_AGENT, to: N_TOOL_GATEWAY, label: "A2T tool calling & context protocol (MCP / OpenAPI)", relation_kind: protocol_call, protocol_plane: a2t, polarity: positive, affects: "agent tool reach"}
-  - {id: E_GATEWAY_TO_TARGET, from: N_TOOL_GATEWAY, to: N_TARGET_SYS, label: "Authenticated operations execution", relation_kind: data_flow, polarity: positive, affects: "target system state (actuation)"}
+  - {id: E_AGENT_TO_GATEWAY_A2T, from: N_AGENT, to: N_TOOL_GATEWAY, label: "A2T tool calling & context protocol (MCP / OpenAPI)", relation_kind: protocol_call, protocol_plane: a2t, polarity: positive, affects: "agent tool reach", delay: immediate}
+  - {id: E_GATEWAY_TO_TARGET, from: N_TOOL_GATEWAY, to: N_TARGET_SYS, label: "Authenticated operations execution", relation_kind: data_flow, polarity: positive, affects: "target system state (actuation)", delay: immediate}
 
 # ===================================================================
 # FEEDBACK LOOPS
@@ -527,23 +583,33 @@ loops:
   - id: L_R1_CAPITAL_COMPUTE_FLYWHEEL
     label: "Capital-compute-valuation flywheel"
     loop_type: reinforcing
+    key_variable: "lab compute capacity and capital"
     loop_edges: [E_CAPITAL_TO_LAB, E_LAB_TO_TRAIN_CAPEX, E_TRAIN_TO_LAB_COMPUTE, E_LAB_TO_CAPITAL_RETURN]
     description: "Capital funds lab compute commitments; compute yields capability and valuation uplift, which attracts more capital. Drives concentration."
   - id: L_B1_OPEN_RELEASE_BRAKE
     label: "Open-release margin brake"
     loop_type: balancing
+    key_variable: "lab inference margin"
     loop_edges: [E_LAB_TO_OPEN_RELEASE, E_OPEN_DEFLATION_LAB]
     description: "Labs that release open weights seed commodity inference, which compresses their own premium margins."
   - id: L_B2_HARM_REGULATION
-    label: "Harm-redress-regulation loop"
+    label: "Harm-complaint-enforcement loop"
     loop_type: balancing
+    key_variable: "regulatory pressure on the enterprise"
     loop_edges: [E_TARGET_HARM_AFFECTED, E_AFFECTED_TO_REG_COMPLAINT, E_REG_TO_ENT, E_ENT_TO_GUARDRAIL, E_GUARDRAIL_TO_AGENT, E_AGENT_TO_GATEWAY_A2T, E_GATEWAY_TO_TARGET]
     description: "Harm triggers complaints and enforcement, the enterprise tightens guardrails, constraining agent actions on target systems."
   - id: L_B3_SOCIAL_LICENCE
     label: "Social-licence loop"
     loop_type: balancing
+    key_variable: "enterprise social licence"
     loop_edges: [E_TARGET_HARM_AFFECTED, E_AFFECTED_CHURN_ENT, E_ENT_TO_GUARDRAIL, E_GUARDRAIL_TO_AGENT, E_AGENT_TO_GATEWAY_A2T, E_GATEWAY_TO_TARGET]
     description: "Harm drives churn and reputational cost; the enterprise tightens guardrails without waiting for the regulator."
+  - id: L_B4_HARM_ALARM_POLICY
+    label: "Harm-alarm-policy loop"
+    loop_type: balancing
+    key_variable: "policy stringency"
+    loop_edges: [E_TARGET_HARM_AFFECTED, E_AFFECTED_TO_CIVIL, E_CIVIL_TO_LEG_ALARM, E_LEG_TO_REG_MANDATE, E_REG_TO_ENT, E_ENT_TO_GUARDRAIL, E_GUARDRAIL_TO_AGENT, E_AGENT_TO_GATEWAY_A2T, E_GATEWAY_TO_TARGET]
+    description: "Systemic harm reaches the legislature through the algedonic channel, widening mandates and enforcement. Slow, but it bypasses regulatory capture."
 
 # ===================================================================
 # VSM FRAMES (viewpoint-relative; unlisted nodes are environment or resource suppliers)
@@ -551,24 +617,27 @@ loops:
 frames:
   - id: F_ENTERPRISE
     label: "Enterprise AI operations (recursion level 0)"
-    description: "System-in-focus: one enterprise's AI-enabled operations. Frontier model, cloud, regulators and affected parties are environment."
+    description: "One enterprise's AI-enabled operations. The knowledge store is a resource of S1 and is not given a role."
+    system_boundary: "Inside: agents, controls, audit, observability, AI governance and the enterprise principal. Outside: model and cloud suppliers, regulators, courts, affected parties, adversaries."
+    viability_question: "Can the enterprise let agents act autonomously while keeping control, independent assurance, adaptation and a working alarm channel?"
     recursion_offset: 0
     roles:
-      - {node: N_AGENT, role: s1_operations, rationale: "Performs the primary operational activity"}
-      - {node: N_KNOWLEDGE_STORE, role: s1_operations, rationale: "Operational memory of the agent"}
-      - {node: N_TARGET_SYS, role: s1_operations, rationale: "Operational substrate where activity lands; source of algedonic signals"}
+      - {node: N_AGENT, role: s1_operations, rationale: "Performs the primary operational activity; stands for any number of S1 units, each recursively viable"}
+      - {node: N_TARGET_SYS, role: s1_operations, rationale: "Operational substrate where activity lands; source of algedonic signals. Debatable: could be treated as environment"}
       - {node: N_TOOL_GATEWAY, role: s2_coordination, rationale: "Arbitrates tool and protocol access across agents"}
       - {node: N_IDP, role: s2_coordination, rationale: "Arbitrates identity and delegation across agents"}
       - {node: N_GUARDRAIL, role: s3_control, rationale: "Operational control, scope enforcement, accountability"}
       - {node: N_AUDIT_STORE, role: s3_control, rationale: "Accountability record for S3"}
-      - {node: N_HUMAN_USER, role: s3_control, rationale: "Human oversight authority with override"}
+      - {node: N_HUMAN_USER, role: s3_control, rationale: "In its oversight capacity only: human override and supervision"}
       - {node: N_OBSERVE, role: s3_star_audit, rationale: "Independent probing outside the S3 command line"}
       - {node: N_AI_GOVERNANCE, role: s4_intelligence, rationale: "Scans models, vendors, regulation and incidents"}
       - {node: N_ENTERPRISE, role: s5_policy, rationale: "Legal principal; holds identity and ultimate policy"}
 
   - id: F_JURISDICTION
-    label: "Societal governance of AI deployment (recursion level +1)"
-    description: "System-in-focus: the jurisdictional meta-system governing AI deployment. Capital, silicon, energy, compute, data and adversaries are resource suppliers or environment; affected parties are the environment whose harm is the algedonic trigger."
+    label: "Global AI governance as a network of regimes (recursion level +1)"
+    description: "Treated as one meta-system of interacting regimes (EU, US, China, UK, APAC). Per-regime frames are a possible extension."
+    system_boundary: "Inside: deployers, providers and platforms, and the institutions that legislate, regulate, adjudicate, standardise, evaluate and audit them. Outside (resource suppliers or environment): capital, silicon, energy, compute, data, adversaries, affected populations, civil society."
+    viability_question: "Can the network of regimes sense harm, adapt policy and enforce it fast enough relative to the pace of AI deployment?"
     recursion_offset: 1
     roles:
       - {node: N_ENTERPRISE, role: s1_operations, rationale: "Deploys AI-enabled economic activity"}
@@ -576,10 +645,12 @@ frames:
       - {node: N_FRONTIER_LAB, role: s1_operations, rationale: "Produces frontier capability"}
       - {node: N_CLOUD_HYPERSCALER, role: s1_operations, rationale: "Provides platform capacity"}
       - {node: N_STANDARDS_BODY, role: s2_coordination, rationale: "Damps divergence via shared standards"}
-      - {node: N_INSURER, role: s3_control, rationale: "Market-based control through pricing and underwriting conditions"}
+      - {node: N_REGULATOR, role: s3_control, rationale: "Supervision and enforcement against the mandate"}
+      - {node: N_COURTS, role: s3_control, rationale: "Adjudication and redress; accountability for S1"}
+      - {node: N_INSURER, role: s3_control, rationale: "Market-based control supplementing the regulatory line, through pricing and underwriting conditions"}
       - {node: N_AUDITOR, role: s3_star_audit, rationale: "Independent conformity checks"}
       - {node: N_SAFETY_INSTITUTE, role: s4_intelligence, rationale: "Horizon scanning and capability evaluation"}
-      - {node: N_REGULATOR, role: s5_policy, rationale: "Statutory policy closure"}
+      - {node: N_LEGISLATURE, role: s5_policy, rationale: "Sets objectives and mandates; ultimate policy closure"}
 
 # ===================================================================
 # VIEWS (each is defined by the question it answers)
@@ -592,18 +663,18 @@ views:
     direction: lr
   - id: V_ENTERPRISE_VSM
     title: "Enterprise AI operation viability"
-    question: "Are all five VSM systems present, and is the algedonic channel intact, for one enterprise's AI operations?"
+    question: "Are all five VSM systems present and connected, and is the algedonic channel intact, for one enterprise's AI operations?"
     frame: F_ENTERPRISE
     direction: tb
   - id: V_SOCIETAL_VSM
     title: "Societal governance viability"
-    question: "Which governance functions exist at the jurisdiction level, and where are the gaps or single points of failure?"
+    question: "Which governance functions and channels exist at the regime level, and where are the gaps or single points of failure?"
     frame: F_JURISDICTION
     direction: tb
   - id: V_LIABILITY
-    title: "Liability and recourse"
+    title: "Harm, liability and recourse"
     question: "When an agent causes harm, who bears liability, and where does recourse break?"
-    relation_kinds: [liability_exposure, contractual_term, statutory_mandate, algedonic_signal]
+    relation_kinds: [impact, liability_exposure, contractual_term, statutory_mandate, algedonic_signal]
     direction: lr
   - id: V_PROTOCOL
     title: "Protocol planes and lock-in"
@@ -613,7 +684,7 @@ views:
   - id: V_FEEDBACK
     title: "Feedback structure"
     question: "Which loops drive concentration, and which provide correction?"
-    loops_shown: [L_R1_CAPITAL_COMPUTE_FLYWHEEL, L_B1_OPEN_RELEASE_BRAKE, L_B2_HARM_REGULATION, L_B3_SOCIAL_LICENCE]
+    loops_shown: [L_R1_CAPITAL_COMPUTE_FLYWHEEL, L_B1_OPEN_RELEASE_BRAKE, L_B2_HARM_REGULATION, L_B3_SOCIAL_LICENCE, L_B4_HARM_ALARM_POLICY]
     direction: lr
   - id: V_SECURITY
     title: "Adversarial surface"

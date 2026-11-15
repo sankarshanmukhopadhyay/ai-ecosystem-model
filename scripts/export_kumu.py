@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Kumu Dynamic Blueprint JSON Exporter for AI Ecosystem Model.
+Kumu Dynamic Blueprint JSON Exporter for AI Ecosystem Model (v3.1).
 Outputs: static/exports/ai_ecosystem_kumu.json
 Formats:
-  - Elements: Promotes Kind, VSM System, Recursion Level, Ashby Variety, and Jurisdiction to Kumu fields
-  - Connections: Preserves relation_kind, protocol_plane, polarity, power_asymmetry, and switching_cost
+  - Elements: Node Kind, VSM Roles (Enterprise & Societal), Ashby Variety, Evolution Stage, Jurisdictions, EU AI Act & NIST tags
+  - Connections: Semantic Relation Kind, Protocol Plane, Polarity, Affects, Normative Status, Delays, Power Asymmetry, Switching Costs
 """
 
 import sys
@@ -20,6 +20,22 @@ if sys.platform == "win32":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
+RELATION_DOMAINS = {
+    "commercial_flow": ["economic"],
+    "resource_supply": ["economic", "technical"],
+    "statutory_mandate": ["governance"],
+    "governance_control": ["governance"],
+    "liability_exposure": ["governance", "economic"],
+    "competitive_pressure": ["economic"],
+    "physical_constraint": ["technical", "economic"],
+    "impact": ["governance", "economic"],
+    "adversarial_attack": ["technical"],
+    "contractual_term": ["economic", "governance"],
+    "protocol_call": ["technical"],
+    "data_flow": ["technical"],
+    "algedonic_signal": ["governance", "technical"],
+}
 
 def to_title_header(snake_str):
     acronyms = {
@@ -44,6 +60,13 @@ def main():
 
     clusters_map = {c["id"]: c.get("label", c["id"]) for c in model.get("clusters", [])}
 
+    # Map VSM frame roles: (frame_id, node_id) -> role
+    vsm_role_map = {}
+    for frame in model.get("frames", []):
+        fid = frame.get("id")
+        for r in frame.get("roles", []):
+            vsm_role_map[(fid, r.get("node"))] = r.get("role")
+
     blueprint = {
         "elements": [],
         "connections": []
@@ -67,16 +90,16 @@ def main():
             "type": primary_domain,
             "description": n.get("sublabel", ""),
             "tags": domains,
-            "Kind": n.get("kind", "EconomicEntity"),
-            "VSM System": n.get("vsm_system", ""),
-            "VSM Recursion Level": n.get("vsm_recursion_level", ""),
-            "Jurisdiction": n.get("jurisdiction", "Global"),
+            "Kind": to_title_header(n.get("kind", "organisation")),
+            "VSM Enterprise": vsm_role_map.get(("F_ENTERPRISE", n["id"]), "Environment / Resource"),
+            "VSM Societal": vsm_role_map.get(("F_JURISDICTION", n["id"]), "Environment / Resource"),
+            "Jurisdictions": ", ".join(n.get("jurisdictions", ["global"])),
             "Ashby Variety": variety_str,
-            "EU AI Act Role": n.get("eu_ai_act_role") or "Not Specified",
-            "NIST Function": n.get("nist_function") or "Not Specified",
+            "EU AI Act Roles": ", ".join(n.get("eu_ai_act_roles", [])) or "None",
+            "NIST Functions": ", ".join(n.get("nist_functions", [])) or "None",
             "Cluster": cluster_name,
             "Cluster ID": cid,
-            "Evolution Stage": n.get("evolution_stage") or "Not Specified"
+            "Evolution Stage": n.get("evolution_stage") or "Not Applicable"
         }
 
         # Promote dynamic properties (e.g. compute_profile, capex_cycle, etc.)
@@ -90,6 +113,10 @@ def main():
         rkind = e.get("relation_kind", "data_flow")
         pplane = e.get("protocol_plane", "NONE")
         polarity = e.get("polarity", "neutral")
+        affects = e.get("affects", "")
+        normative = e.get("normative_status", "")
+        delay = e.get("delay", "")
+        edge_domains = RELATION_DOMAINS.get(rkind, [])
 
         connection = {
             "id": e.get("id", f"conn_{i}"),
@@ -98,10 +125,13 @@ def main():
             "label": e.get("label", ""),
             "type": rkind,
             "direction": "directed",
-            "tags": e.get("domains", []),
+            "tags": edge_domains,
             "Protocol Plane": pplane,
             "Polarity": polarity,
-            "description": f"Kind: {rkind} | Protocol: {pplane} | Polarity: {polarity}"
+            "Affects": affects or "None",
+            "Normative Status": normative or "None",
+            "Delay": delay or "Immediate",
+            "description": f"Kind: {rkind} | Polarity: {polarity}" + (f" | Affects: {affects}" if affects else "")
         }
 
         if "power_asymmetry" in e:
