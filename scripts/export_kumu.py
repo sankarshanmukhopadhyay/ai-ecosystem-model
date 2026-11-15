@@ -75,7 +75,8 @@ def main():
             "EU AI Act Role": n.get("eu_ai_act_role") or "Not Specified",
             "NIST Function": n.get("nist_function") or "Not Specified",
             "Cluster": cluster_name,
-            "Cluster ID": cid
+            "Cluster ID": cid,
+            "Evolution Stage": n.get("evolution_stage") or "Not Specified"
         }
 
         # Promote dynamic properties (e.g. compute_profile, capex_cycle, etc.)

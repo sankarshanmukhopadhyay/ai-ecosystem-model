@@ -1,16 +1,16 @@
 # yaml-language-server: $schema=../schema/ai_ecosystem.json
 metadata:
   title: "AI Ecosystem Canonical Governance, Economic & Architecture Model"
-  version: "2.9"
-  description: "Single-source-of-truth property graph integrating cognitive agent state (CoALA), cybernetic control (Beer's VSM Systems 1-5), standards bodies, safety institutes, physical semiconductor chokepoints, energy constraints, and market power asymmetry."
+  version: "2.10"
+  description: "Single-source-of-truth property graph integrating cognitive agent state (CoALA), cybernetic control (Beer's VSM Systems 1-5), standards bodies, safety institutes, physical semiconductor chokepoints, energy constraints, cloud hyperscalers, and Wardley evolution stages."
 
 clusters:
   - id: cluster_regulatory
     label: "0. Jurisdictional, Capital & Regulatory Sphere"
     description: "Statutory authorities, standards bodies, national safety institutes, underwriting insurers, and macro capital markets."
   - id: cluster_supply
-    label: "1. Upstream Foundation, Silicon & Energy Supply"
-    description: "Semiconductor lithography, energy grids, training mega-compute hubs, frontier labs, open commons, and platform absorption."
+    label: "1. Upstream Foundation, Silicon & Cloud Supply"
+    description: "Semiconductor lithography, energy grids, training mega-compute hubs, cloud hyperscalers, frontier labs, and open commons."
   - id: cluster_product
     label: "2. Specialized Product & Harness Domain (ISV / Custom Runtime)"
     description: "Vertical AI applications, continuous observability/evals, and autonomous runtime harnesses."
@@ -23,7 +23,7 @@ clusters:
 
 nodes:
   # ===================================================================
-  # Cluster 0: Regulatory & Oversight (Recursion Level n+1: Meta-System)
+  # Cluster 0: Regulatory & Oversight (Level n+1: Meta-System)
   # ===================================================================
   - id: N_REGULATOR
     label: "Market Surveillance & Trade Authorities"
@@ -31,11 +31,10 @@ nodes:
     cluster: cluster_regulatory
     domains: [governance]
     kind: StatutoryAuthority
+    evolution_stage: product
     vsm_system: S5_Policy
     vsm_recursion_level: Level_n_plus_1_Jurisdiction
     jurisdiction: Multi_Jurisdictional
-    eu_ai_act_role: Not_Applicable
-    nist_function: GOVERN
     cardinality_log10_min: 1.0
     cardinality_log10_max: 2.0
     cardinality_unit: jurisdictions
@@ -48,11 +47,10 @@ nodes:
     cluster: cluster_regulatory
     domains: [governance, technical]
     kind: StandardsConsortium
+    evolution_stage: commodity
     vsm_system: S2_Coordination
     vsm_recursion_level: Level_n_plus_1_Jurisdiction
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: MAP
     cardinality_log10_min: 1.0
     cardinality_log10_max: 1.5
     cardinality_unit: entities
@@ -66,11 +64,10 @@ nodes:
     cluster: cluster_regulatory
     domains: [governance, technical]
     kind: ForesightInstitute
+    evolution_stage: custom_built
     vsm_system: S4_Intelligence
     vsm_recursion_level: Level_n_plus_1_Jurisdiction
     jurisdiction: Multi_Jurisdictional
-    eu_ai_act_role: Not_Applicable
-    nist_function: MEASURE
     cardinality_log10_min: 1.0
     cardinality_log10_max: 1.5
     cardinality_unit: entities
@@ -84,11 +81,10 @@ nodes:
     cluster: cluster_regulatory
     domains: [governance]
     kind: StatutoryAuthority
+    evolution_stage: product
     vsm_system: S3_Star_Audit
     vsm_recursion_level: Level_n_plus_1_Jurisdiction
     jurisdiction: Multi_Jurisdictional
-    eu_ai_act_role: Not_Applicable
-    nist_function: MEASURE
     cardinality_log10_min: 2.0
     cardinality_log10_max: 3.0
     cardinality_unit: entities
@@ -101,11 +97,10 @@ nodes:
     cluster: cluster_regulatory
     domains: [economic, governance]
     kind: EconomicEntity
+    evolution_stage: product
     vsm_system: S3_Control
     vsm_recursion_level: Level_n_plus_1_Jurisdiction
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: MANAGE
     cardinality_log10_min: 2.0
     cardinality_log10_max: 3.0
     cardinality_unit: entities
@@ -118,11 +113,8 @@ nodes:
     cluster: cluster_regulatory
     domains: [economic]
     kind: EconomicEntity
-    vsm_system: S5_Policy
-    vsm_recursion_level: Level_n_plus_1_Jurisdiction
+    evolution_stage: commodity
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: GOVERN
     cardinality_log10_min: 2.0
     cardinality_log10_max: 3.0
     cardinality_unit: entities
@@ -130,7 +122,7 @@ nodes:
       financing_role: "Subsidizes CapEx overhang, silicon leases & nuclear PPAs"
 
   # ===================================================================
-  # Cluster 1: Upstream Foundation, Silicon & Energy Supply
+  # Cluster 1: Upstream Foundation, Silicon & Cloud Supply
   # ===================================================================
   - id: N_SILICON_CHOKEPOINT
     label: "Leading-Edge Silicon & Lithography"
@@ -138,11 +130,8 @@ nodes:
     cluster: cluster_supply
     domains: [economic, technical]
     kind: EconomicEntity
-    vsm_system: S1_Operations
-    vsm_recursion_level: Level_n_plus_1_Jurisdiction
+    evolution_stage: custom_built
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: MAP
     cardinality_log10_min: 0.0
     cardinality_log10_max: 1.0
     cardinality_unit: entities
@@ -156,11 +145,8 @@ nodes:
     cluster: cluster_supply
     domains: [economic, technical]
     kind: EconomicEntity
-    vsm_system: S1_Operations
-    vsm_recursion_level: Level_n_plus_1_Jurisdiction
+    evolution_stage: commodity
     jurisdiction: Multi_Jurisdictional
-    eu_ai_act_role: Not_Applicable
-    nist_function: MAP
     cardinality_log10_min: 2.0
     cardinality_log10_max: 3.0
     cardinality_unit: entities
@@ -169,16 +155,13 @@ nodes:
       environmental_impact: "Carbon intensity, baseline grid load, cooling water consumption"
 
   - id: N_TRAIN
-    label: "Training Supply Chain & Compute Campuses"
-    sublabel: "Mega-Data Centers, Cluster Fabric, Data Curators"
+    label: "Training Compute Campuses"
+    sublabel: "Mega-Data Centers, GW-Scale Cluster Fabric, Power Sub-stations"
     cluster: cluster_supply
     domains: [economic, technical]
     kind: EconomicEntity
-    vsm_system: S1_Operations
-    vsm_recursion_level: Level_n_plus_1_Jurisdiction
+    evolution_stage: product
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: MAP
     cardinality_log10_min: 1.0
     cardinality_log10_max: 1.3
     cardinality_unit: clusters
@@ -186,12 +169,28 @@ nodes:
       compute_profile: "Concentrated 50k-100k+ GPU clusters; GW-scale power"
       cost_type: "Fixed / Heavy CapEx ($600B Infrastructure Question)"
 
+  - id: N_CLOUD_HYPERSCALER
+    label: "Hyperscaler Cloud Platform"
+    sublabel: "Microsoft Azure, AWS, Google Cloud, OCI"
+    cluster: cluster_supply
+    domains: [economic, technical]
+    kind: EconomicEntity
+    evolution_stage: commodity
+    jurisdiction: Global
+    cardinality_log10_min: 0.5
+    cardinality_log10_max: 0.8
+    cardinality_unit: entities
+    properties:
+      market_role: "Vertical aggregator providing compute tenancy, hosted foundation models, and enterprise IAM fabric"
+      lock_in_mechanism: "Data egress fees, committed spend discounts (MACC), sovereign cloud zones"
+
   - id: N_FRONTIER
     label: "Frontier Foundation Model"
     sublabel: "Globally Replicated Weights & Inference Fleets"
     cluster: cluster_supply
     domains: [economic, technical, governance]
     kind: SoftwareService
+    evolution_stage: product
     vsm_system: S1_Operations
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
@@ -210,8 +209,7 @@ nodes:
     cluster: cluster_supply
     domains: [economic, technical]
     kind: SoftwareService
-    vsm_system: S4_Intelligence
-    vsm_recursion_level: Level_n_Enterprise
+    evolution_stage: commodity
     jurisdiction: Global
     eu_ai_act_role: Provider_GPAI
     nist_function: MAP
@@ -223,20 +221,17 @@ nodes:
 
   - id: N_ABSORBED
     label: "Platform Absorption Zone"
-    sublabel: "Native Tools, Prompt Cache, Hosted State"
+    sublabel: "Native Tools, Prompt Cache, Hosted State (a16z Stack)"
     cluster: cluster_supply
     domains: [economic, technical]
     kind: EconomicEntity
-    vsm_system: ENVIRONMENT
-    vsm_recursion_level: Level_n_Enterprise
+    evolution_stage: commodity
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
-    nist_function: NOT_APPLICABLE
     cardinality_log10_min: 0.5
     cardinality_log10_max: 0.8
     cardinality_unit: entities
     properties:
-      market_effect: "Feature commoditization of wrapper ISVs (a16z Stack)"
+      market_effect: "Feature commoditization of wrapper ISVs into native cloud/model APIs"
 
   # ===================================================================
   # Cluster 2: Specialized Product & Harness Domain (ISV / Custom)
@@ -247,8 +242,7 @@ nodes:
     cluster: cluster_product
     domains: [economic, technical]
     kind: SoftwareService
-    vsm_system: S4_Intelligence
-    vsm_recursion_level: Level_n_Enterprise
+    evolution_stage: product
     jurisdiction: Global
     eu_ai_act_role: Provider_System
     nist_function: MAP
@@ -264,10 +258,10 @@ nodes:
     cluster: cluster_product
     domains: [technical, governance]
     kind: DeterministicGate
+    evolution_stage: product
     vsm_system: S3_Control
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MANAGE
     cardinality_log10_min: 7.0
     cardinality_log10_max: 9.0
@@ -282,10 +276,10 @@ nodes:
     cluster: cluster_product
     domains: [technical, governance]
     kind: StateStore
+    evolution_stage: product
     vsm_system: S3_Control
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MEASURE
     cardinality_log10_min: 4.0
     cardinality_log10_max: 5.0
@@ -299,10 +293,10 @@ nodes:
     cluster: cluster_product
     domains: [technical, governance, economic]
     kind: SoftwareService
+    evolution_stage: product
     vsm_system: S3_Star_Audit
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MEASURE
     cardinality_log10_min: 4.0
     cardinality_log10_max: 5.0
@@ -319,6 +313,7 @@ nodes:
     cluster: cluster_client
     domains: [economic, governance]
     kind: EconomicEntity
+    evolution_stage: custom_built
     vsm_system: S5_Policy
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Multi_Jurisdictional
@@ -336,10 +331,10 @@ nodes:
     cluster: cluster_client
     domains: [technical, governance]
     kind: SecurityAuthority
+    evolution_stage: commodity
     vsm_system: S2_Coordination
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MANAGE
     cardinality_log10_min: 5.0
     cardinality_log10_max: 6.0
@@ -353,10 +348,10 @@ nodes:
     cluster: cluster_client
     domains: [technical, governance]
     kind: StateStore
+    evolution_stage: custom_built
     vsm_system: S1_Operations
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MAP
     cardinality_log10_min: 5.0
     cardinality_log10_max: 6.0
@@ -370,10 +365,10 @@ nodes:
     cluster: cluster_client
     domains: [technical, governance]
     kind: NaturalPerson
+    evolution_stage: custom_built
     vsm_system: S5_Policy
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Deployer
     nist_function: GOVERN
     cardinality_log10_min: 7.0
     cardinality_log10_max: 8.5
@@ -390,10 +385,10 @@ nodes:
     cluster: cluster_environment
     domains: [technical, governance]
     kind: DeterministicGate
+    evolution_stage: product
     vsm_system: S2_Coordination
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MANAGE
     cardinality_log10_min: 4.0
     cardinality_log10_max: 5.0
@@ -407,10 +402,10 @@ nodes:
     cluster: cluster_environment
     domains: [technical, governance]
     kind: StateStore
+    evolution_stage: custom_built
     vsm_system: S1_Operations
     vsm_recursion_level: Level_n_Enterprise
     jurisdiction: Global
-    eu_ai_act_role: Not_Applicable
     nist_function: MANAGE
     cardinality_log10_min: 6.0
     cardinality_log10_max: 7.0
@@ -424,11 +419,9 @@ nodes:
     cluster: cluster_environment
     domains: [governance]
     kind: NaturalPerson
-    vsm_system: ENVIRONMENT
-    vsm_recursion_level: Level_n_plus_1_Jurisdiction
+    evolution_stage: custom_built
     jurisdiction: Global
     eu_ai_act_role: Affected_Subject
-    nist_function: NOT_APPLICABLE
     cardinality_log10_min: 9.0
     cardinality_log10_max: 10.0
     cardinality_unit: natural_persons
@@ -440,7 +433,7 @@ nodes:
 # ===================================================================
 edges:
   # ==========================================
-  # 0. Physical Silicon & Energy Supply Edges
+  # 0. Physical Silicon, Energy & Cloud Edges
   # ==========================================
   - id: E_CAPITAL_TO_SILICON
     from: N_CAPITAL
@@ -489,9 +482,29 @@ edges:
     to: N_TRAIN
     label: "Physical GW Power & Transformer Bottleneck"
     domains: [economic, technical]
-    relation_kind: liability_exposure
+    relation_kind: physical_constraint
     protocol_plane: NONE
     polarity: negative
+
+  - id: E_TRAIN_TO_CLOUD
+    from: N_TRAIN
+    to: N_CLOUD_HYPERSCALER
+    label: "Compute Cluster Hosting & Bare-Metal Capacity"
+    domains: [economic, technical]
+    relation_kind: commercial_flow
+    protocol_plane: NONE
+    polarity: positive
+    power_asymmetry: balanced
+    switching_cost: high
+
+  - id: E_CLOUD_TO_FRONTIER
+    from: N_CLOUD_HYPERSCALER
+    to: N_FRONTIER
+    label: "Hyperscale Inference Fleet Orchestration"
+    domains: [technical]
+    relation_kind: data_flow
+    protocol_plane: NONE
+    polarity: positive
 
   # ==========================================
   # 1. Standards & Macro Foresight Edges
@@ -557,6 +570,17 @@ edges:
     power_asymmetry: balanced
     switching_cost: high
 
+  - id: E_ENT_TO_CLOUD
+    from: N_ENTERPRISE
+    to: N_CLOUD_HYPERSCALER
+    label: "$$$ Cloud Spend Commitments (MACC) & Enterprise Tenancy"
+    domains: [economic]
+    relation_kind: commercial_flow
+    protocol_plane: NONE
+    polarity: positive
+    power_asymmetry: supplier_dominant
+    switching_cost: high
+
   - id: E_ENT_TO_ISV_SUB
     from: N_ENTERPRISE
     to: N_ISV_PRODUCT
@@ -606,7 +630,7 @@ edges:
     to: N_ISV_PRODUCT
     label: "Platform Commoditization Pressure (a16z Stack)"
     domains: [economic]
-    relation_kind: liability_exposure
+    relation_kind: competitive_pressure
     protocol_plane: NONE
     polarity: negative
     power_asymmetry: captive
@@ -626,7 +650,7 @@ edges:
     to: N_FRONTIER
     label: "Inference Price Deflation & Compression"
     domains: [economic]
-    relation_kind: liability_exposure
+    relation_kind: competitive_pressure
     protocol_plane: NONE
     polarity: negative
 
@@ -696,6 +720,17 @@ edges:
     protocol_plane: NONE
     polarity: positive
 
+  - id: E_AFFECTED_TO_ENT_CHURN
+    from: N_AFFECTED_PARTY
+    to: N_ENTERPRISE
+    label: "Market Resistance, Consumer Churn & Social License Revocation"
+    domains: [economic, governance]
+    relation_kind: competitive_pressure
+    protocol_plane: NONE
+    polarity: negative
+    power_asymmetry: buyer_dominant
+    switching_cost: low
+
   - id: E_ENT_TO_HARNESS_DELEGATION
     from: N_ENTERPRISE
     to: N_HARNESS
@@ -749,17 +784,6 @@ edges:
     relation_kind: liability_exposure
     protocol_plane: NONE
     polarity: negative
-
-  - id: E_AFFECTED_TO_ENT_CHURN
-    from: N_AFFECTED_PARTY
-    to: N_ENTERPRISE
-    label: "Market Resistance, Consumer Churn & Social License Revocation"
-    domains: [economic, governance]
-    relation_kind: liability_exposure
-    protocol_plane: NONE
-    polarity: negative
-    power_asymmetry: buyer_dominant
-    switching_cost: low
 
   # ===================================================================
   # 4. Cybernetic Control Channels (VSM S3* Audit & Algedonic Alarm)

@@ -8,6 +8,7 @@
   <key for="node" id="d_domains" attr.name="domains" attr.type="string"/>
   <key for="node" id="d_kind" attr.name="kind" attr.type="string"/>
   <key for="node" id="d_sublabel" attr.name="sublabel" attr.type="string"/>
+  <key for="node" id="d_evolution" attr.name="evolution_stage" attr.type="string"/>
   <key for="node" id="d_vsm" attr.name="vsm_system" attr.type="string"/>
   <key for="node" id="d_vsm_rec" attr.name="vsm_recursion_level" attr.type="string"/>
   <key for="node" id="d_jurisdiction" attr.name="jurisdiction" attr.type="string"/>
@@ -31,8 +32,10 @@
   <key for="node" id="d_prop_iso_42001_role" attr.name="iso_42001_role" attr.type="string"/>
   <key for="node" id="d_prop_legal_standing" attr.name="legal_standing" attr.type="string"/>
   <key for="node" id="d_prop_liability_posture" attr.name="liability_posture" attr.type="string"/>
+  <key for="node" id="d_prop_lock_in_mechanism" attr.name="lock_in_mechanism" attr.type="string"/>
   <key for="node" id="d_prop_margin_exposure" attr.name="margin_exposure" attr.type="string"/>
   <key for="node" id="d_prop_market_effect" attr.name="market_effect" attr.type="string"/>
+  <key for="node" id="d_prop_market_role" attr.name="market_role" attr.type="string"/>
   <key for="node" id="d_prop_physical_bottleneck" attr.name="physical_bottleneck" attr.type="string"/>
   <key for="node" id="d_prop_pricing_model" attr.name="pricing_model" attr.type="string"/>
   <key for="node" id="d_prop_red_team_role" attr.name="red_team_role" attr.type="string"/>
@@ -71,11 +74,12 @@
           <data key="d_domains">governance</data>
           <data key="d_kind">StatutoryAuthority</data>
           <data key="d_sublabel">EU AI Office, FTC, BIS Export Controls, DPAs, Courts</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S5_Policy</data>
           <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
           <data key="d_jurisdiction">Multi_Jurisdictional</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">GOVERN</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">1.0</data>
           <data key="d_card_max">2.0</data>
           <data key="d_card_unit">jurisdictions</data>
@@ -96,11 +100,12 @@
           <data key="d_domains">governance, technical</data>
           <data key="d_kind">StandardsConsortium</data>
           <data key="d_sublabel">ISO/IEC JTC 1/SC 42, NIST, CEN-CENELEC, IEEE</data>
+          <data key="d_evolution">commodity</data>
           <data key="d_vsm">S2_Coordination</data>
           <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MAP</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">1.0</data>
           <data key="d_card_max">1.5</data>
           <data key="d_card_unit">entities</data>
@@ -122,11 +127,12 @@
           <data key="d_domains">governance, technical</data>
           <data key="d_kind">ForesightInstitute</data>
           <data key="d_sublabel">US AISI, UK AISI, Japan AISI, Frontier Evaluators</data>
+          <data key="d_evolution">custom_built</data>
           <data key="d_vsm">S4_Intelligence</data>
           <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
           <data key="d_jurisdiction">Multi_Jurisdictional</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MEASURE</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">1.0</data>
           <data key="d_card_max">1.5</data>
           <data key="d_card_unit">entities</data>
@@ -148,11 +154,12 @@
           <data key="d_domains">governance</data>
           <data key="d_kind">StatutoryAuthority</data>
           <data key="d_sublabel">Notified Bodies, ISO/IEC 42001 Certifiers</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S3_Star_Audit</data>
           <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
           <data key="d_jurisdiction">Multi_Jurisdictional</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MEASURE</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">2.0</data>
           <data key="d_card_max">3.0</data>
           <data key="d_card_unit">entities</data>
@@ -173,11 +180,12 @@
           <data key="d_domains">economic, governance</data>
           <data key="d_kind">EconomicEntity</data>
           <data key="d_sublabel">Algorithmic Liability &amp; Cyber Risk Carrier</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S3_Control</data>
           <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MANAGE</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">2.0</data>
           <data key="d_card_max">3.0</data>
           <data key="d_card_unit">entities</data>
@@ -198,11 +206,12 @@
           <data key="d_domains">economic</data>
           <data key="d_kind">EconomicEntity</data>
           <data key="d_sublabel">VC Syndicates, Hyperscaler Equity &amp; Sovereign Wealth</data>
-          <data key="d_vsm">S5_Policy</data>
-          <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
+          <data key="d_evolution">commodity</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">GOVERN</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">2.0</data>
           <data key="d_card_max">3.0</data>
           <data key="d_card_unit">entities</data>
@@ -228,7 +237,7 @@
               <y:Geometry width="280" height="350"/>
               <y:Fill color="#F8FAFC" transparent="false"/>
               <y:BorderStyle color="#CBD5E1" type="line" width="1.5"/>
-              <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#E2E8F0" fontSize="12" fontStyle="bold" modelName="internal" modelPosition="t">1. Upstream Foundation, Silicon &amp; Energy Supply</y:NodeLabel>
+              <y:NodeLabel alignment="right" autoSizePolicy="node_width" backgroundColor="#E2E8F0" fontSize="12" fontStyle="bold" modelName="internal" modelPosition="t">1. Upstream Foundation, Silicon &amp; Cloud Supply</y:NodeLabel>
               <y:Shape type="roundrectangle"/>
               <y:State closed="false"/>
             </y:GroupNode>
@@ -241,11 +250,12 @@
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">EconomicEntity</data>
           <data key="d_sublabel">ASML (EUV), TSMC (Foundry), Nvidia, HBM Memory</data>
-          <data key="d_vsm">S1_Operations</data>
-          <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
+          <data key="d_evolution">custom_built</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MAP</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">0.0</data>
           <data key="d_card_max">1.0</data>
           <data key="d_card_unit">entities</data>
@@ -267,11 +277,12 @@
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">EconomicEntity</data>
           <data key="d_sublabel">Nuclear PPAs, Substation Transformers, Cooling</data>
-          <data key="d_vsm">S1_Operations</data>
-          <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
+          <data key="d_evolution">commodity</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Multi_Jurisdictional</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MAP</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">2.0</data>
           <data key="d_card_max">3.0</data>
           <data key="d_card_unit">entities</data>
@@ -292,12 +303,13 @@
           <data key="d_cluster">cluster_supply</data>
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">EconomicEntity</data>
-          <data key="d_sublabel">Mega-Data Centers, Cluster Fabric, Data Curators</data>
-          <data key="d_vsm">S1_Operations</data>
-          <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
+          <data key="d_sublabel">Mega-Data Centers, GW-Scale Cluster Fabric, Power Sub-stations</data>
+          <data key="d_evolution">product</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">MAP</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">1.0</data>
           <data key="d_card_max">1.3</data>
           <data key="d_card_unit">clusters</data>
@@ -308,8 +320,35 @@
               <y:Geometry width="230" height="75"/>
               <y:Fill color="#F6FFED" transparent="false"/>
               <y:BorderStyle color="#52C41A" type="line" width="2.0"/>
-              <y:NodeLabel alignment="center" autoSizePolicy="content">Training Supply Chain &amp; Compute Campuses
-(Mega-Data Centers, Cluster Fabric, Data Curators)</y:NodeLabel>
+              <y:NodeLabel alignment="center" autoSizePolicy="content">Training Compute Campuses
+(Mega-Data Centers, GW-Scale Cluster Fabric, Power Sub-stations)</y:NodeLabel>
+              <y:Shape type="rectangle"/>
+            </y:ShapeNode>
+          </data>
+        </node>
+        <node id="N_CLOUD_HYPERSCALER">
+          <data key="d_cluster">cluster_supply</data>
+          <data key="d_domains">economic, technical</data>
+          <data key="d_kind">EconomicEntity</data>
+          <data key="d_sublabel">Microsoft Azure, AWS, Google Cloud, OCI</data>
+          <data key="d_evolution">commodity</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
+          <data key="d_jurisdiction">Global</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
+          <data key="d_card_min">0.5</data>
+          <data key="d_card_max">0.8</data>
+          <data key="d_card_unit">entities</data>
+          <data key="d_prop_lock_in_mechanism">Data egress fees, committed spend discounts (MACC), sovereign cloud zones</data>
+          <data key="d_prop_market_role">Vertical aggregator providing compute tenancy, hosted foundation models, and enterprise IAM fabric</data>
+          <data key="d_graphics">
+            <y:ShapeNode>
+              <y:Geometry width="230" height="75"/>
+              <y:Fill color="#F6FFED" transparent="false"/>
+              <y:BorderStyle color="#52C41A" type="line" width="2.0"/>
+              <y:NodeLabel alignment="center" autoSizePolicy="content">Hyperscaler Cloud Platform
+(Microsoft Azure, AWS, Google Cloud, OCI)</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -319,6 +358,7 @@
           <data key="d_domains">economic, technical, governance</data>
           <data key="d_kind">SoftwareService</data>
           <data key="d_sublabel">Globally Replicated Weights &amp; Inference Fleets</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S1_Operations</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
@@ -345,8 +385,9 @@
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">SoftwareService</data>
           <data key="d_sublabel">Commoditized Weights, Distilled Checkpoints &amp; Local Runtimes</data>
-          <data key="d_vsm">S4_Intelligence</data>
-          <data key="d_vsm_rec">Level_n_Enterprise</data>
+          <data key="d_evolution">commodity</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
           <data key="d_eu_role">Provider_GPAI</data>
           <data key="d_nist">MAP</data>
@@ -369,23 +410,24 @@
           <data key="d_cluster">cluster_supply</data>
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">EconomicEntity</data>
-          <data key="d_sublabel">Native Tools, Prompt Cache, Hosted State</data>
-          <data key="d_vsm">ENVIRONMENT</data>
-          <data key="d_vsm_rec">Level_n_Enterprise</data>
+          <data key="d_sublabel">Native Tools, Prompt Cache, Hosted State (a16z Stack)</data>
+          <data key="d_evolution">commodity</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
-          <data key="d_nist">NOT_APPLICABLE</data>
+          <data key="d_eu_role"></data>
+          <data key="d_nist"></data>
           <data key="d_card_min">0.5</data>
           <data key="d_card_max">0.8</data>
           <data key="d_card_unit">entities</data>
-          <data key="d_prop_market_effect">Feature commoditization of wrapper ISVs (a16z Stack)</data>
+          <data key="d_prop_market_effect">Feature commoditization of wrapper ISVs into native cloud/model APIs</data>
           <data key="d_graphics">
             <y:ShapeNode>
               <y:Geometry width="230" height="75"/>
               <y:Fill color="#F6FFED" transparent="false"/>
               <y:BorderStyle color="#52C41A" type="line" width="2.0"/>
               <y:NodeLabel alignment="center" autoSizePolicy="content">Platform Absorption Zone
-(Native Tools, Prompt Cache, Hosted State)</y:NodeLabel>
+(Native Tools, Prompt Cache, Hosted State (a16z Stack))</y:NodeLabel>
               <y:Shape type="rectangle"/>
             </y:ShapeNode>
           </data>
@@ -413,8 +455,9 @@
           <data key="d_domains">economic, technical</data>
           <data key="d_kind">SoftwareService</data>
           <data key="d_sublabel">Vertical Solutions (Legal, Medical, Finance, Ops)</data>
-          <data key="d_vsm">S4_Intelligence</data>
-          <data key="d_vsm_rec">Level_n_Enterprise</data>
+          <data key="d_evolution">product</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
           <data key="d_eu_role">Provider_System</data>
           <data key="d_nist">MAP</data>
@@ -438,10 +481,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">DeterministicGate</data>
           <data key="d_sublabel">Execution Loop, Planning, Rights &amp; Guardrails</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S3_Control</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MANAGE</data>
           <data key="d_card_min">7.0</data>
           <data key="d_card_max">9.0</data>
@@ -464,10 +508,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">StateStore</data>
           <data key="d_sublabel">Tamper-Evident WORM State &amp; Forensic Store</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S3_Control</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MEASURE</data>
           <data key="d_card_min">4.0</data>
           <data key="d_card_max">5.0</data>
@@ -489,10 +534,11 @@
           <data key="d_domains">technical, governance, economic</data>
           <data key="d_kind">SoftwareService</data>
           <data key="d_sublabel">Continuous Evaluation, Traces &amp; Cost Telemetry</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S3_Star_Audit</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MEASURE</data>
           <data key="d_card_min">4.0</data>
           <data key="d_card_max">5.0</data>
@@ -532,6 +578,7 @@
           <data key="d_domains">economic, governance</data>
           <data key="d_kind">EconomicEntity</data>
           <data key="d_sublabel">Legal Principal &amp; Economic Sponsor</data>
+          <data key="d_evolution">custom_built</data>
           <data key="d_vsm">S5_Policy</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Multi_Jurisdictional</data>
@@ -557,10 +604,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">SecurityAuthority</data>
           <data key="d_sublabel">OAuth, OIDC, Workload IAM &amp; Ephemeral Tokens</data>
+          <data key="d_evolution">commodity</data>
           <data key="d_vsm">S2_Coordination</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MANAGE</data>
           <data key="d_card_min">5.0</data>
           <data key="d_card_max">6.0</data>
@@ -582,10 +630,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">StateStore</data>
           <data key="d_sublabel">Proprietary Vector DBs, Documents &amp; Embeddings</data>
+          <data key="d_evolution">custom_built</data>
           <data key="d_vsm">S1_Operations</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MAP</data>
           <data key="d_card_min">5.0</data>
           <data key="d_card_max">6.0</data>
@@ -607,10 +656,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">NaturalPerson</data>
           <data key="d_sublabel">End User / Mandatory HITL Supervisor</data>
+          <data key="d_evolution">custom_built</data>
           <data key="d_vsm">S5_Policy</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Deployer</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">GOVERN</data>
           <data key="d_card_min">7.0</data>
           <data key="d_card_max">8.5</data>
@@ -650,10 +700,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">DeterministicGate</data>
           <data key="d_sublabel">Decoupled Tool Broker &amp; Context Provider (MCP)</data>
+          <data key="d_evolution">product</data>
           <data key="d_vsm">S2_Coordination</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MANAGE</data>
           <data key="d_card_min">4.0</data>
           <data key="d_card_max">5.0</data>
@@ -675,10 +726,11 @@
           <data key="d_domains">technical, governance</data>
           <data key="d_kind">StateStore</data>
           <data key="d_sublabel">Databases, Production ERP, Financial Rails</data>
+          <data key="d_evolution">custom_built</data>
           <data key="d_vsm">S1_Operations</data>
           <data key="d_vsm_rec">Level_n_Enterprise</data>
           <data key="d_jurisdiction">Global</data>
-          <data key="d_eu_role">Not_Applicable</data>
+          <data key="d_eu_role"></data>
           <data key="d_nist">MANAGE</data>
           <data key="d_card_min">6.0</data>
           <data key="d_card_max">7.0</data>
@@ -700,11 +752,12 @@
           <data key="d_domains">governance</data>
           <data key="d_kind">NaturalPerson</data>
           <data key="d_sublabel">Consumers, Employees, Citizens</data>
-          <data key="d_vsm">ENVIRONMENT</data>
-          <data key="d_vsm_rec">Level_n_plus_1_Jurisdiction</data>
+          <data key="d_evolution">custom_built</data>
+          <data key="d_vsm"></data>
+          <data key="d_vsm_rec"></data>
           <data key="d_jurisdiction">Global</data>
           <data key="d_eu_role">Affected_Subject</data>
-          <data key="d_nist">NOT_APPLICABLE</data>
+          <data key="d_nist"></data>
           <data key="d_card_min">9.0</data>
           <data key="d_card_max">10.0</data>
           <data key="d_card_unit">natural_persons</data>
@@ -789,16 +842,48 @@
     <edge id="E_ENERGY_TO_TRAIN_CONSTRAINT" source="N_ENERGY_GRID" target="N_TRAIN">
       <data key="d_edge_id">E_ENERGY_TO_TRAIN_CONSTRAINT</data>
       <data key="d_edge_domains">economic, technical</data>
-      <data key="d_edge_relation_kind">liability_exposure</data>
+      <data key="d_edge_relation_kind">physical_constraint</data>
       <data key="d_edge_protocol_plane">NONE</data>
       <data key="d_edge_polarity">negative</data>
       <data key="d_edge_asym"></data>
       <data key="d_edge_scost"></data>
       <data key="d_edge_graphics">
         <y:PolyLineEdge>
-          <y:LineStyle color="#DC2626" type="dashed" width="2.0"/>
+          <y:LineStyle color="#7C3AED" type="line" width="2.5"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Physical GW Power &amp; Transformer Bottleneck</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_TRAIN_TO_CLOUD" source="N_TRAIN" target="N_CLOUD_HYPERSCALER">
+      <data key="d_edge_id">E_TRAIN_TO_CLOUD</data>
+      <data key="d_edge_domains">economic, technical</data>
+      <data key="d_edge_relation_kind">commercial_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_asym">balanced</data>
+      <data key="d_edge_scost">high</data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#16A34A" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Compute Cluster Hosting &amp; Bare-Metal Capacity</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_CLOUD_TO_FRONTIER" source="N_CLOUD_HYPERSCALER" target="N_FRONTIER">
+      <data key="d_edge_id">E_CLOUD_TO_FRONTIER</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">data_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#64748B" type="line" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Hyperscale Inference Fleet Orchestration</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>
@@ -898,6 +983,22 @@
         </y:PolyLineEdge>
       </data>
     </edge>
+    <edge id="E_ENT_TO_CLOUD" source="N_ENTERPRISE" target="N_CLOUD_HYPERSCALER">
+      <data key="d_edge_id">E_ENT_TO_CLOUD</data>
+      <data key="d_edge_domains">economic</data>
+      <data key="d_edge_relation_kind">commercial_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_asym">supplier_dominant</data>
+      <data key="d_edge_scost">high</data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#16A34A" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">$$$ Cloud Spend Commitments (MACC) &amp; Enterprise Tenancy</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
     <edge id="E_ENT_TO_ISV_SUB" source="N_ENTERPRISE" target="N_ISV_PRODUCT">
       <data key="d_edge_id">E_ENT_TO_ISV_SUB</data>
       <data key="d_edge_domains">economic</data>
@@ -965,14 +1066,14 @@
     <edge id="E_ABSORBED_TENSION_ISV" source="N_ABSORBED" target="N_ISV_PRODUCT">
       <data key="d_edge_id">E_ABSORBED_TENSION_ISV</data>
       <data key="d_edge_domains">economic</data>
-      <data key="d_edge_relation_kind">liability_exposure</data>
+      <data key="d_edge_relation_kind">competitive_pressure</data>
       <data key="d_edge_protocol_plane">NONE</data>
       <data key="d_edge_polarity">negative</data>
       <data key="d_edge_asym">captive</data>
       <data key="d_edge_scost">prohibitive</data>
       <data key="d_edge_graphics">
         <y:PolyLineEdge>
-          <y:LineStyle color="#DC2626" type="dashed" width="2.0"/>
+          <y:LineStyle color="#D97706" type="dashed" width="2.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Platform Commoditization Pressure (a16z Stack)</y:EdgeLabel>
         </y:PolyLineEdge>
@@ -997,14 +1098,14 @@
     <edge id="E_OPEN_DEFLATION_FRONTIER" source="N_OPEN_MODEL" target="N_FRONTIER">
       <data key="d_edge_id">E_OPEN_DEFLATION_FRONTIER</data>
       <data key="d_edge_domains">economic</data>
-      <data key="d_edge_relation_kind">liability_exposure</data>
+      <data key="d_edge_relation_kind">competitive_pressure</data>
       <data key="d_edge_protocol_plane">NONE</data>
       <data key="d_edge_polarity">negative</data>
       <data key="d_edge_asym"></data>
       <data key="d_edge_scost"></data>
       <data key="d_edge_graphics">
         <y:PolyLineEdge>
-          <y:LineStyle color="#DC2626" type="dashed" width="2.0"/>
+          <y:LineStyle color="#D97706" type="dashed" width="2.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Inference Price Deflation &amp; Compression</y:EdgeLabel>
         </y:PolyLineEdge>
@@ -1122,6 +1223,22 @@
         </y:PolyLineEdge>
       </data>
     </edge>
+    <edge id="E_AFFECTED_TO_ENT_CHURN" source="N_AFFECTED_PARTY" target="N_ENTERPRISE">
+      <data key="d_edge_id">E_AFFECTED_TO_ENT_CHURN</data>
+      <data key="d_edge_domains">economic, governance</data>
+      <data key="d_edge_relation_kind">competitive_pressure</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">negative</data>
+      <data key="d_edge_asym">buyer_dominant</data>
+      <data key="d_edge_scost">low</data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#D97706" type="dashed" width="2.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Market Resistance, Consumer Churn &amp; Social License Revocation</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
     <edge id="E_ENT_TO_HARNESS_DELEGATION" source="N_ENTERPRISE" target="N_HARNESS">
       <data key="d_edge_id">E_ENT_TO_HARNESS_DELEGATION</data>
       <data key="d_edge_domains">governance</data>
@@ -1215,22 +1332,6 @@
           <y:LineStyle color="#DC2626" type="dashed" width="2.0"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Direct Impact &amp; Real-World Blast Radius</y:EdgeLabel>
-        </y:PolyLineEdge>
-      </data>
-    </edge>
-    <edge id="E_AFFECTED_TO_ENT_CHURN" source="N_AFFECTED_PARTY" target="N_ENTERPRISE">
-      <data key="d_edge_id">E_AFFECTED_TO_ENT_CHURN</data>
-      <data key="d_edge_domains">economic, governance</data>
-      <data key="d_edge_relation_kind">liability_exposure</data>
-      <data key="d_edge_protocol_plane">NONE</data>
-      <data key="d_edge_polarity">negative</data>
-      <data key="d_edge_asym">buyer_dominant</data>
-      <data key="d_edge_scost">low</data>
-      <data key="d_edge_graphics">
-        <y:PolyLineEdge>
-          <y:LineStyle color="#DC2626" type="dashed" width="2.0"/>
-          <y:Arrows source="none" target="standard"/>
-          <y:EdgeLabel alignment="center">Market Resistance, Consumer Churn &amp; Social License Revocation</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>

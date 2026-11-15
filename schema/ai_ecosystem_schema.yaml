@@ -1,8 +1,8 @@
 id: https://w3id.org/ai-ecosystem/schema
 name: ai_ecosystem_schema
 title: AI Ecosystem Metamodel Specification
-description: Formal schema defining nodes, edges, clusters, regulatory roles, cybernetic systems, and protocol planes.
-version: "2.2.0"
+description: Formal schema defining nodes, edges, clusters, regulatory roles, cybernetic systems, protocol planes, and Wardley evolution stages.
+version: "2.3.0"
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -54,6 +54,7 @@ classes:
       - cluster
       - domains
       - kind
+      - evolution_stage
       - vsm_system
       - vsm_recursion_level
       - jurisdiction
@@ -74,12 +75,15 @@ classes:
       kind:
         range: NodeKindEnum
         required: true
+      evolution_stage:
+        range: EvolutionStageEnum
+        required: false
       vsm_system:
         range: VSMSystemEnum
-        required: true
+        required: false
       vsm_recursion_level:
         range: VSMRecursionLevelEnum
-        required: true
+        required: false
       jurisdiction:
         range: JurisdictionEnum
         required: false
@@ -190,6 +194,8 @@ slots:
     range: DirectionEnum
   kind:
     range: NodeKindEnum
+  evolution_stage:
+    range: EvolutionStageEnum
   vsm_system:
     range: VSMSystemEnum
   vsm_recursion_level:
@@ -258,6 +264,17 @@ enums:
       technical: {}
       governance: {}
 
+  EvolutionStageEnum:
+    permissible_values:
+      genesis:
+        description: "Novel, experimental, unproven concepts with high uncertainty."
+      custom_built:
+        description: "Bespoke, highly differentiated implementations or rare capital assets."
+      product:
+        description: "Standardized, commercialized off-the-shelf software or hardware products."
+      commodity:
+        description: "Ubiquitous, low-margin utilities or open commons (zero marginal cost)."
+
   NodeKindEnum:
     permissible_values:
       StatutoryAuthority:
@@ -277,7 +294,7 @@ enums:
       SoftwareService:
         description: "Foundation model endpoints, vertical SaaS."
       EconomicEntity:
-        description: "Commercial deployers, compute hubs, insurers, utility operators."
+        description: "Commercial deployers, compute hubs, insurers, utility operators, cloud platforms."
 
   VSMSystemEnum:
     permissible_values:
@@ -313,6 +330,8 @@ enums:
         description: "European Union legal framework"
       US:
         description: "United States federal and state jurisdictions"
+      China:
+        description: "People's Republic of China regulatory & AI governance framework"
       UK:
         description: "United Kingdom regulatory framework"
       APAC:
@@ -356,19 +375,23 @@ enums:
   RelationKindEnum:
     permissible_values:
       commercial_flow:
-        description: "Capital, subscription fees, CapEx."
+        description: "Capital, subscription fees, wholesale token tolls, CapEx."
       statutory_mandate:
-        description: "Legal authority, compliance orders, fines."
+        description: "Legal authority, compliance orders, export controls, fines."
       governance_control:
-        description: "Policy bounds, scope enforcement, human override."
+        description: "Policy bounds, scope enforcement, audit logging, human override."
       liability_exposure:
-        description: "Tort liability, blast radius, recourse."
+        description: "Real-world tort liability, blast radius harm, legal recourse."
+      competitive_pressure:
+        description: "Market margin compression, platform absorption, open-weight price deflation, consumer boycotts."
+      physical_constraint:
+        description: "Hard physical, thermodynamic, electrical, or geographic ceilings."
       contractual_term:
-        description: "ToS liability disclaimers, SLAs."
+        description: "ToS liability disclaimers, SLAs, warranty carve-outs."
       protocol_call:
         description: "Authenticated technical protocols (MIP, A2E, A2T, A2A)."
       data_flow:
-        description: "Telemetry, prompts, audit logs."
+        description: "Telemetry, prompts, model weights, audit evidence logs."
       algedonic_signal:
         description: "Emergency bypass alarm signaling critical failure from S1 to S5."
 

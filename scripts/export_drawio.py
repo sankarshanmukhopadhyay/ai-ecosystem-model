@@ -111,6 +111,7 @@ def render_diagram_page(page_id, page_name, clusters, nodes, edges):
                 "jurisdiction": n.get("jurisdiction", "Global"),
                 "eu_ai_act_role": n.get("eu_ai_act_role") or "",
                 "nist_function": n.get("nist_function") or "",
+                "evolution_stage": n.get("evolution_stage") or "",
                 "cardinality_min": str(n.get("cardinality_log10_min", "")),
                 "cardinality_max": str(n.get("cardinality_log10_max", "")),
                 "cardinality_unit": str(n.get("cardinality_unit", "")),

@@ -3,8 +3,8 @@
 Generates the canonical docs/index.md page.
 Decouples presentation styles from ontology:
 - Maps NodeKindEnum (including Standards and Foresight bodies) to Mermaid shapes
-- Maps RelationKindEnum (including algedonic_signal) to Mermaid edge styles
-- Renders tables for Power Asymmetry, Switching Costs, and Jurisdictions
+- Maps RelationKindEnum (including physical_constraint and competitive_pressure)
+- Renders tables for Wardley Evolution Stages, Power Asymmetry, and Switching Costs
 """
 
 import sys
@@ -56,7 +56,7 @@ def edge_to_mermaid(e):
         return f'== "🚨 {label}" ==>'
     elif rkind in ["commercial_flow", "statutory_mandate"]:
         return f'== "{label}" ==>'
-    elif rkind in ["liability_exposure", "contractual_term", "governance_control"]:
+    elif rkind in ["liability_exposure", "contractual_term", "governance_control", "competitive_pressure", "physical_constraint"]:
         return f'-. "{label}" .->'
     return f'-->|"{label}"|'
 
@@ -107,7 +107,7 @@ def build_notation_table():
 | `StateStore` | WORM audit ledgers, vector databases, operational enterprise ERPs | `cylinder` |
 | `SecurityAuthority` | Enterprise IdP, OAuth token issuers, workload authorization brokers | `stadium` |
 | `SoftwareService` | Foundation model endpoints, vertical applications, continuous eval engines | `rounded` |
-| `EconomicEntity` | Commercial deployers, CapEx supply chain entities, venture capital funds | `rect` |
+| `EconomicEntity` | Commercial deployers, compute hubs, cloud platforms, capital funds, energy grids | `rect` |
 
 ### Relationship & Edge Types
 
@@ -117,20 +117,26 @@ def build_notation_table():
 | `== 'label' ==>` | `commercial_flow` | Capital transactions, SaaS fees, token costs, insurance premiums |
 | `== 'label' ==>` | `statutory_mandate` | Statutory orders, compliance mandates, mandatory oversight |
 | `-. 'label' .->` | `governance_control` | Policy bounds, audit trail logging, S3* independent sampling probes |
-| `-. 'label' .->` | `liability_exposure` | Tort liability, blast radius causation, platform margin pressure |
+| `-. 'label' .->` | `liability_exposure` | Real-world tort liability, blast radius causation, direct civil exposure |
+| `-. 'label' .->` | `competitive_pressure` | Market margin compression, platform absorption, open-weight price deflation |
+| `-. 'label' .->` | `physical_constraint` | Hard physical limits: power grid capacity, transformer delays, fab throughput |
 | `-. 'label' .->` | `contractual_term` | Contractual liability carve-outs, ToS 'AS-IS' disclaimers |
 | `-->|'label'|` | `protocol_call` | Technical protocols (A2E, MIP, A2T via MCP, A2A) |
-| `-->|'label'|` | `data_flow` | Telemetry traces, prompt context (RAG), evidence logs |
+| `-->|'label'|` | `data_flow` | Telemetry traces, prompt context (RAG), model weights, evidence logs |
 
-### Market Dynamics: Power Asymmetry & Switching Costs
+### Market Dynamics: Wardley Stages, Power Asymmetry & Switching Costs
 
 | Property | Values | Semantic Meaning |
 | :--- | :--- | :--- |
-| **`power_asymmetry`** | `supplier_dominant` | Supplier dictates pricing, access, and terms (seller's market; e.g. leading-edge GPU allocation) |
-| | `buyer_dominant` | Buyer dictates terms and performance specifications (buyer's market; e.g. open-weight hosting) |
-| | `balanced` | Bilateral commercial parity (e.g. enterprise software contracts) |
+| **`evolution_stage`** | `genesis` | Novel, experimental, unproven concepts with high uncertainty |
+| | `custom_built` | Bespoke, highly differentiated implementations or rare capital assets (e.g. ASML lithography) |
+| | `product` | Standardized, commercialized off-the-shelf software or hardware products |
+| | `commodity` | Ubiquitous, standardized utility or open commons (zero-marginal cost) |
+| **`power_asymmetry`** | `supplier_dominant` | Supplier dictates pricing, access, and terms (seller's market) |
+| | `buyer_dominant` | Buyer dictates terms and performance specifications (buyer's market) |
+| | `balanced` | Bilateral commercial parity |
 | | `captive` | Downstream participant is structurally trapped with near-zero alternative options |
-| **`switching_cost`** | `prohibitive` | Switching requires full architectural, physical, or legal refactoring (e.g. ASML lithography) |
+| **`switching_cost`** | `prohibitive` | Switching requires full architectural, physical, or legal refactoring |
 | | `high` | Switching requires extensive re-indexing, prompt re-tuning, and workflow rebuilding |
 | | `moderate` | Standard multi-cloud or modular API adaptation effort |
 | | `low` | Commoditized, drop-in replacement (e.g. OpenAI-compatible open-weight endpoints) |"""
@@ -230,19 +236,25 @@ def main():
         "",
         "## Canonical Element Dictionary",
         "",
-        "| Element | Cluster | Kind | VSM Tier & Recursion | Ashby Variety | Jurisdiction | EU AI Act Role |",
-        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
+        "| Element | Cluster | Kind | Wardley Evolution | VSM Tier & Recursion | Ashby Variety | Jurisdiction | EU AI Act Role |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |",
     ]
 
     clusters_map = {c["id"]: c["label"] for c in model.get("clusters", [])}
     for n in model["nodes"]:
         cluster_name = clusters_map.get(n.get("cluster", ""), n.get("cluster", ""))
         sub = f"<br/><small>{n['sublabel']}</small>" if n.get("sublabel") else ""
-        vsm_desc = f"`{n.get('vsm_system', '')}`<br/><small>{n.get('vsm_recursion_level', '')}</small>"
+        
+        vsm_sys = n.get("vsm_system")
+        vsm_rec = n.get("vsm_recursion_level")
+        vsm_desc = f"`{vsm_sys}`<br/><small>{vsm_rec}</small>" if vsm_sys else "—"
+        
         cardinality_str = format_cardinality(n)
         jurisdiction = n.get("jurisdiction", "Global")
         eu_role = n.get("eu_ai_act_role") or "—"
-        md.append(f"| **{n['label']}**{sub}<br/>`{n['id']}` | {cluster_name} | `{n.get('kind', '')}` | {vsm_desc} | {cardinality_str} | `{jurisdiction}` | `{eu_role}` |")
+        evolution = f"`{n.get('evolution_stage')}`" if n.get("evolution_stage") else "—"
+        
+        md.append(f"| **{n['label']}**{sub}<br/>`{n['id']}` | {cluster_name} | `{n.get('kind', '')}` | {evolution} | {vsm_desc} | {cardinality_str} | `{jurisdiction}` | `{eu_role}` |")
 
     OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_text("\n".join(md), encoding="utf-8")

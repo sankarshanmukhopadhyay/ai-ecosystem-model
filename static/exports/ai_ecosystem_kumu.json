@@ -13,10 +13,11 @@
       "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
       "Jurisdiction": "Multi_Jurisdictional",
       "Ashby Variety": "10^1–10^2 jurisdictions",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "GOVERN",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "product",
       "Enforcement Powers": "Fines up to 7% global turnover (Art. 99), export control sanctions, stop orders"
     },
     {
@@ -33,10 +34,11 @@
       "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^1–10^1.5 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MAP",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "commodity",
       "Harmonization Role": "Defines CEN-CENELEC harmonised European standards (hENs) and ISO/IEC 42001 AIMS controls",
       "Variety Function": "Attenuates technical variety into standardized conformity benchmarks"
     },
@@ -54,10 +56,11 @@
       "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
       "Jurisdiction": "Multi_Jurisdictional",
       "Ashby Variety": "10^1–10^1.5 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MEASURE",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "custom_built",
       "Red Team Role": "Pre-deployment red-teaming, biosecurity/cyber capability evaluations, systemic risk thresholds",
       "VSM Role": "Macro System 4 horizon scanning feeding statutory policy"
     },
@@ -74,10 +77,11 @@
       "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
       "Jurisdiction": "Multi_Jurisdictional",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MEASURE",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "product",
       "Role": "CE conformity assessments (Art. 43) & continuous surveillance"
     },
     {
@@ -94,10 +98,11 @@
       "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MANAGE",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "product",
       "Underwriting Gate": "Requires verifiable audit trail & human oversight"
     },
     {
@@ -109,14 +114,15 @@
         "economic"
       ],
       "Kind": "EconomicEntity",
-      "VSM System": "S5_Policy",
-      "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "GOVERN",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
+      "Evolution Stage": "commodity",
       "Financing Role": "Subsidizes CapEx overhang, silicon leases & nuclear PPAs"
     },
     {
@@ -129,14 +135,15 @@
         "technical"
       ],
       "Kind": "EconomicEntity",
-      "VSM System": "S1_Operations",
-      "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^0–10^1 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MAP",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
+      "Evolution Stage": "custom_built",
       "Geopolitical Exposure": "Concentrated in Taiwan Strait & Netherlands; subject to strict US EAR export controls",
       "Capex Cycle": "$20B+ per fab; 3-5 year construction lead time"
     },
@@ -150,37 +157,61 @@
         "technical"
       ],
       "Kind": "EconomicEntity",
-      "VSM System": "S1_Operations",
-      "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Multi_Jurisdictional",
       "Ashby Variety": "10^2–10^3 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MAP",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
+      "Evolution Stage": "commodity",
       "Physical Bottleneck": "Substation transformer lead times of 3-5 years; GW-scale interconnection queues",
       "Environmental Impact": "Carbon intensity, baseline grid load, cooling water consumption"
     },
     {
       "id": "N_TRAIN",
-      "label": "Training Supply Chain & Compute Campuses",
+      "label": "Training Compute Campuses",
       "type": "Economic",
-      "description": "Mega-Data Centers, Cluster Fabric, Data Curators",
+      "description": "Mega-Data Centers, GW-Scale Cluster Fabric, Power Sub-stations",
       "tags": [
         "economic",
         "technical"
       ],
       "Kind": "EconomicEntity",
-      "VSM System": "S1_Operations",
-      "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^1–10^1.3 clusters",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "MAP",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
+      "Evolution Stage": "product",
       "Compute Profile": "Concentrated 50k-100k+ GPU clusters; GW-scale power",
       "Cost Type": "Fixed / Heavy CapEx ($600B Infrastructure Question)"
+    },
+    {
+      "id": "N_CLOUD_HYPERSCALER",
+      "label": "Hyperscaler Cloud Platform",
+      "type": "Economic",
+      "description": "Microsoft Azure, AWS, Google Cloud, OCI",
+      "tags": [
+        "economic",
+        "technical"
+      ],
+      "Kind": "EconomicEntity",
+      "VSM System": "",
+      "VSM Recursion Level": "",
+      "Jurisdiction": "Global",
+      "Ashby Variety": "10^0.5–10^0.8 entities",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
+      "Cluster ID": "cluster_supply",
+      "Evolution Stage": "commodity",
+      "Market Role": "Vertical aggregator providing compute tenancy, hosted foundation models, and enterprise IAM fabric",
+      "Lock In Mechanism": "Data egress fees, committed spend discounts (MACC), sovereign cloud zones"
     },
     {
       "id": "N_FRONTIER",
@@ -199,8 +230,9 @@
       "Ashby Variety": "10^1–10^1.3 entities",
       "EU AI Act Role": "Provider_GPAI",
       "NIST Function": "MEASURE",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
+      "Evolution Stage": "product",
       "Compute Profile": "High memory-bandwidth inference clusters; low latency",
       "Liability Posture": "Disclaimed via ToS ('AS-IS')"
     },
@@ -214,35 +246,37 @@
         "technical"
       ],
       "Kind": "SoftwareService",
-      "VSM System": "S4_Intelligence",
-      "VSM Recursion Level": "Level_n_Enterprise",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^2–10^3 instances",
       "EU AI Act Role": "Provider_GPAI",
       "NIST Function": "MAP",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
+      "Evolution Stage": "commodity",
       "Pricing Model": "Zero Marginal License Cost (Commoditized Inference)"
     },
     {
       "id": "N_ABSORBED",
       "label": "Platform Absorption Zone",
       "type": "Economic",
-      "description": "Native Tools, Prompt Cache, Hosted State",
+      "description": "Native Tools, Prompt Cache, Hosted State (a16z Stack)",
       "tags": [
         "economic",
         "technical"
       ],
       "Kind": "EconomicEntity",
-      "VSM System": "ENVIRONMENT",
-      "VSM Recursion Level": "Level_n_Enterprise",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^0.5–10^0.8 entities",
-      "EU AI Act Role": "Not_Applicable",
-      "NIST Function": "NOT_APPLICABLE",
-      "Cluster": "1. Upstream Foundation, Silicon & Energy Supply",
+      "EU AI Act Role": "Not Specified",
+      "NIST Function": "Not Specified",
+      "Cluster": "1. Upstream Foundation, Silicon & Cloud Supply",
       "Cluster ID": "cluster_supply",
-      "Market Effect": "Feature commoditization of wrapper ISVs (a16z Stack)"
+      "Evolution Stage": "commodity",
+      "Market Effect": "Feature commoditization of wrapper ISVs into native cloud/model APIs"
     },
     {
       "id": "N_ISV_PRODUCT",
@@ -254,14 +288,15 @@
         "technical"
       ],
       "Kind": "SoftwareService",
-      "VSM System": "S4_Intelligence",
-      "VSM Recursion Level": "Level_n_Enterprise",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^4–10^5 instances",
       "EU AI Act Role": "Provider_System",
       "NIST Function": "MAP",
       "Cluster": "2. Specialized Product & Harness Domain (ISV / Custom Runtime)",
       "Cluster ID": "cluster_product",
+      "Evolution Stage": "product",
       "Margin Exposure": "Squeezed between token costs & platform absorption"
     },
     {
@@ -278,10 +313,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^7–10^9 invocations_per_year",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MANAGE",
       "Cluster": "2. Specialized Product & Harness Domain (ISV / Custom Runtime)",
       "Cluster ID": "cluster_product",
+      "Evolution Stage": "product",
       "Compute Profile": "Lightweight CPU / Orchestration Logic",
       "Iso 42001 Role": "AIMS Technical Control Implementation"
     },
@@ -299,10 +335,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MEASURE",
       "Cluster": "2. Specialized Product & Harness Domain (ISV / Custom Runtime)",
       "Cluster ID": "cluster_product",
+      "Evolution Stage": "product",
       "Compliance": "Art. 12 Mandatory Logging / Rebuttal of Fault"
     },
     {
@@ -320,10 +357,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MEASURE",
       "Cluster": "2. Specialized Product & Harness Domain (ISV / Custom Runtime)",
       "Cluster ID": "cluster_product",
+      "Evolution Stage": "product",
       "Capabilities": "LLM-as-a-judge, OTEL tracing, token telemetry, independent red-teaming"
     },
     {
@@ -344,6 +382,7 @@
       "NIST Function": "GOVERN",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
+      "Evolution Stage": "custom_built",
       "Liability Posture": "Holds Vicarious & Strict Legal Liability"
     },
     {
@@ -360,10 +399,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^5–10^6 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MANAGE",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
+      "Evolution Stage": "commodity",
       "Security Role": "Issues scoped actor delegations to agents (A2E)"
     },
     {
@@ -380,10 +420,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^5–10^6 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MAP",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
+      "Evolution Stage": "custom_built",
       "CoALA Memory Type": "Semantic Memory (Factual & Document Knowledge)"
     },
     {
@@ -400,10 +441,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^7–10^8.5 natural_persons",
-      "EU AI Act Role": "Deployer",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "GOVERN",
       "Cluster": "3. Enterprise Deployer & Principal Domain",
       "Cluster ID": "cluster_client",
+      "Evolution Stage": "custom_built",
       "Control Mode": "Prompting, Art. 14 Human Oversight, Override"
     },
     {
@@ -420,10 +462,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^4–10^5 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MANAGE",
       "Cluster": "4. Target Execution Environment & Blast Radius",
       "Cluster ID": "cluster_environment",
+      "Evolution Stage": "product",
       "Security Role": "Tool discovery, sandbox isolation, scope negotiation"
     },
     {
@@ -440,10 +483,11 @@
       "VSM Recursion Level": "Level_n_Enterprise",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^6–10^7 instances",
-      "EU AI Act Role": "Not_Applicable",
+      "EU AI Act Role": "Not Specified",
       "NIST Function": "MANAGE",
       "Cluster": "4. Target Execution Environment & Blast Radius",
       "Cluster ID": "cluster_environment",
+      "Evolution Stage": "custom_built",
       "Risk Zone": "Direct Causation Blast Radius"
     },
     {
@@ -455,14 +499,15 @@
         "governance"
       ],
       "Kind": "NaturalPerson",
-      "VSM System": "ENVIRONMENT",
-      "VSM Recursion Level": "Level_n_plus_1_Jurisdiction",
+      "VSM System": "",
+      "VSM Recursion Level": "",
       "Jurisdiction": "Global",
       "Ashby Variety": "10^9–10^10 natural_persons",
       "EU AI Act Role": "Affected_Subject",
-      "NIST Function": "NOT_APPLICABLE",
+      "NIST Function": "Not Specified",
       "Cluster": "4. Target Execution Environment & Blast Radius",
       "Cluster ID": "cluster_environment",
+      "Evolution Stage": "custom_built",
       "Legal Standing": "Private Right of Action, Tort Plaintiff, Data Subject"
     }
   ],
@@ -535,7 +580,7 @@
       "from": "N_ENERGY_GRID",
       "to": "N_TRAIN",
       "label": "Physical GW Power & Transformer Bottleneck",
-      "type": "liability_exposure",
+      "type": "physical_constraint",
       "direction": "directed",
       "tags": [
         "economic",
@@ -543,7 +588,38 @@
       ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative"
+      "description": "Kind: physical_constraint | Protocol: NONE | Polarity: negative"
+    },
+    {
+      "id": "E_TRAIN_TO_CLOUD",
+      "from": "N_TRAIN",
+      "to": "N_CLOUD_HYPERSCALER",
+      "label": "Compute Cluster Hosting & Bare-Metal Capacity",
+      "type": "commercial_flow",
+      "direction": "directed",
+      "tags": [
+        "economic",
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Power Asymmetry": "balanced",
+      "Switching Cost": "high"
+    },
+    {
+      "id": "E_CLOUD_TO_FRONTIER",
+      "from": "N_CLOUD_HYPERSCALER",
+      "to": "N_FRONTIER",
+      "label": "Hyperscale Inference Fleet Orchestration",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
     },
     {
       "id": "E_SAFETY_TO_REG_INTELLIGENCE",
@@ -637,6 +713,22 @@
       "Switching Cost": "high"
     },
     {
+      "id": "E_ENT_TO_CLOUD",
+      "from": "N_ENTERPRISE",
+      "to": "N_CLOUD_HYPERSCALER",
+      "label": "$$$ Cloud Spend Commitments (MACC) & Enterprise Tenancy",
+      "type": "commercial_flow",
+      "direction": "directed",
+      "tags": [
+        "economic"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "description": "Kind: commercial_flow | Protocol: NONE | Polarity: positive",
+      "Power Asymmetry": "supplier_dominant",
+      "Switching Cost": "high"
+    },
+    {
       "id": "E_ENT_TO_ISV_SUB",
       "from": "N_ENTERPRISE",
       "to": "N_ISV_PRODUCT",
@@ -706,14 +798,14 @@
       "from": "N_ABSORBED",
       "to": "N_ISV_PRODUCT",
       "label": "Platform Commoditization Pressure (a16z Stack)",
-      "type": "liability_exposure",
+      "type": "competitive_pressure",
       "direction": "directed",
       "tags": [
         "economic"
       ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative",
+      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
       "Power Asymmetry": "captive",
       "Switching Cost": "prohibitive"
     },
@@ -737,14 +829,14 @@
       "from": "N_OPEN_MODEL",
       "to": "N_FRONTIER",
       "label": "Inference Price Deflation & Compression",
-      "type": "liability_exposure",
+      "type": "competitive_pressure",
       "direction": "directed",
       "tags": [
         "economic"
       ],
       "Protocol Plane": "NONE",
       "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative"
+      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative"
     },
     {
       "id": "E_REG_TO_ENT_COMPLIANCE",
@@ -845,6 +937,23 @@
       "description": "Kind: data_flow | Protocol: NONE | Polarity: positive"
     },
     {
+      "id": "E_AFFECTED_TO_ENT_CHURN",
+      "from": "N_AFFECTED_PARTY",
+      "to": "N_ENTERPRISE",
+      "label": "Market Resistance, Consumer Churn & Social License Revocation",
+      "type": "competitive_pressure",
+      "direction": "directed",
+      "tags": [
+        "economic",
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "negative",
+      "description": "Kind: competitive_pressure | Protocol: NONE | Polarity: negative",
+      "Power Asymmetry": "buyer_dominant",
+      "Switching Cost": "low"
+    },
+    {
       "id": "E_ENT_TO_HARNESS_DELEGATION",
       "from": "N_ENTERPRISE",
       "to": "N_HARNESS",
@@ -930,23 +1039,6 @@
       "Protocol Plane": "NONE",
       "Polarity": "negative",
       "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative"
-    },
-    {
-      "id": "E_AFFECTED_TO_ENT_CHURN",
-      "from": "N_AFFECTED_PARTY",
-      "to": "N_ENTERPRISE",
-      "label": "Market Resistance, Consumer Churn & Social License Revocation",
-      "type": "liability_exposure",
-      "direction": "directed",
-      "tags": [
-        "economic",
-        "governance"
-      ],
-      "Protocol Plane": "NONE",
-      "Polarity": "negative",
-      "description": "Kind: liability_exposure | Protocol: NONE | Polarity: negative",
-      "Power Asymmetry": "buyer_dominant",
-      "Switching Cost": "low"
     },
     {
       "id": "E_OBSERVE_S3_STAR_PROBE",

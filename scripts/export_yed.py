@@ -4,8 +4,8 @@ yEd GraphML Exporter for AI Ecosystem Model.
 Outputs: static/exports/ai_ecosystem.graphml
 Preserves:
   - yFiles group nodes for clusters
-  - Ontological node kinds, VSM recursion, Ashby variety, and jurisdiction
-  - Edge relation kinds, protocol planes, polarity, power asymmetry, and switching costs
+  - Ontological node kinds, Wardley evolution stages, VSM recursion, Ashby variety, and jurisdiction
+  - Edge relation kinds (including physical_constraint and competitive_pressure), protocol planes, polarity, power asymmetry, and switching costs
 """
 
 import sys
@@ -40,6 +40,8 @@ def get_yed_edge_style(relation_kind):
     if relation_kind == "statutory_mandate": return "#722ED1", "line", "3.0"
     if relation_kind in ["liability_exposure", "contractual_term"]: return "#DC2626", "dashed", "2.0"
     if relation_kind == "governance_control": return "#E11D48", "dashed", "2.0"
+    if relation_kind == "competitive_pressure": return "#D97706", "dashed", "2.0"
+    if relation_kind == "physical_constraint": return "#7C3AED", "line", "2.5"
     if relation_kind == "protocol_call": return "#2563EB", "line", "2.0"
     return "#64748B", "line", "1.5"
 
@@ -73,6 +75,7 @@ def main():
         '  <key for="node" id="d_domains" attr.name="domains" attr.type="string"/>',
         '  <key for="node" id="d_kind" attr.name="kind" attr.type="string"/>',
         '  <key for="node" id="d_sublabel" attr.name="sublabel" attr.type="string"/>',
+        '  <key for="node" id="d_evolution" attr.name="evolution_stage" attr.type="string"/>',
         '  <key for="node" id="d_vsm" attr.name="vsm_system" attr.type="string"/>',
         '  <key for="node" id="d_vsm_rec" attr.name="vsm_recursion_level" attr.type="string"/>',
         '  <key for="node" id="d_jurisdiction" attr.name="jurisdiction" attr.type="string"/>',
@@ -138,8 +141,9 @@ def main():
             xml.append(f'          <data key="d_domains">{html.escape(domains_str)}</data>')
             xml.append(f'          <data key="d_kind">{html.escape(kind)}</data>')
             xml.append(f'          <data key="d_sublabel">{sub}</data>')
-            xml.append(f'          <data key="d_vsm">{html.escape(str(n.get("vsm_system", "")))}</data>')
-            xml.append(f'          <data key="d_vsm_rec">{html.escape(str(n.get("vsm_recursion_level", "")))}</data>')
+            xml.append(f'          <data key="d_evolution">{html.escape(str(n.get("evolution_stage") or ""))}</data>')
+            xml.append(f'          <data key="d_vsm">{html.escape(str(n.get("vsm_system") or ""))}</data>')
+            xml.append(f'          <data key="d_vsm_rec">{html.escape(str(n.get("vsm_recursion_level") or ""))}</data>')
             xml.append(f'          <data key="d_jurisdiction">{html.escape(str(n.get("jurisdiction", "Global")))}</data>')
             xml.append(f'          <data key="d_eu_role">{html.escape(str(n.get("eu_ai_act_role") or ""))}</data>')
             xml.append(f'          <data key="d_nist">{html.escape(str(n.get("nist_function") or ""))}</data>')
