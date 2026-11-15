@@ -172,7 +172,7 @@ An Enterprise Agent operates under the legal framework of **commercial agency an
 
 4. **The Flight Recorder (N_AUDIT_STORE):** To comply with Article 12 of the EU AI Act and satisfy risk underwriters (N_INSURER), every proposal, authorization, and tool execution is piped to a tamper-evident WORM ledger.
 
-5. **Decoupled Actuation (N_TOOL_GATEWAY** → N_TARGET_SYS):** The agent never holds direct database credentials. It negotiates tool calls via the Model Context Protocol (**A2T plane**), executing authenticated reads and writes against corporate ERPs and financial rails.
+5. **Decoupled Actuation (N_TOOL_GATEWAY → N_TARGET_SYS):** The agent never holds direct database credentials. It negotiates tool calls via the Model Context Protocol (**A2T plane**), executing authenticated reads and writes against corporate ERPs and financial rails.
 
 ### 3.2 Anatomy of a User Agent (Personal / Consumer Agency)
 
