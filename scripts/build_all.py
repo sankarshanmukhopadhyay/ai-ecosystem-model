@@ -27,13 +27,16 @@ MODEL_FILE = PROJECT_ROOT / "model" / "ai_ecosystem.yaml"
 SCHEMA_FILE = PROJECT_ROOT / "schema" / "ai_ecosystem_schema.yaml"
 INQUIRIES_DIR = PROJECT_ROOT / "docs" / "inquiries"
 
+inquiry_docs = [str(p) for p in INQUIRIES_DIR.glob("*.md")] if INQUIRIES_DIR.exists() else []
+
 PIPELINE = [
-    ("Ecosystem & Cybernetic Validation",    "validate_ecosystem.py", [str(MODEL_FILE), str(SCHEMA_FILE)]),
+    ("Ecosystem & Cybernetic Validation", "validate_ecosystem.py", 
+     [str(MODEL_FILE), str(SCHEMA_FILE)] + (["--refs"] + inquiry_docs if inquiry_docs else [])),
     ("Standing Inquiry Regression Analysis", "analyze_ecosystem.py", [str(MODEL_FILE), "all"]),
-    ("Master Documentation Portal",          "generate_docs.py", []),
-    ("Draw.io Multi-Page Diagram",           "export_drawio.py", []),
-    ("yEd GraphML Export",                   "export_yed.py", []),
-    ("Kumu Dynamic JSON Export",             "export_kumu.py", []),
+    ("Master Documentation Portal",      "generate_docs.py", []),
+    ("Draw.io Multi-Page Diagram",        "export_drawio.py", []),
+    ("yEd GraphML Export",                "export_yed.py", []),
+    ("Kumu Dynamic JSON Export",           "export_kumu.py", []),
 ]
 
 def validate_inquiries():

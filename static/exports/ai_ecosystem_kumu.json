@@ -82,6 +82,7 @@
       "Cluster": "0. Jurisdictional, Capital & Regulatory Sphere",
       "Cluster ID": "cluster_regulatory",
       "Evolution Stage": "Not Applicable",
+      "Reassessment Authority": "Recognition and supervision by statutory authorities; evidence from enterprise-operated systems is not independent of the assessed enterprise",
       "Role": "EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification"
     },
     {
@@ -1672,6 +1673,91 @@
       "Normative Status": "None",
       "Delay": "Immediate",
       "description": "Kind: data_flow | Polarity: positive | Affects: enterprise strategic awareness of AI risk"
+    },
+    {
+      "id": "E_REG_TO_AUDITOR",
+      "from": "N_REGULATOR",
+      "to": "N_AUDITOR",
+      "label": "Recognition, supervision & suspension of conformity bodies; can require reassessment after incidents",
+      "type": "statutory_mandate",
+      "direction": "directed",
+      "tags": [
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "negative",
+      "Affects": "freedom to certify without supervision",
+      "Normative Status": "binding",
+      "Delay": "Immediate",
+      "description": "Kind: statutory_mandate | Polarity: negative | Affects: freedom to certify without supervision"
+    },
+    {
+      "id": "E_OBSERVE_TO_AUDITOR",
+      "from": "N_OBSERVE",
+      "to": "N_AUDITOR",
+      "label": "Behavioural evaluation evidence for continuing surveillance (enterprise-operated)",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "auditor behavioural evidence base",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: auditor behavioural evidence base"
+    },
+    {
+      "id": "E_AUDITOR_TO_INSURER",
+      "from": "N_AUDITOR",
+      "to": "N_INSURER",
+      "label": "Certification status & scope as an underwriting basis (third-party reliance)",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "insurer assurance basis",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: insurer assurance basis"
+    },
+    {
+      "id": "E_ENT_TO_IDP",
+      "from": "N_ENTERPRISE",
+      "to": "N_IDP",
+      "label": "Grants, scopes & revokes delegated authority (S5 to S2)",
+      "type": "governance_control",
+      "direction": "directed",
+      "tags": [
+        "governance"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "agent delegated authority",
+      "Normative Status": "practice",
+      "Delay": "Immediate",
+      "description": "Kind: governance_control | Polarity: positive | Affects: agent delegated authority"
+    },
+    {
+      "id": "E_IDP_TO_GATEWAY",
+      "from": "N_IDP",
+      "to": "N_TOOL_GATEWAY",
+      "label": "Credential validation at call time: withdrawn authority stops tool access",
+      "type": "protocol_call",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "a2e",
+      "Polarity": "positive",
+      "Affects": "tool-call authority verification",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: tool-call authority verification"
     },
     {
       "id": "E_OBSERVE_PROBE_TARGET",

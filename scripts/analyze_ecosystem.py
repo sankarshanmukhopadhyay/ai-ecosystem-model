@@ -10,6 +10,8 @@ Inquiries (each answers the question of the matching view):
                recourse break?                                              (V_LIABILITY)
   viability    Are the VSM channels present in each frame?                  (V_*_VSM)
   loops        Which loops exist, how slow are they, which edges are shared? (V_FEEDBACK)
+  assurance    Can adverse evidence or a change in authority reach the
+               auditor independently, and who can rely on the result?       (V_ASSURANCE)
   all          Everything (default)
 
 --remove deletes nodes first, so `viability --remove N_SAFETY_INSTITUTE` answers
@@ -192,10 +194,86 @@ def loops():
             print(f"  {c} loops: {name(e['from'])} -> {name(e['to'])} ({e['label']})")
 
 
+# ------------------------------------------------------------------ assurance
+AUDITOR = "N_AUDITOR"
+EVIDENCE_KINDS = {"data_flow", "governance_control", "statutory_mandate", "algedonic_signal"}
+
+
+def find_path(src, dst, allowed_mid=None):
+    """Shortest path over evidence-carrying edges; intermediates must satisfy allowed_mid."""
+    queue, seen = [[src]], {src}
+    while queue:
+        p = queue.pop(0)
+        if p[-1] == dst:
+            return p
+        for e in edges:
+            if e["from"] != p[-1] or e["relation_kind"] not in EVIDENCE_KINDS or e["to"] in seen:
+                continue
+            if e["to"] != dst and allowed_mid is not None and not allowed_mid(e["to"]):
+                continue
+            seen.add(e["to"])
+            queue.append(p + [e["to"]])
+    return None
+
+
+def assurance():
+    header("ASSURANCE: continuing reliance on a determination")
+    if AUDITOR not in nodes:
+        print(f"  {AUDITOR} not in model; nothing to assess")
+        return
+    frame = next((f for f in M["frames"] if f["id"] == "F_ENTERPRISE"), None)
+    ent_controlled = {r["node"] for r in frame["roles"]} if frame else set()
+    ent_controlled |= {"N_KNOWLEDGE_STORE"} & set(nodes)
+
+    sup = [e for e in edges if e["to"] == AUDITOR and e["relation_kind"] == "statutory_mandate"]
+    print("\nAuthority over the conformity body (recognition, supervision, suspension):")
+    for e in sup:
+        print(f"  {name(e['from'])} [{e['normative_status']}]")
+    if not sup:
+        print("  NONE modelled: nobody can restrict or withdraw the auditor's standing")
+
+    rel = [e for e in edges if e["from"] == AUDITOR]
+    third = [e for e in rel if e["to"] != "N_ENTERPRISE"]
+    print("\nParties the determination reaches:")
+    for e in rel:
+        tag = "relying party" if e in third else "assessed enterprise"
+        print(f"  {name(e['to'])} ({tag})")
+    if not third:
+        print("  NO third-party reliance modelled (only the assessed enterprise)")
+
+    print("\nRoutes from triggers to the auditor:")
+    print(f"  {'trigger':34} {'any route':10} {'independent of enterprise'}")
+    triggers = [("runtime evaluation", "N_OBSERVE"), ("affected-party complaint", "N_AFFECTED_PARTY"),
+                ("civil-society alarm", "N_CIVIL_SOCIETY"), ("regulator action", "N_REGULATOR")]
+    for label, src in triggers:
+        if src not in nodes:
+            print(f"  {label:34} (source node removed)")
+            continue
+        anyp = find_path(src, AUDITOR)
+        indep = None
+        if src in ent_controlled:
+            verdict = "n/a (source is enterprise-operated)"
+        else:
+            indep = find_path(src, AUDITOR, allowed_mid=lambda n: n not in ent_controlled)
+            verdict = " > ".join(name(n) for n in indep) if indep else "NONE: route passes through enterprise-controlled systems"
+        print(f"  {label:34} {'yes' if anyp else 'NO':10} {verdict}")
+
+    print("\nDelegated-authority chain (authority source -> credential -> enforcement):")
+    idp_in = [e for e in edges if e["to"] == "N_IDP" and e["relation_kind"] == "governance_control"]
+    idp_gw = [e for e in edges if e["from"] == "N_IDP" and e["to"] == "N_TOOL_GATEWAY"]
+    idp_ag = [e for e in edges if e["from"] == "N_IDP" and e["to"] == "N_AGENT"]
+    print(f"  principal grants/revokes authority via IdP : {'ok' if idp_in else 'MISSING'}")
+    print(f"  IdP issues credentials to the agent        : {'ok' if idp_ag else 'MISSING'}")
+    print(f"  gateway validates credentials at call time : {'ok' if idp_gw else 'MISSING (agent may keep technical capability after authority is withdrawn)'}")
+    print("\nNote: the graph shows whether routes exist, not whether they operate. Independence is judged by")
+    print("whether the route avoids systems the enterprise controls (F_ENTERPRISE frame members).")
+
+
 # ------------------------------------------------------------------ main
 if remove:
     print(f"Removed nodes: {', '.join(sorted(remove))} ({len(M['edges']) - len(edges)} edges dropped)")
-run = {"chokepoints": chokepoints, "liability": liability, "viability": viability, "loops": loops}
+run = {"chokepoints": chokepoints, "liability": liability, "viability": viability, "loops": loops,
+       "assurance": assurance}
 for key in (run if "all" in wanted else wanted):
     if key not in run:
         sys.exit(f"unknown inquiry '{key}'. Choose from {list(run)} or 'all'.")

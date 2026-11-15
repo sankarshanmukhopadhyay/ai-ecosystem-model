@@ -132,7 +132,7 @@ In a normalized software economy, revenue flows up from the buyer to the applica
 
 3. **CapEx Commitments (N_FRONTIER_LAB → N_TRAIN):** Foundation labs channel their token revenues directly into massive, multi-year compute offtake agreements.
 
-### 2. The Equity Bridge & The Capital-Compute Flywheel (L_R1)
+### 2. The Equity Bridge & The Capital-Compute Flywheel (L_R1_CAPITAL_COMPUTE_FLYWHEEL)
 
 Commercial revenues alone do not cover the massive capital requirements of frontier training runs.
 
@@ -169,4 +169,4 @@ When frontier labs or hyperscalers release open-weight checkpoints (N_OPEN_MODEL
   
   - Integrated N_CLOUD_HYPERSCALER as the enterprise tenancy and compute aggregator.
   
-  - Formally mapped feedback loops L_R1 (Flywheel) and L_B1 (Open-Weight Margin Brake).
+  - Formally mapped feedback loops L_R1_CAPITAL_COMPUTE_FLYWHEEL (Flywheel) and L_B1_OPEN_RELEASE_BRAKE (Open-Weight Margin Brake).

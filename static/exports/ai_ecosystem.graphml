@@ -41,6 +41,7 @@
   <key for="node" id="d_prop_market_role" attr.name="market_role" attr.type="string"/>
   <key for="node" id="d_prop_physical_bottleneck" attr.name="physical_bottleneck" attr.type="string"/>
   <key for="node" id="d_prop_pricing_model" attr.name="pricing_model" attr.type="string"/>
+  <key for="node" id="d_prop_reassessment_authority" attr.name="reassessment_authority" attr.type="string"/>
   <key for="node" id="d_prop_red_team_role" attr.name="red_team_role" attr.type="string"/>
   <key for="node" id="d_prop_regulatory_note" attr.name="regulatory_note" attr.type="string"/>
   <key for="node" id="d_prop_risk_zone" attr.name="risk_zone" attr.type="string"/>
@@ -171,6 +172,7 @@
           <data key="d_card_min">2.0</data>
           <data key="d_card_max">3.0</data>
           <data key="d_card_unit">entities</data>
+          <data key="d_prop_reassessment_authority">Recognition and supervision by statutory authorities; evidence from enterprise-operated systems is not independent of the assessed enterprise</data>
           <data key="d_prop_role">EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification</data>
           <data key="d_graphics">
             <y:ShapeNode>
@@ -2046,6 +2048,101 @@
           <y:LineStyle color="#64748B" type="line" width="1.5"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Risk assessments &amp; policy recommendations (S4 to S5)</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_REG_TO_AUDITOR" source="N_REGULATOR" target="N_AUDITOR">
+      <data key="d_edge_id">E_REG_TO_AUDITOR</data>
+      <data key="d_edge_domains">governance</data>
+      <data key="d_edge_relation_kind">statutory_mandate</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">negative</data>
+      <data key="d_edge_affects">freedom to certify without supervision</data>
+      <data key="d_edge_normative">binding</data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#722ED1" type="line" width="3.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Recognition, supervision &amp; suspension of conformity bodies; can require reassessment after incidents</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_OBSERVE_TO_AUDITOR" source="N_OBSERVE" target="N_AUDITOR">
+      <data key="d_edge_id">E_OBSERVE_TO_AUDITOR</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">data_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">auditor behavioural evidence base</data>
+      <data key="d_edge_normative"></data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#64748B" type="line" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Behavioural evaluation evidence for continuing surveillance (enterprise-operated)</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_AUDITOR_TO_INSURER" source="N_AUDITOR" target="N_INSURER">
+      <data key="d_edge_id">E_AUDITOR_TO_INSURER</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">data_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">insurer assurance basis</data>
+      <data key="d_edge_normative"></data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#64748B" type="line" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Certification status &amp; scope as an underwriting basis (third-party reliance)</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_ENT_TO_IDP" source="N_ENTERPRISE" target="N_IDP">
+      <data key="d_edge_id">E_ENT_TO_IDP</data>
+      <data key="d_edge_domains">governance</data>
+      <data key="d_edge_relation_kind">governance_control</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">agent delegated authority</data>
+      <data key="d_edge_normative">practice</data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#E11D48" type="dashed" width="2.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Grants, scopes &amp; revokes delegated authority (S5 to S2)</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_IDP_TO_GATEWAY" source="N_IDP" target="N_TOOL_GATEWAY">
+      <data key="d_edge_id">E_IDP_TO_GATEWAY</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">protocol_call</data>
+      <data key="d_edge_protocol_plane">a2e</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">tool-call authority verification</data>
+      <data key="d_edge_normative"></data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#2563EB" type="line" width="2.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Credential validation at call time: withdrawn authority stops tool access</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>

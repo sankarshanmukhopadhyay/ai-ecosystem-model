@@ -4,15 +4,27 @@
 Covers what plain LinkML validation does not: relational checks (min <= max, loop contiguity,
 frame completeness, algedonic wiring, orphans) plus the schema's conditional rules, which are
 re-implemented here so the checks run without the linkml package.
-Usage: python validate_ecosystem.py [model.yaml] [schema.yaml]
+Usage: python validate_ecosystem.py [model.yaml] [schema.yaml] [--refs doc.md ...]
+
+--refs also checks inquiry pages or other documents against the model:
+  - every node/edge/loop/frame/view id (N_*, E_*, L_*, F_*, V_*) must exist (errors; old v2 ids get a hint)
+  - every "N_A -> N_B" relationship claim must be backed by an edge (warnings: label it a hypothesis
+    or add the edge with defensible semantics)
 """
+import re
 import sys
 from collections import Counter
 
 import yaml
 
-model_path = sys.argv[1] if len(sys.argv) > 1 else "ai_ecosystem.yaml"
-schema_path = sys.argv[2] if len(sys.argv) > 2 else "ai_ecosystem_schema.yaml"
+_args = sys.argv[1:]
+ref_docs = []
+if "--refs" in _args:
+    _i = _args.index("--refs")
+    ref_docs = _args[_i + 1:]
+    _args = _args[:_i]
+model_path = _args[0] if len(_args) > 0 else "ai_ecosystem.yaml"
+schema_path = _args[1] if len(_args) > 1 else "ai_ecosystem_schema.yaml"
 M = yaml.safe_load(open(model_path, encoding="utf-8"))
 S = yaml.safe_load(open(schema_path, encoding="utf-8"))
 enums = {k: set(v["permissible_values"]) for k, v in S["enums"].items()}
@@ -183,6 +195,34 @@ for v in M.get("views", []):
             err(f"{w}: unknown loop {lid}")
     if "direction" in v:
         check_enum(f"{w}.direction", v["direction"], "DirectionEnum")
+
+# ---------------- document references ----------------
+MIGRATED = {  # ids removed or split in v3.x
+    "N_HARNESS": "split into N_AGENT (runtime) and N_GUARDRAIL (policy kernel)",
+    "N_FRONTIER": "split into N_FRONTIER_LAB (organisation) and N_FRONTIER_MODEL (artefact)",
+    "N_ABSORBED": "now the competitive_pressure edges E_LAB_ABSORBS_ISV and E_CLOUD_ABSORBS_ISV",
+    "N_ISV": "renamed N_ISV_PRODUCT",
+}
+if ref_docs:
+    all_ids = set(nodes) | set(edges) | {lp["id"] for lp in M.get("loops", [])} | set(frames) \
+        | {v["id"] for v in M.get("views", [])}
+    pairs = {(e["from"], e["to"]) for e in M["edges"]}
+    id_re = re.compile(r"\b[NELFV]_[A-Z][A-Z0-9_]*\b")
+    claim_re = re.compile(r"\b(N_[A-Z][A-Z0-9_]*)\s*(?:→|->|⟶)\s*(N_[A-Z][A-Z0-9_]*)")
+    for doc in ref_docs:
+        try:
+            lines = open(doc, encoding="utf-8").read().splitlines()
+        except OSError as ex:
+            err(f"{doc}: cannot read ({ex})")
+            continue
+        for ln, text in enumerate(lines, 1):
+            for ident in sorted(set(id_re.findall(text))):
+                if ident not in all_ids:
+                    hint = f" ({MIGRATED[ident]})" if ident in MIGRATED else ""
+                    err(f"{doc}:{ln}: unknown id {ident}{hint}")
+            for a, b in claim_re.findall(text):
+                if a in nodes and b in nodes and (a, b) not in pairs:
+                    warn(f"{doc}:{ln}: no edge {a} -> {b}; present as a hypothesis or add a defensible edge")
 
 # ---------------- report ----------------
 print(f"{len(nodes)} nodes, {len(edges)} edges, {len(M.get('loops', []))} loops, "

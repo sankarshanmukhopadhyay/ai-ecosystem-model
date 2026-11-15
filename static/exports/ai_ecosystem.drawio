@@ -22,7 +22,7 @@
             <mxGeometry x="30" y="270" width="220" height="75" as="geometry"/>
           </mxCell>
         </object>
-        <object id="N_AUDITOR" label="&lt;b&gt;Conformity &amp; Certification Bodies&lt;/b&gt;&lt;br/&gt;&lt;small&gt;EU notified bodies, ISO/IEC 42001 certifiers&lt;/small&gt;" kind="private_oversight_body" domains="governance" cluster="cluster_regulatory" jurisdictions="eu, global" eu_ai_act_roles="" nist_functions="measure" evolution_stage="" cardinality_min="2.0" cardinality_max="3.0" cardinality_unit="entities" role="EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification">
+        <object id="N_AUDITOR" label="&lt;b&gt;Conformity &amp; Certification Bodies&lt;/b&gt;&lt;br/&gt;&lt;small&gt;EU notified bodies, ISO/IEC 42001 certifiers&lt;/small&gt;" kind="private_oversight_body" domains="governance" cluster="cluster_regulatory" jurisdictions="eu, global" eu_ai_act_roles="" nist_functions="measure" evolution_stage="" cardinality_min="2.0" cardinality_max="3.0" cardinality_unit="entities" reassessment_authority="Recognition and supervision by statutory authorities; evidence from enterprise-operated systems is not independent of the assessed enterprise" role="EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification">
           <mxCell style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#FFF1F0;strokeColor=#F5222D;strokeWidth=2;fontColor=#0F172A;" vertex="1" parent="master_view_cluster_regulatory">
             <mxGeometry x="30" y="380" width="220" height="75" as="geometry"/>
           </mxCell>
@@ -345,6 +345,21 @@
         <mxCell id="E_GOV_TO_ENT_ADVICE" value="Risk assessments &amp; policy recommendations (S4 to S5)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_AI_GOVERNANCE" target="N_ENTERPRISE" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
+        <mxCell id="E_REG_TO_AUDITOR" value="Recognition, supervision &amp; suspension of conformity bodies; can require reassessment after incidents" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#722ED1;strokeWidth=3;html=1;" edge="1" source="N_REGULATOR" target="N_AUDITOR" parent="1" power_asymmetry="" switching_cost="" polarity="negative" protocol_plane="NONE" relation_kind="statutory_mandate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_OBSERVE_TO_AUDITOR" value="Behavioural evaluation evidence for continuing surveillance (enterprise-operated)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_OBSERVE" target="N_AUDITOR" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_AUDITOR_TO_INSURER" value="Certification status &amp; scope as an underwriting basis (third-party reliance)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_AUDITOR" target="N_INSURER" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_ENT_TO_IDP" value="Grants, scopes &amp; revokes delegated authority (S5 to S2)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E11D48;strokeWidth=2;dashed=1;html=1;" edge="1" source="N_ENTERPRISE" target="N_IDP" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="governance_control">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_IDP_TO_GATEWAY" value="Credential validation at call time: withdrawn authority stops tool access" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2563EB;strokeWidth=2;html=1;" edge="1" source="N_IDP" target="N_TOOL_GATEWAY" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="a2e" relation_kind="protocol_call">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
         <mxCell id="E_OBSERVE_PROBE_TARGET" value="S3* independent behavioural probe &amp; red-teaming" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E11D48;strokeWidth=2;dashed=1;html=1;" edge="1" source="N_OBSERVE" target="N_TARGET_SYS" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="governance_control">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
@@ -589,7 +604,7 @@
             <mxGeometry x="30" y="270" width="220" height="75" as="geometry"/>
           </mxCell>
         </object>
-        <object id="N_AUDITOR" label="&lt;b&gt;Conformity &amp; Certification Bodies&lt;/b&gt;&lt;br/&gt;&lt;small&gt;EU notified bodies, ISO/IEC 42001 certifiers&lt;/small&gt;" kind="private_oversight_body" domains="governance" cluster="cluster_regulatory" jurisdictions="eu, global" eu_ai_act_roles="" nist_functions="measure" evolution_stage="" cardinality_min="2.0" cardinality_max="3.0" cardinality_unit="entities" role="EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification">
+        <object id="N_AUDITOR" label="&lt;b&gt;Conformity &amp; Certification Bodies&lt;/b&gt;&lt;br/&gt;&lt;small&gt;EU notified bodies, ISO/IEC 42001 certifiers&lt;/small&gt;" kind="private_oversight_body" domains="governance" cluster="cluster_regulatory" jurisdictions="eu, global" eu_ai_act_roles="" nist_functions="measure" evolution_stage="" cardinality_min="2.0" cardinality_max="3.0" cardinality_unit="entities" reassessment_authority="Recognition and supervision by statutory authorities; evidence from enterprise-operated systems is not independent of the assessed enterprise" role="EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification">
           <mxCell style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;fillColor=#FFF1F0;strokeColor=#F5222D;strokeWidth=2;fontColor=#0F172A;" vertex="1" parent="view_governance_cluster_regulatory">
             <mxGeometry x="30" y="380" width="220" height="75" as="geometry"/>
           </mxCell>
@@ -738,6 +753,12 @@
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_CIVIL_TO_LEG_ALARM" value="Public alarm: investigations, advocacy &amp; media pressure bypassing regulators" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#B91C1C;strokeWidth=4;html=1;" edge="1" source="N_CIVIL_SOCIETY" target="N_LEGISLATURE" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="algedonic_signal">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_REG_TO_AUDITOR" value="Recognition, supervision &amp; suspension of conformity bodies; can require reassessment after incidents" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#722ED1;strokeWidth=3;html=1;" edge="1" source="N_REGULATOR" target="N_AUDITOR" parent="1" power_asymmetry="" switching_cost="" polarity="negative" protocol_plane="NONE" relation_kind="statutory_mandate">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_ENT_TO_IDP" value="Grants, scopes &amp; revokes delegated authority (S5 to S2)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E11D48;strokeWidth=2;dashed=1;html=1;" edge="1" source="N_ENTERPRISE" target="N_IDP" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="governance_control">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_OBSERVE_PROBE_TARGET" value="S3* independent behavioural probe &amp; red-teaming" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E11D48;strokeWidth=2;dashed=1;html=1;" edge="1" source="N_OBSERVE" target="N_TARGET_SYS" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="governance_control">
@@ -894,6 +915,9 @@
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_GUARDRAIL_TO_AUDIT" value="Tamper-evident decision &amp; action trail (Art. 12)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_GUARDRAIL" target="N_AUDIT_STORE" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_IDP_TO_GATEWAY" value="Credential validation at call time: withdrawn authority stops tool access" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2563EB;strokeWidth=2;html=1;" edge="1" source="N_IDP" target="N_TOOL_GATEWAY" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="a2e" relation_kind="protocol_call">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_THREAT_TO_AGENT" value="Prompt injection, tool poisoning, credential abuse" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_THREAT_ACTOR" target="N_AGENT" parent="1" power_asymmetry="" switching_cost="" polarity="negative" protocol_plane="NONE" relation_kind="adversarial_attack">

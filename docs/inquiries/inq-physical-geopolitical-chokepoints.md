@@ -167,8 +167,6 @@ The entire global AI capital cycle rests on a needlepoint of single-digit physic
 
 - **Entities Evaluated:** N_SILICON, N_ENERGY_GRID, N_CAPITAL, N_REGULATOR, N_TRAIN, N_FRONTIER_LAB, N_FRONTIER_MODEL, N_ENTERPRISE, N_AFFECTED_PARTY.
 
-- **Ontological Additions Resolved (v3.0):**
-  
-  - Renamed N_SILICON_CHOKEPOINT to N_SILICON.
-  
+- **Ontological Additions Resolved (v3.2):**
+   
   - Classified the energy bottleneck as a physical_constraint rather than a liability_exposure.

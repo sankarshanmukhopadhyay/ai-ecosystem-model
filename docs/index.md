@@ -212,6 +212,11 @@ flowchart TB
     N_AFFECTED_PARTY -->|"Reports harm to advocates, researchers & media"| N_CIVIL_SOCIETY
     N_CIVIL_SOCIETY == "🚨 Public alarm: investigations, advocacy & media pressure bypassing regulators" ==> N_LEGISLATURE
     N_AI_GOVERNANCE -->|"Risk assessments & policy recommendations (S4 to S5)"| N_ENTERPRISE
+    N_REGULATOR == "Recognition, supervision & suspension of conformity bodies; can require reassessment after incidents" ==> N_AUDITOR
+    N_OBSERVE -->|"Behavioural evaluation evidence for continuing surveillance (enterprise-operated)"| N_AUDITOR
+    N_AUDITOR -->|"Certification status & scope as an underwriting basis (third-party reliance)"| N_INSURER
+    N_ENTERPRISE -. "Grants, scopes & revokes delegated authority (S5 to S2)" .-> N_IDP
+    N_IDP -->|"Credential validation at call time: withdrawn authority stops tool access"| N_TOOL_GATEWAY
     N_OBSERVE -. "S3* independent behavioural probe & red-teaming" .-> N_TARGET_SYS
     N_TARGET_SYS == "🚨 Algedonic alarm: direct S1 to S5 circuit breaker" ==> N_ENTERPRISE
     N_THREAT_ACTOR -. "⚡ Prompt injection, tool poisoning, credential abuse" .-> N_AGENT

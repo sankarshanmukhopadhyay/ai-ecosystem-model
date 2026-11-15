@@ -111,10 +111,10 @@ flowchart TB
     N_TARGET_SYS -. "Direct impact & real-world blast radius" .-> N_AFFECTED_PARTY
     N_ENTERPRISE -. "Vicarious liability for harm (respondeat superior)" .-> N_AFFECTED_PARTY
 
-    %% Balancing Loop 1: Direct Market Resistance (L_B3)
+    %% Balancing Loop 1: Direct Market Resistance (L_B3_SOCIAL_LICENCE)
     N_AFFECTED_PARTY -. "Market resistance, churn & social-licence revocation" .-> N_ENTERPRISE
 
-    %% Balancing Loop 2: Statutory Redress (L_B2)
+    %% Balancing Loop 2: Statutory Redress (L_B2_HARM_REGULATION)
     N_AFFECTED_PARTY -->|"Complaints & redress demands (Art. 85)"| N_REGULATOR
     N_REGULATOR == "Statutory penalties & enforcement" ==> N_ENTERPRISE
 

@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../schema/ai_ecosystem.json
 metadata:
   title: "AI Ecosystem Governance, Economic & Architecture Model"
-  version: "3.1"
+  version: "3.2"
   schema_version: "3.1.0"
   as_of: 2026-11-15
   description: "Property graph of the AI ecosystem: value chain, control structure (viewpoint-relative VSM frames), liability, adversaries and named feedback loops, with Wardley evolution stage on value-chain components."
@@ -87,6 +87,7 @@ nodes:
     cardinality_log10_max: 3.0
     cardinality_unit: entities
     properties:
+      reassessment_authority: "Recognition and supervision by statutory authorities; evidence from enterprise-operated systems is not independent of the assessed enterprise"
       role: "EU conformity assessment where a notified body is required (Art. 43; most Annex III systems use internal control instead) and voluntary ISO/IEC 42001 certification"
 
   - id: N_INSURER
@@ -557,6 +558,13 @@ edges:
   - {id: E_CIVIL_TO_LEG_ALARM, from: N_CIVIL_SOCIETY, to: N_LEGISLATURE, label: "Public alarm: investigations, advocacy & media pressure bypassing regulators", relation_kind: algedonic_signal, polarity: positive, affects: "policy-maker awareness of systemic harm", delay: months}
   - {id: E_GOV_TO_ENT_ADVICE, from: N_AI_GOVERNANCE, to: N_ENTERPRISE, label: "Risk assessments & policy recommendations (S4 to S5)", relation_kind: data_flow, polarity: positive, affects: "enterprise strategic awareness of AI risk"}
 
+  # ---- Assurance continuity & delegated authority ----
+  - {id: E_REG_TO_AUDITOR, from: N_REGULATOR, to: N_AUDITOR, label: "Recognition, supervision & suspension of conformity bodies; can require reassessment after incidents", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to certify without supervision", normative_status: binding}
+  - {id: E_OBSERVE_TO_AUDITOR, from: N_OBSERVE, to: N_AUDITOR, label: "Behavioural evaluation evidence for continuing surveillance (enterprise-operated)", relation_kind: data_flow, polarity: positive, affects: "auditor behavioural evidence base"}
+  - {id: E_AUDITOR_TO_INSURER, from: N_AUDITOR, to: N_INSURER, label: "Certification status & scope as an underwriting basis (third-party reliance)", relation_kind: data_flow, polarity: positive, affects: "insurer assurance basis"}
+  - {id: E_ENT_TO_IDP, from: N_ENTERPRISE, to: N_IDP, label: "Grants, scopes & revokes delegated authority (S5 to S2)", relation_kind: governance_control, polarity: positive, affects: "agent delegated authority", normative_status: practice}
+  - {id: E_IDP_TO_GATEWAY, from: N_IDP, to: N_TOOL_GATEWAY, label: "Credential validation at call time: withdrawn authority stops tool access", relation_kind: protocol_call, protocol_plane: a2e, polarity: positive, affects: "tool-call authority verification"}
+
   # ---- Cybernetic channels and adversaries ----
   - {id: E_OBSERVE_PROBE_TARGET, from: N_OBSERVE, to: N_TARGET_SYS, label: "S3* independent behavioural probe & red-teaming", relation_kind: governance_control, polarity: positive, affects: "behavioural assurance evidence", normative_status: practice}
   - {id: E_ALGEDONIC_TARGET_ENT, from: N_TARGET_SYS, to: N_ENTERPRISE, label: "Algedonic alarm: direct S1 to S5 circuit breaker", relation_kind: algedonic_signal, polarity: positive, affects: "enterprise awareness of critical failure"}
@@ -685,6 +693,12 @@ views:
     title: "Feedback structure"
     question: "Which loops drive concentration, and which provide correction?"
     loops_shown: [L_R1_CAPITAL_COMPUTE_FLYWHEEL, L_B1_OPEN_RELEASE_BRAKE, L_B2_HARM_REGULATION, L_B3_SOCIAL_LICENCE, L_B4_HARM_ALARM_POLICY]
+    direction: lr
+  - id: V_ASSURANCE
+    title: "Continuing assurance"
+    question: "When a certified deployment changes or produces adverse evidence, can reassessment be triggered by credible and independent evidence, and who can rely on the result?"
+    relation_kinds: [governance_control, statutory_mandate, data_flow, algedonic_signal, protocol_call]
+    focus_nodes: [N_AUDITOR, N_REGULATOR, N_OBSERVE, N_AUDIT_STORE, N_GUARDRAIL, N_INSURER, N_ENTERPRISE, N_IDP, N_TOOL_GATEWAY, N_AFFECTED_PARTY]
     direction: lr
   - id: V_SECURITY
     title: "Adversarial surface"
