@@ -1,8 +1,12 @@
 id: https://w3id.org/ai-ecosystem/schema
 name: ai_ecosystem_schema
 title: AI Ecosystem Metamodel Specification
-description: Formal schema defining nodes, edges, clusters, regulatory roles, cybernetic systems, protocol planes, and Wardley evolution stages.
-version: "2.3.0"
+description: >-
+  Property-graph metamodel of the AI ecosystem. Core structure: nodes (archetypes) and typed,
+  directed edges. Analytical lenses sit on top of the core and are detachable: viewpoint-relative
+  VSM frames, named feedback loops, Wardley evolution stage, and optional framework tags
+  (EU AI Act, NIST AI RMF). Views are the queryable entry points (each carries the question it answers).
+version: "3.0.0"
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -24,11 +28,11 @@ classes:
     tree_root: true
     slots:
       - metadata
-      - styles
-      - taxonomies
       - clusters
       - nodes
       - edges
+      - loops
+      - frames
       - views
 
   Metadata:
@@ -36,17 +40,22 @@ classes:
     slots:
       - title
       - version
+      - schema_version
       - description
+      - as_of
+      - provenance_note
 
   Cluster:
-    description: "Functional or value-chain boundary."
+    description: "Functional or value-chain boundary (layout and grouping only; carries no semantics)."
     slots:
       - id
       - label
       - description
 
   Node:
-    description: "Architectural archetype (system, authority, actor, or asset)."
+    description: >-
+      Architectural archetype: an actor, institution, component, store, or commons. Forces and
+      pressures (e.g. platform absorption) are modelled as edges, not nodes.
     slots:
       - id
       - label
@@ -55,14 +64,16 @@ classes:
       - domains
       - kind
       - evolution_stage
-      - vsm_system
-      - vsm_recursion_level
-      - jurisdiction
-      - eu_ai_act_role
-      - nist_function
+      - jurisdictions
+      - regime_types
+      - eu_ai_act_roles
+      - nist_functions
       - cardinality_log10_min
       - cardinality_log10_max
       - cardinality_unit
+      - confidence
+      - sources
+      - as_of
       - properties
     slot_usage:
       cluster:
@@ -76,23 +87,24 @@ classes:
         range: NodeKindEnum
         required: true
       evolution_stage:
+        description: >-
+          Wardley evolution stage. Apply ONLY to value-chain components (things that are built,
+          bought or consumed); leave unset for authorities, people and adversaries.
         range: EvolutionStageEnum
-        required: false
-      vsm_system:
-        range: VSMSystemEnum
-        required: false
-      vsm_recursion_level:
-        range: VSMRecursionLevelEnum
-        required: false
-      jurisdiction:
+      jurisdictions:
         range: JurisdictionEnum
-        required: false
-      eu_ai_act_role:
+        multivalued: true
+      regime_types:
+        description: "Only meaningful for statutory authorities that bundle several regime types."
+        range: RegimeTypeEnum
+        multivalued: true
+      eu_ai_act_roles:
         range: EuAiActRoleEnum
-        required: false
-      nist_function:
+        multivalued: true
+      nist_functions:
+        description: "Optional. Tag only organisation-level actors and controls that actually perform the function."
         range: NistRmfFunctionEnum
-        required: false
+        multivalued: true
       cardinality_log10_min:
         range: float
         required: true
@@ -102,68 +114,176 @@ classes:
       cardinality_unit:
         range: CardinalityUnitEnum
         required: true
+    rules:
+      - description: "evolution_stage is for value-chain components only."
+        preconditions:
+          slot_conditions:
+            kind:
+              equals_string_in: [public_authority, statutory_authority, private_oversight_body, person, threat_actor]
+        postconditions:
+          slot_conditions:
+            evolution_stage:
+              value_presence: ABSENT
 
   Edge:
-    description: "Directed relationship, financial flow, protocol call, or liability boundary."
+    description: "Directed relationship: money, supply, mandate, control, liability, pressure, attack, protocol call, or data."
     slots:
       - id
       - from_node
       - to_node
       - label
-      - domains
       - relation_kind
       - protocol_plane
       - polarity
+      - affects
       - power_asymmetry
       - switching_cost
+      - confidence
+      - sources
     slot_usage:
-      id:
-        required: true
       from_node:
         range: Node
         required: true
       to_node:
         range: Node
         required: true
-      domains:
-        range: DomainEnum
-        multivalued: true
-        required: true
       relation_kind:
         range: RelationKindEnum
-        required: true
-      protocol_plane:
-        range: ProtocolPlaneEnum
         required: true
       polarity:
         range: PolarityEnum
         required: true
-      power_asymmetry:
-        range: PowerAsymmetryEnum
-        required: false
-      switching_cost:
-        range: SwitchingCostEnum
-        required: false
+    rules:
+      - description: "protocol_plane is required for protocol calls."
+        preconditions:
+          slot_conditions:
+            relation_kind:
+              equals_string: protocol_call
+        postconditions:
+          slot_conditions:
+            protocol_plane:
+              required: true
+      - description: "protocol_plane must be absent for every other relation kind."
+        preconditions:
+          slot_conditions:
+            relation_kind:
+              equals_string_in:
+                - commercial_flow
+                - resource_supply
+                - statutory_mandate
+                - governance_control
+                - liability_exposure
+                - competitive_pressure
+                - physical_constraint
+                - adversarial_attack
+                - contractual_term
+                - data_flow
+                - algedonic_signal
+        postconditions:
+          slot_conditions:
+            protocol_plane:
+              value_presence: ABSENT
+      - description: "Market-structure fields apply only to market-type relations."
+        preconditions:
+          slot_conditions:
+            relation_kind:
+              equals_string_in:
+                - statutory_mandate
+                - governance_control
+                - liability_exposure
+                - physical_constraint
+                - adversarial_attack
+                - data_flow
+                - algedonic_signal
+        postconditions:
+          slot_conditions:
+            power_asymmetry:
+              value_presence: ABSENT
+            switching_cost:
+              value_presence: ABSENT
+      - description: "A signed polarity must name the state variable it acts on."
+        preconditions:
+          slot_conditions:
+            polarity:
+              equals_string_in: [positive, negative]
+        postconditions:
+          slot_conditions:
+            affects:
+              required: true
+      - description: "A neutral edge acts on no state variable."
+        preconditions:
+          slot_conditions:
+            polarity:
+              equals_string: neutral
+        postconditions:
+          slot_conditions:
+            affects:
+              value_presence: ABSENT
+
+  Loop:
+    description: >-
+      Named feedback loop: an ordered, contiguous cycle of edges (each edge's to_node is the next
+      edge's from_node; the last returns to the first from_node). The loop type is an analyst
+      judgement; a parity check on edge polarities is only a sanity test.
+    slots:
+      - id
+      - label
+      - loop_type
+      - loop_edges
+      - description
+    slot_usage:
+      loop_type:
+        required: true
+      loop_edges:
+        required: true
+
+  VsmFrame:
+    description: >-
+      Viewpoint-relative Viable System Model assignment. VSM roles are relative to a system-in-focus
+      at one recursion level, so they live here, not on nodes. A node may hold different roles in
+      different frames. Nodes not listed are the frame's environment or its resource suppliers.
+    slots:
+      - id
+      - label
+      - description
+      - recursion_offset
+      - roles
+    slot_usage:
+      recursion_offset:
+        required: true
+      roles:
+        required: true
+
+  VsmRole:
+    description: "A node's role within one frame."
+    slots:
+      - node
+      - role
+      - rationale
+    slot_usage:
+      node:
+        range: Node
+        required: true
+      role:
+        required: true
 
   View:
-    description: "Queryable lens projecting a slice of the property graph."
+    description: "Queryable lens projecting a slice of the graph, defined by the question it answers."
     slots:
       - id
       - title
-      - description
-      - domains
+      - question
+      - relation_kinds
+      - focus_nodes
+      - frame
+      - loops_shown
       - direction
-    slot_usage:
-      domains:
-        range: DomainEnum
-        multivalued: true
-        required: true
-      direction:
-        range: DirectionEnum
 
   AnyObject:
     class_uri: linkml:Any
-    description: "Unconstrained dictionary for dynamic node properties."
+    description: >-
+      Unconstrained commentary dictionary for node-specific notes. Promote a key to a typed slot as
+      soon as two nodes share it and a query needs it.
 
 # ===================================================================
 # SLOTS
@@ -171,17 +291,18 @@ classes:
 slots:
   id:
     identifier: true
-    range: string
-  title:
-    range: string
-  label:
-    range: string
-  sublabel:
-    range: string
-  version:
-    range: string
-  description:
-    range: string
+  title: {}
+  label: {}
+  sublabel: {}
+  version: {}
+  schema_version: {}
+  description: {}
+  provenance_note: {}
+  rationale: {}
+  question:
+    description: "The inquiry this view exists to answer."
+  as_of:
+    range: date
   from_node:
     alias: from
     range: Node
@@ -190,46 +311,77 @@ slots:
     range: Node
   cluster:
     range: Cluster
-  direction:
-    range: DirectionEnum
   kind:
     range: NodeKindEnum
   evolution_stage:
     range: EvolutionStageEnum
-  vsm_system:
-    range: VSMSystemEnum
-  vsm_recursion_level:
-    range: VSMRecursionLevelEnum
-  jurisdiction:
+  jurisdictions:
     range: JurisdictionEnum
-  eu_ai_act_role:
+    multivalued: true
+  regime_types:
+    range: RegimeTypeEnum
+    multivalued: true
+  eu_ai_act_roles:
     range: EuAiActRoleEnum
-  nist_function:
+    multivalued: true
+  nist_functions:
     range: NistRmfFunctionEnum
+    multivalued: true
   cardinality_log10_min:
     range: float
   cardinality_log10_max:
     range: float
   cardinality_unit:
     range: CardinalityUnitEnum
+  confidence:
+    range: ConfidenceEnum
+    description: "Confidence in the node's or edge's quantitative or factual claims."
+  sources:
+    description: "Citations or URIs supporting the claims (prov:wasDerivedFrom)."
+    multivalued: true
   relation_kind:
     range: RelationKindEnum
   protocol_plane:
     range: ProtocolPlaneEnum
   polarity:
     range: PolarityEnum
+  affects:
+    description: "Name of the target-side state variable the edge acts on (e.g. 'lab margin'). Required for signed polarity."
   power_asymmetry:
     range: PowerAsymmetryEnum
   switching_cost:
     range: SwitchingCostEnum
+  loop_type:
+    range: LoopTypeEnum
+  loop_edges:
+    range: Edge
+    multivalued: true
+  recursion_offset:
+    range: integer
+    description: "Recursion level relative to the enterprise (0 = enterprise, +1 = jurisdiction, -1 = agent internals)."
+  node:
+    range: Node
+  role:
+    range: VsmRoleEnum
+  roles:
+    range: VsmRole
+    multivalued: true
+    inlined_as_list: true
+  relation_kinds:
+    range: RelationKindEnum
+    multivalued: true
+  focus_nodes:
+    range: Node
+    multivalued: true
+  frame:
+    range: VsmFrame
+  loops_shown:
+    range: Loop
+    multivalued: true
+  direction:
+    range: DirectionEnum
   metadata:
     range: Metadata
-    inlined: true
-  styles:
-    range: AnyObject
-    inlined: true
-  taxonomies:
-    range: AnyObject
     inlined: true
   properties:
     range: AnyObject
@@ -249,16 +401,25 @@ slots:
     range: Edge
     multivalued: true
     inlined_as_list: true
+  loops:
+    range: Loop
+    multivalued: true
+    inlined_as_list: true
+  frames:
+    range: VsmFrame
+    multivalued: true
+    inlined_as_list: true
   views:
     range: View
     multivalued: true
     inlined_as_list: true
 
 # ===================================================================
-# ENUMS
+# ENUMS (all values lower snake_case)
 # ===================================================================
 enums:
   DomainEnum:
+    description: "Node-level lens. Edge domains are derived from relation_kind (see its 'domains' annotation)."
     permissible_values:
       economic: {}
       technical: {}
@@ -267,181 +428,199 @@ enums:
   EvolutionStageEnum:
     permissible_values:
       genesis:
-        description: "Novel, experimental, unproven concepts with high uncertainty."
+        description: "Novel, experimental, poorly understood."
       custom_built:
-        description: "Bespoke, highly differentiated implementations or rare capital assets."
+        description: "Bespoke, differentiated, or rare capital assets."
       product:
-        description: "Standardized, commercialized off-the-shelf software or hardware products."
+        description: "Standardised, commercially packaged offerings."
       commodity:
-        description: "Ubiquitous, low-margin utilities or open commons (zero marginal cost)."
+        description: "Ubiquitous utility or open commons; near-zero marginal cost."
 
   NodeKindEnum:
     permissible_values:
-      StatutoryAuthority:
-        description: "Regulators, court systems, market surveillance."
-      StandardsConsortium:
-        description: "International standards setting organizations, technical committees (ISO/IEC JTC 1/SC 42, IEEE, W3C, CEN-CENELEC)."
-      ForesightInstitute:
-        description: "National AI Safety Institutes (US/UK/Japan AISI), frontier red-team evaluators, horizon-scanning bodies."
-      NaturalPerson:
-        description: "Human delegators, operators, impacted citizens."
-      DeterministicGate:
-        description: "Policy kernels, sandboxes, capability brokers."
-      StateStore:
-        description: "Vector databases, audit ledgers, ERP systems."
-      SecurityAuthority:
-        description: "IdP, OAuth token brokers, workload IAM."
-      SoftwareService:
-        description: "Foundation model endpoints, vertical SaaS."
-      EconomicEntity:
-        description: "Commercial deployers, compute hubs, insurers, utility operators, cloud platforms."
+      statutory_authority:
+        description: "Regulators, enforcement agencies, courts, market surveillance."
+      public_authority:
+        description: "Non-statutory public bodies: national AI safety/security institutes, horizon-scanning units."
+      private_oversight_body:
+        description: "Standards bodies, certification and audit bodies."
+      organisation:
+        description: "Firms, markets, and internal functions (labs, clouds, insurers, capital, enterprises, governance boards)."
+      person:
+        description: "Natural persons or populations of them (delegators, overseers, consumers, citizens)."
+      threat_actor:
+        description: "Adversaries and misuse actors."
+      software_service:
+        description: "Models, applications, agent runtimes, observability services."
+      control_component:
+        description: "Deterministic gates, policy kernels, identity brokers, tool gateways."
+      data_store:
+        description: "Knowledge bases, audit ledgers, production systems of record."
+      commons:
+        description: "Open, non-proprietary shared artefacts (open-weight models)."
 
-  VSMSystemEnum:
+  VsmRoleEnum:
     permissible_values:
-      S1_Operations:
-        description: "System 1: Operational primary activities."
-      S2_Coordination:
-        description: "System 2: Oscillation damping and protocol arbitration."
-      S3_Control:
-        description: "System 3: Operational control and internal stability."
-      S3_Star_Audit:
-        description: "System 3*: Sporadic, independent audit and red-teaming."
-      S4_Intelligence:
-        description: "System 4: Environmental scanning, foresight, and horizon strategy."
-      S5_Policy:
-        description: "System 5: Ultimate policy and identity closure."
-      ENVIRONMENT:
-        description: "External operational environment and blast radius."
-
-  VSMRecursionLevelEnum:
-    permissible_values:
-      Level_n_Enterprise:
-        description: "Recursion Level n: The enterprise deployer and its internal AI operations."
-      Level_n_plus_1_Jurisdiction:
-        description: "Recursion Level n+1: The societal, statutory, and macro-financial meta-system."
-      Level_n_minus_1_Component:
-        description: "Recursion Level n-1: Internal micro-components within an agent runtime."
+      s1_operations:
+        description: "System 1: operational units doing the primary activity."
+      s2_coordination:
+        description: "System 2: oscillation damping, protocol and identity arbitration."
+      s3_control:
+        description: "System 3: operational control, resource bargain, accountability."
+      s3_star_audit:
+        description: "System 3*: sporadic, independent audit and probing."
+      s4_intelligence:
+        description: "System 4: environmental scanning, foresight, adaptation."
+      s5_policy:
+        description: "System 5: ultimate policy and identity closure."
 
   JurisdictionEnum:
     permissible_values:
-      Global:
-        description: "Transnational / global consensus or market space"
-      EU:
-        description: "European Union legal framework"
-      US:
-        description: "United States federal and state jurisdictions"
-      China:
-        description: "People's Republic of China regulatory & AI governance framework"
-      UK:
-        description: "United Kingdom regulatory framework"
-      APAC:
-        description: "Asia-Pacific legal frameworks (Australia, Singapore, Japan)"
-      Multi_Jurisdictional:
-        description: "Cross-border operational footprint"
+      global: {}
+      eu: {}
+      us: {}
+      china: {}
+      uk: {}
+      apac:
+        description: "Asia-Pacific excluding China (Australia, Singapore, Japan, ...)."
+      multi_jurisdictional: {}
+
+  RegimeTypeEnum:
+    permissible_values:
+      ex_ante_statutory:
+        description: "Pre-market obligations and conformity regimes (e.g. EU AI Act)."
+      ex_post_liability:
+        description: "Enforcement, tort and litigation after harm (e.g. US model)."
+      licensing_state_directed:
+        description: "Registration, filing or licensing with state-directed oversight."
+      export_control:
+        description: "Controls on chips, tools, weights and technology transfer."
 
   CardinalityUnitEnum:
     permissible_values:
-      jurisdictions:
-        description: "Independent sovereign legal jurisdictions"
+      jurisdictions: {}
       entities:
-        description: "Incorporated organizations, firms, or labs"
+        description: "Incorporated organisations, firms, labs."
       clusters:
-        description: "Physical mega-compute data center clusters"
+        description: "Mega-compute data-center clusters."
       instances:
-        description: "Deployed persistent application instances or gateways"
+        description: "Deployed persistent application instances or gateways."
+      model_families:
+        description: "Distinct model families or lineages."
       invocations_per_year:
-        description: "Annual ephemeral agent execution loops"
-      natural_persons:
-        description: "Individual human beings"
+        description: "Annual ephemeral agent execution loops."
+      natural_persons: {}
+
+  ConfidenceEnum:
+    permissible_values:
+      high: {}
+      medium: {}
+      low:
+        description: "Order-of-magnitude estimate or unsourced."
 
   EuAiActRoleEnum:
     permissible_values:
-      Provider_GPAI: {}
-      Provider_System: {}
-      Deployer: {}
-      Importer: {}
-      Distributor: {}
-      Affected_Subject: {}
-      Not_Applicable: {}
+      provider_gpai: {}
+      provider_system: {}
+      deployer: {}
+      importer: {}
+      distributor: {}
+      affected_subject: {}
 
   NistRmfFunctionEnum:
     permissible_values:
-      GOVERN: {}
-      MAP: {}
-      MEASURE: {}
-      MANAGE: {}
-      NOT_APPLICABLE: {}
+      govern: {}
+      map: {}
+      measure: {}
+      manage: {}
 
   RelationKindEnum:
+    description: "Each value carries a 'domains' annotation: the lens(es) it belongs to."
     permissible_values:
       commercial_flow:
-        description: "Capital, subscription fees, wholesale token tolls, CapEx."
+        description: "Capital, fees, subscriptions, capex, wholesale token tolls."
+        annotations: {domains: "economic"}
+      resource_supply:
+        description: "Delivery of physical or compute capacity, hardware, or training inputs."
+        annotations: {domains: "economic,technical"}
       statutory_mandate:
-        description: "Legal authority, compliance orders, export controls, fines."
+        description: "Legal authority: compliance orders, export controls, fines."
+        annotations: {domains: "governance"}
       governance_control:
-        description: "Policy bounds, scope enforcement, audit logging, human override."
+        description: "Policy bounds, scope enforcement, oversight, audit, release gating."
+        annotations: {domains: "governance"}
       liability_exposure:
-        description: "Real-world tort liability, blast radius harm, legal recourse."
+        description: "Tort liability, harm, legal recourse and claims."
+        annotations: {domains: "governance,economic"}
       competitive_pressure:
-        description: "Market margin compression, platform absorption, open-weight price deflation, consumer boycotts."
+        description: "Margin compression, platform absorption, price deflation, consumer churn."
+        annotations: {domains: "economic"}
       physical_constraint:
-        description: "Hard physical, thermodynamic, electrical, or geographic ceilings."
+        description: "Hard physical, electrical, thermodynamic or geographic ceilings."
+        annotations: {domains: "technical,economic"}
+      adversarial_attack:
+        description: "Hostile action against a component or model (injection, poisoning, jailbreak, misuse)."
+        annotations: {domains: "technical"}
       contractual_term:
-        description: "ToS liability disclaimers, SLAs, warranty carve-outs."
+        description: "ToS disclaimers, SLAs, warranty carve-outs."
+        annotations: {domains: "economic,governance"}
       protocol_call:
-        description: "Authenticated technical protocols (MIP, A2E, A2T, A2A)."
+        description: "Authenticated technical protocol interaction."
+        annotations: {domains: "technical"}
       data_flow:
-        description: "Telemetry, prompts, model weights, audit evidence logs."
+        description: "Telemetry, prompts, weights, evidence, audit logs, information."
+        annotations: {domains: "technical"}
       algedonic_signal:
-        description: "Emergency bypass alarm signaling critical failure from S1 to S5."
+        description: "Emergency bypass alarm to the highest policy level, skipping intermediate layers."
+        annotations: {domains: "governance,technical"}
 
   ProtocolPlaneEnum:
     permissible_values:
-      A2E:
-        description: "Agent-to-Enterprise Identity & Auth"
-      MIP:
-        description: "Model Inference Protocol"
-      A2T:
-        description: "Agent-to-Tool Context (MCP, OpenAPI)"
-      A2A:
-        description: "Agent-to-Agent Peer Protocols"
-      NONE:
-        description: "Non-technical institutional relationship"
+      a2e:
+        description: "Agent-to-Enterprise identity and authorisation."
+      mip:
+        description: "Model Inference Protocol."
+      a2t:
+        description: "Agent-to-Tool context (MCP, OpenAPI)."
+      a2a:
+        description: "Agent-to-Agent peer protocols."
 
   PolarityEnum:
     permissible_values:
       positive:
-        description: "Reinforcing edge: increases state of target."
+        description: "More of the source tends to increase the named 'affects' variable on the target."
       negative:
-        description: "Dampening edge: bounds or drains state of target."
+        description: "More of the source tends to decrease or bound the named 'affects' variable on the target."
       neutral:
-        description: "Transactional or state transfer without dynamic sign."
+        description: "Pure transfer with no dynamic sign; 'affects' must be absent."
+
+  LoopTypeEnum:
+    permissible_values:
+      reinforcing: {}
+      balancing: {}
 
   PowerAsymmetryEnum:
     permissible_values:
-      supplier_dominant:
-        description: "Supplier dictates terms, access, and pricing (seller's market)."
-      buyer_dominant:
-        description: "Buyer dictates terms and performance specifications (buyer's market)."
-      balanced:
-        description: "Bilateral bargaining parity between commercial parties."
+      supplier_dominant: {}
+      buyer_dominant: {}
+      balanced: {}
       captive:
-        description: "Target is structurally captive with near-zero alternative suppliers."
+        description: "Target is structurally captive with near-zero alternatives."
 
   SwitchingCostEnum:
     permissible_values:
       prohibitive:
-        description: "Switching involves complete architectural, physical, or legal refactoring."
+        description: "Complete architectural, physical or legal refactoring."
       high:
-        description: "Switching requires significant data migration, re-indexing, or prompt re-tuning."
+        description: "Significant data migration, re-indexing or prompt re-tuning."
       moderate:
-        description: "Standard multi-cloud or modular API adaptation effort."
+        description: "Standard multi-cloud or modular API adaptation."
       low:
-        description: "Commoditized drop-in replacement (e.g. OpenAI-compatible endpoints)."
+        description: "Commoditised drop-in replacement."
 
   DirectionEnum:
     permissible_values:
-      TB: {}
-      LR: {}
-      BT: {}
-      RL: {}
+      tb: {}
+      lr: {}
+      bt: {}
+      rl: {}

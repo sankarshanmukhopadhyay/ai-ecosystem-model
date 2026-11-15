@@ -9,8 +9,9 @@ active_nodes:
   - N_ENTERPRISE
   - N_HUMAN_USER
   - N_IDP
-  - N_HARNESS
-  - N_FRONTIER
+  - N_AGENT
+  - N_GUARDRAIL
+  - N_FRONTIER_MODEL
   - N_KNOWLEDGE_STORE
   - N_TOOL_GATEWAY
   - N_TARGET_SYS
@@ -19,20 +20,24 @@ active_nodes:
   - N_AFFECTED_PARTY
 active_edges:
   - from: N_ENTERPRISE
-    to: N_HARNESS
+    to: N_GUARDRAIL
   - from: N_HUMAN_USER
-    to: N_HARNESS
+    to: N_AGENT
   - from: N_IDP
-    to: N_HARNESS
-  - from: N_HARNESS
-    to: N_FRONTIER
-  - from: N_HARNESS
+    to: N_AGENT
+  - from: N_GUARDRAIL
+    to: N_AGENT
+  - from: N_AGENT
+    to: N_GUARDRAIL
+  - from: N_AGENT
+    to: N_FRONTIER_MODEL
+  - from: N_AGENT
     to: N_KNOWLEDGE_STORE
-  - from: N_HARNESS
+  - from: N_AGENT
     to: N_TOOL_GATEWAY
   - from: N_TOOL_GATEWAY
     to: N_TARGET_SYS
-  - from: N_HARNESS
+  - from: N_GUARDRAIL
     to: N_AUDIT_STORE
   - from: N_OBSERVE
     to: N_TARGET_SYS
@@ -50,15 +55,15 @@ highlight_mode: dim_others
 ## 1. Executive Summary & Core Thesis
 When viewers search the canonical model for a single box labeled **"AI Agent"**, they will not find one. This is by design. 
 
-In this architecture, treating an AI Agent as a monolithic, atomic box is an **ontological category mistake**. An AI Agent is an **emergent cybernetic loop** formed when distinct architectural roles converge: **Reasoning Core**, **Deterministic Controller**, **Semantic Memory**, **Tool Actuation**, **Identity Delegation**, **Independent Verification**, and **Legal Principal**. 
+In this architecture, treating an AI Agent as a monolithic, atomic box is an **ontological category mistake**. An AI Agent is an **emergent cybernetic loop** formed when distinct architectural roles converge: **Reasoning Core** (`N_FRONTIER_MODEL`), **Execution Loop** (`N_AGENT`), **Deterministic Governor** (`N_GUARDRAIL`), **Semantic Memory** (`N_KNOWLEDGE_STORE`), **Tool Actuation** (`N_TOOL_GATEWAY`), and **Legal Principal** (`N_ENTERPRISE`).
 
-Collapsing these roles into a single "agent" entity obscures where software failure modes occur, where deterministic safety gates operate, and where statutory vicarious liability (*respondeat superior*) actually settles.
+The v3.0 model explicitly separates the **Agent Worker** (`N_AGENT`, VSM System 1) from the **Policy Guardrail** (`N_GUARDRAIL`, VSM System 3). Collapsing these roles into a single "agent" entity obscures where software failure modes occur, where deterministic safety gates operate, and where statutory vicarious liability (*respondeat superior*) actually settles.
 
 ---
 
 ## 2. Model Perspective
 
-The diagram below dims the broader regulatory and supply chain context, highlighting the socio-technical loop that forms an active enterprise agent:
+The diagram below highlights the socio-technical loop that forms an active enterprise agent:
 
 ```mermaid
 flowchart TB
@@ -68,129 +73,112 @@ flowchart TB
     classDef dim fill:#F8FAFC,stroke:#E2E8F0,color:#94A3B8,stroke-dasharray: 3 3;
 
     %% Dimmed Context
-    N_REGULATOR[Market Surveillance Authorities]:::dim
-    N_AUDITOR[Conformity Body & ISO Auditor]:::dim
+    N_REGULATOR[Statutory Authorities]:::dim
+    N_AUDITOR[Conformity Bodies]:::dim
     N_INSURER[AI Risk Underwriter]:::dim
-    N_CAPITAL[Capital Markets & Underwriters]:::dim
-    N_TRAIN[Training Supply Chain]:::dim
-    N_OPEN_MODEL[Open-Weight Model Commons]:::dim
-    N_ABSORBED[Platform Absorption Zone]:::dim
-    N_ISV_PRODUCT[Specialized AI Application]:::dim
+    N_CAPITAL[Capital Markets]:::dim
+    N_SILICON[Silicon & Fabs]:::dim
+    N_ENERGY_GRID[Energy Grids]:::dim
+    N_TRAIN[Compute Campuses]:::dim
+    N_CLOUD_HYPERSCALER[Cloud Hyperscalers]:::dim
+    N_FRONTIER_LAB[Frontier AI Labs]:::dim
+    N_ISV_PRODUCT[AI Applications]:::dim
 
     %% Cluster 3: The Principal Domain
-    subgraph cluster_client ["3. Enterprise Deployer & Principal Domain"]
-        N_ENTERPRISE["Enterprise Deployer<br/><small><i>Legal Principal &amp; Economic Sponsor</i></small>"]:::gov
-        N_HUMAN_USER(("Human Task Delegator &amp; Overseer<br/><small><i>End User / Art. 14 HITL Supervisor</i></small>")):::gov
-        N_IDP(["Enterprise Identity &amp; Auth (IdP)<br/><small><i>OAuth, OIDC, Workload IAM &amp; Ephemeral Tokens</i></small>"]):::tech
-        N_KNOWLEDGE_STORE[("Enterprise Semantic Knowledge Base<br/><small><i>Proprietary Vector DBs, Docs &amp; Embeddings</i></small>")]:::tech
+    subgraph cluster_client ["3. Enterprise Deployer Domain"]
+        N_ENTERPRISE["Enterprise Deployer<br/><small><i>Legal Principal &amp; S5 Policy</i></small>"]:::econ
+        N_HUMAN_USER(("Human Task Delegator<br/><small><i>Art. 14 HITL Supervisor</i></small>")):::gov
+        N_IDP(["Enterprise IdP<br/><small><i>OAuth &amp; Ephemeral IAM</i></small>"]):::tech
+        N_KNOWLEDGE_STORE[("Enterprise Semantic Knowledge Base<br/><small><i>Vector DB &amp; CoALA Memory</i></small>")]:::tech
     end
 
-    %% Cluster 2: Runtime & Harness
-    subgraph cluster_product ["2. Specialized Product & Harness Domain"]
-        N_HARNESS[["Autonomous Agent Runtime (The Harness)<br/><small><i>Execution Loop, Planning, Rights &amp; Guardrails</i></small>"]]:::tech
-        N_AUDIT_STORE[("Sovereign Audit Ledger<br/><small><i>Tamper-Evident WORM State &amp; Forensic Store</i></small>")]:::tech
-        N_OBSERVE("Observability &amp; Evals Engine<br/><small><i>Independent Probes &amp; Red-Teaming</i></small>"):::tech
+    %% Cluster 2: Runtime & Governance Kernel
+    subgraph cluster_product ["2. Application & Agent Domain"]
+        N_AGENT("Agent Runtime<br/><small><i>The Worker: Plan-Act Loop (S1)</i></small>"):::tech
+        N_GUARDRAIL[["Policy &amp; Guardrail Kernel<br/><small><i>The Governor: Scope &amp; Budget Gate (S3)</i></small>"]]:::tech
+        N_AUDIT_STORE[("Sovereign Audit Ledger<br/><small><i>Art. 12 WORM Logging</i></small>")]:::tech
+        N_OBSERVE("Observability &amp; Evals Engine<br/><small><i>S3* Independent Probes</i></small>"):::tech
     end
 
-    %% Cluster 1: Probabilistic Intelligence Core
-    subgraph cluster_supply ["1. Upstream Foundation & Model Lab"]
-        N_FRONTIER("Frontier Foundation Model<br/><small><i>Cognitive Engine &amp; Inference Fleets</i></small>"):::tech
+    %% Cluster 1: Probabilistic Model Artifact
+    subgraph cluster_supply ["1. Upstream Model Artifact"]
+        N_FRONTIER_MODEL("Frontier Foundation Model<br/><small><i>Inference Weights Core</i></small>"):::tech
     end
 
-    %% Cluster 4: Real-World Actuation & Impact
+    %% Cluster 4: Real-World Actuation
     subgraph cluster_environment ["4. Target Execution Environment & Blast Radius"]
-        N_TOOL_GATEWAY[["Capability &amp; Tool Gateway<br/><small><i>Decoupled Tool Broker &amp; Context Provider (MCP)</i></small>"]]:::tech
-        N_TARGET_SYS[("Target Systems &amp; Operational APIs<br/><small><i>Databases, Production ERP, Financial Rails</i></small>")]:::tech
-        N_AFFECTED_PARTY(("Impacted Third Party<br/><small><i>Consumers, Employees, Citizens</i></small>")):::gov
+        N_TOOL_GATEWAY[["Capability &amp; Tool Gateway<br/><small><i>Decoupled Broker (MCP)</i></small>"]]:::tech
+        N_TARGET_SYS[("Target Systems &amp; APIs<br/><small><i>Operational State of Record</i></small>")]:::tech
+        N_AFFECTED_PARTY(("Affected Individuals<br/><small><i>Consumers, Citizens</i></small>")):::gov
     end
 
-    %% Active Coordination & Protocol Flows
-    N_ENTERPRISE == "Delegates Authority & Safety Boundaries (VSM 5 to 3)" ==> N_HARNESS
-    N_HUMAN_USER == "Art. 14 Human Oversight & Kill Switch" ==> N_HARNESS
-    N_IDP -->|"A2E Workload Identity Delegation (OAuth/OIDC)"| N_HARNESS
+    %% Authority & Delegation
+    N_ENTERPRISE == "Delegates Authority & Safety Boundaries (S5 to S3)" ==> N_GUARDRAIL
+    N_HUMAN_USER == "Art. 14 Human Oversight & Kill Switch" ==> N_AGENT
+    N_IDP -->|"A2E Workload Identity Delegation"| N_AGENT
 
-    N_HARNESS -->|"MIP Inference API (Tokens & Directives)"| N_FRONTIER
-    N_HARNESS -->|"RAG Semantic Retrieval & Working Context (CoALA)"| N_KNOWLEDGE_STORE
-    N_HARNESS -. "Cryptographic Tamper-Proof Audit Trail (Art. 12)" .-> N_AUDIT_STORE
+    %% The Cybernetic Control Seam between S3 and S1
+    N_GUARDRAIL -. "Policy Envelope & Runtime Constraints (S3 to S1)" .-> N_AGENT
+    N_AGENT -->|"Action Proposals for Pre-Execution Authorisation"| N_GUARDRAIL
+    N_GUARDRAIL -->|"Tamper-Evident Decision Trail (Art. 12)"| N_AUDIT_STORE
 
-    N_HARNESS -. "Enforces Least-Privilege Scopes (VSM 3 to 2)" .-> N_TOOL_GATEWAY
-    N_TOOL_GATEWAY -->|"Authenticated Operations Execution (VSM System 1)"| N_TARGET_SYS
+    %% Operational Actuation
+    N_AGENT -->|"MIP Inference API (Tokens)"| N_FRONTIER_MODEL
+    N_AGENT -->|"RAG Semantic Retrieval"| N_KNOWLEDGE_STORE
+    N_GUARDRAIL -. "Enforces Least-Privilege Scopes (S3 to S2)" .-> N_TOOL_GATEWAY
+    N_AGENT -->|"A2T Tool Calling (MCP)"| N_TOOL_GATEWAY
+    N_TOOL_GATEWAY -->|"Authenticated Operations Execution"| N_TARGET_SYS
 
-    %% Cybernetic Audit & Emergency Channels
-    N_OBSERVE -. "VSM S3* Independent Behavioral Probe & Red-Teaming" .-> N_TARGET_SYS
-    N_TARGET_SYS == "🚨 VSM Algedonic Alarm (Direct S1 to S5 Circuit Breaker)" ==> N_ENTERPRISE
+    %% Independent S3* Probe & Algedonic Emergency Tripwire
+    N_OBSERVE -. "S3* Independent Behavioural Probe" .-> N_TARGET_SYS
+    N_TARGET_SYS == "🚨 Algedonic Alarm (Direct S1 to S5 Circuit Breaker)" ==> N_ENTERPRISE
 
     %% Tensions & Liability
     N_TARGET_SYS -. "Direct Impact & Real-World Blast Radius" .-> N_AFFECTED_PARTY
     N_ENTERPRISE -. "Vicarious Liability for Harm (Respondeat Superior)" .-> N_AFFECTED_PARTY
-
 ```
 
 ## 3. Systemic Mechanics & Walkthrough
 
-The composite agent loop decomposes into distinct functional roles:
+The composite agent loop decomposes into six distinct functional roles:
 
-### 1. The Brain (Probabilistic Reasoning Core) — N_FRONTIER
+### 1. The Brain (Probabilistic Reasoning Core) — N_FRONTIER_MODEL
 
 - **Role:** Stateless next-token prediction, planning proposals, and linguistic abstraction.
 
-- **VSM Role:** **System 1 Cognitive Capability**.
+- **Why it is not an agent:** It possesses no agency, no persistent memory, no internal clock, and no ability to actuate changes in the world. It is a technical software artifact licensed under standard commercial ToS.
 
-- **Protocol Plane:** Invoked over the **Model Inference Protocol (MIP)**.
-
-- **Why it is not an agent:** It possesses no agency, no persistent memory, no internal clock, and no ability to actuate changes in the world. It explicitly disclaims operational warranties via upstream ToS (contractual_term edge).
-
-### 2. The Controller / Ego (Deterministic Drive Loop) — N_HARNESS
+### 2. The Worker (Operational Execution Loop) — N_AGENT
 
 - **Role:** The orchestration while-loop (e.g., LangGraph, AutoGen, or custom runtimes).
 
-- **Cybernetic Tier:** **VSM System 3 (Operational Control & Stability)**.
+- **VSM Role:** **System 1 (Primary Operational Unit)** in the enterprise frame (F_ENTERPRISE).
 
-- **Function:** Maintains execution state across steps, manages self-reflection, verifies token consumption limits, and applies deterministic policy guardrails to constrain non-deterministic model proposals.
+- **Function:** Maintains execution state, manages working and episodic memory, queries model inference via the MIP protocol, and proposes tool actions.
 
-### 3. The Memory (Semantic Context) — N_KNOWLEDGE_STORE
+### 3. The Governor (Deterministic Policy Kernel) — N_GUARDRAIL
+
+- **Role:** The boundary controller and budget gatekeeper.
+
+- **VSM Role:** **System 3 (Operational Control)** in the enterprise frame (F_ENTERPRISE).
+
+- **Function:** Intercepts proposed actions before execution, validates token consumption thresholds, verifies authorization scopes against corporate policy, and writes an unalterable log to N_AUDIT_STORE.
+
+### 4. The Memory (Semantic Context) — N_KNOWLEDGE_STORE
 
 - **Role:** Grounding the agent in organizational reality.
 
 - **Framework:** Implements the **CoALA (Cognitive Architectures for Language Agents)** memory model (Semantic and Episodic stores).
 
-- **Function:** Injects proprietary business rules, historical interactions, and private documents into the prompt context via RAG, bounding hallucinations.
-
-### 4. The Hands (Decoupled Actuation) — N_TOOL_GATEWAY
-
-```
-→
-```
-
-N_TARGET_SYS
+### 5. The Hands (Decoupled Actuation) — N_TOOL_GATEWAY → N_TARGET_SYS
 
 - **Role:** Execution of real-world state changes (database writes, transaction execution, ERP updates).
 
-- **Protocol Plane:** Communicates via the **Agent-to-Tool (A2T)** protocol (e.g., Anthropic's Model Context Protocol or OpenAPI).
+- **Protocol Plane:** Communicates via the **Agent-to-Tool (A2T)** protocol (Model Context Protocol / OpenAPI).
 
-- **Cybernetic Tier:** **VSM System 2 (Coordination & Damping)**.
+- **VSM Tier:** **System 2 (Coordination & Damping)**.
 
-- **Function:** Ensures the runtime never touches production APIs directly. The gateway acts as a capability broker and sandbox, negotiating scopes and verifying authorization before actuating N_TARGET_SYS (**VSM System 1**).
-
-### 5. The Cybernetic Verification Channels — N_OBSERVE & N_AUDIT_STORE
-
-- **The Flight Recorder (N_AUDIT_STORE):** The harness pipes an immutable, tamper-evident log (inputs, outputs, approvals) into sovereign storage to fulfill EU AI Act Article 12.
-
-- **The S3* Independent Probe (N_OBSERVE):** To avoid the cybernetic pathology of self-reporting, N_OBSERVE conducts independent behavioral probes and red-teaming against N_TARGET_SYS, verifying that actual operations match authorized policies.
-
-### 6. The Algedonic Circuit Breaker — N_TARGET_SYS
-
-```
-→
-```
-
-N_ENTERPRISE
-
-- **Cybernetic Role:** **Beer's Algedonic Channel**.
-
-- **Function:** If an agent breaches blast radius thresholds or enters an infinite execution loop, a direct alarm bypasses the harness and alerts N_ENTERPRISE leadership directly, tripping the automated circuit breaker.
-
-### 7. The Principal (Conferral of Legal Agency) — N_ENTERPRISE, N_HUMAN_USER, N_IDP
+### 6. The Principal (Conferral of Legal Agency) — N_ENTERPRISE, N_HUMAN_USER, N_IDP
 
 - **Role:** A software loop cannot be an agent in law without a **legal principal**.
 
@@ -204,22 +192,20 @@ N_ENTERPRISE
 
 | Boundary                                                    | Interaction                | Cybernetic / Governance Risk                                                                                                              |
 | ----------------------------------------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| N_ENTERPRISE → N_HARNESS        | **Authority Delegation**   | Over-delegation of authority without bounded deterministic guardrails exposes the enterprise to strict tort liability.                    |
-| N_HARNESS → N_FRONTIER          | **Probabilistic Gap**      | The harness relies on a non-deterministic inference engine that disclaims liability for incorrect or hallucinated outputs.                |
-| N_OBSERVE → N_TARGET_SYS        | **S3* Independence**       | Without independent behavioral sampling, the enterprise is blind to what the harness fails or chooses not to log.                         |
-| N_TARGET_SYS → N_ENTERPRISE     | **Algedonic Latency**      | If emergency tripwires fail, runaway agent loops cause catastrophic real-world balance sheet damage.                                      |
+| N_GUARDRAIL → N_AGENT           | **S3 Control Envelope**    | Guardrails must constrain probabilistic hallucinations without choking autonomous operational problem-solving.                            |
+| N_AGENT → N_FRONTIER_MODEL      | **Probabilistic Gap**      | The agent relies on a non-deterministic inference engine that disclaims liability for incorrect or biased outputs.                        |
+| N_OBSERVE → N_TARGET_SYS        | **S3* Independence**       | Without independent behavioral sampling, the enterprise is blind to what the agent runtime fails or chooses not to log.                   |
+| N_TARGET_SYS → N_ENTERPRISE     | **Algedonic Latency**      | If emergency circuit breakers fail, runaway agent loops cause catastrophic real-world balance sheet damage.                               |
 | N_TARGET_SYS → N_AFFECTED_PARTY | **Blast Radius Causation** | Actions taken by the agent impact external citizens; the legal doctrine of respondeat superior imputes direct fault back to N_ENTERPRISE. |
 
 ---
 
 ## 5. Model Feedback & Audit Trail
 
-- **Entities Evaluated:** N_ENTERPRISE, N_HUMAN_USER, N_IDP, N_HARNESS, N_FRONTIER, N_KNOWLEDGE_STORE, N_TOOL_GATEWAY, N_TARGET_SYS, N_AUDIT_STORE, N_OBSERVE, N_AFFECTED_PARTY.
+- **Entities Evaluated:** N_ENTERPRISE, N_HUMAN_USER, N_IDP, N_AGENT, N_GUARDRAIL, N_FRONTIER_MODEL, N_KNOWLEDGE_STORE, N_TOOL_GATEWAY, N_TARGET_SYS, N_AUDIT_STORE, N_OBSERVE, N_AFFECTED_PARTY.
 
-- **Cybernetic Features Verified:**
+- **Ontological Refinements Verified (v3.0):**
   
-  - S1 cognition mapping for N_FRONTIER.
+  - Explicitly separated the operational worker loop (N_AGENT, S1) from the deterministic policy governor (N_GUARDRAIL, S3).
   
-  - S3* independent sampling channel (E_OBSERVE_S3_STAR_PROBE).
-  
-  - Algedonic emergency bypass tripwire (E_ALGEDONIC_TRIPWIRE).
+  - Separated the corporate lab entity (N_FRONTIER_LAB) from the technical model weights (N_FRONTIER_MODEL).

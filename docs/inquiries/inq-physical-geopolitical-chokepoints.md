@@ -6,27 +6,28 @@ description: "An inquiry exposing the radical cardinality inversion of the AI ec
 domains: [economic, governance, technical]
 target_audience: [National Security Strategists, Energy Planners, Technology Executives, Sovereign Wealth Funds]
 active_nodes:
-  - N_SILICON_CHOKEPOINT
+  - N_SILICON
   - N_ENERGY_GRID
   - N_CAPITAL
   - N_REGULATOR
   - N_TRAIN
-  - N_FRONTIER
+  - N_FRONTIER_LAB
+  - N_FRONTIER_MODEL
   - N_ENTERPRISE
   - N_AFFECTED_PARTY
 active_edges:
   - from: N_CAPITAL
-    to: N_SILICON_CHOKEPOINT
+    to: N_SILICON
   - from: N_CAPITAL
     to: N_ENERGY_GRID
   - from: N_REGULATOR
-    to: N_SILICON_CHOKEPOINT
-  - from: N_SILICON_CHOKEPOINT
+    to: N_SILICON
+  - from: N_SILICON
     to: N_TRAIN
   - from: N_ENERGY_GRID
     to: N_TRAIN
-  - from: N_TRAIN
-    to: N_FRONTIER
+  - from: N_FRONTIER_LAB
+    to: N_FRONTIER_MODEL
   - from: N_CAPITAL
     to: N_TRAIN
 highlight_mode: dim_others
@@ -59,29 +60,30 @@ flowchart TB
     classDef dim fill:#F8FAFC,stroke:#E2E8F0,color:#94A3B8,stroke-dasharray: 3 3;
 
     %% Dimmed Downstream Context
-    N_ISV_PRODUCT[Specialized AI Application]:::dim
-    N_HARNESS[Autonomous Agent Runtime]:::dim
-    N_AUDIT_STORE[Sovereign Audit Ledger]:::dim
+    N_ISV_PRODUCT[AI Applications]:::dim
+    N_AGENT[Agent Runtime]:::dim
+    N_GUARDRAIL[Policy Guardrail Kernel]:::dim
     N_TOOL_GATEWAY[Capability Gateway]:::dim
     N_TARGET_SYS[Target Systems & APIs]:::dim
-    N_AFFECTED_PARTY[Impacted Citizens]:::dim
+    N_AFFECTED_PARTY[Affected Individuals]:::dim
 
     %% Geopolitical Authority & Macro Capital
     subgraph cluster_regulatory ["0. Jurisdictional, Capital & Regulatory Sphere"]
-        N_REGULATOR{{"National Security &amp; Trade Authorities<br/><small><i>BIS Export Controls, CFIUS, Sovereignty Mandates</i></small>"}}:::gov
+        N_REGULATOR{{"Statutory &amp; Trade Authorities<br/><small><i>BIS Export Controls, CFIUS, Sovereignty Mandates</i></small>"}}:::gov
         N_CAPITAL["Capital Markets &amp; Sovereign Funds<br/><small><i>$600B Infrastructure Financing</i></small>"]:::econ
     end
 
     %% Physical Hardware & Resource Layer
     subgraph Cluster_Physical ["The Physical Chokepoint Layer"]
-        N_SILICON_CHOKEPOINT["Leading-Edge Silicon &amp; Lithography<br/><small><i>ASML (EUV), TSMC (3nm/2nm), CoWoS Packaging</i></small>"]:::physical
+        N_SILICON["Leading-Edge Silicon &amp; Lithography<br/><small><i>ASML (EUV), TSMC (3nm/2nm), CoWoS Packaging</i></small>"]:::physical
         N_ENERGY_GRID[("Energy Grids &amp; Power Generation<br/><small><i>Nuclear PPAs, Substation Transformers, Water</i></small>")]:::physical
     end
 
     %% Upstream Compute & Foundation Lab
-    subgraph cluster_supply ["1. Upstream Foundation &amp; Model Lab"]
-        N_TRAIN["Compute Hubs &amp; Hyperscale Campuses<br/><small><i>GW-Scale Data Centers (Azure, AWS, OCI)</i></small>"]:::econ
-        N_FRONTIER("Frontier Foundation Model<br/><small><i>Globally Replicated Weights &amp; Inference Fleets</i></small>"):::tech
+    subgraph cluster_supply ["1. Upstream Silicon, Cloud &amp; Model Supply"]
+        N_TRAIN["Training Compute Campuses<br/><small><i>GW-Scale Cluster Fabric</i></small>"]:::econ
+        N_FRONTIER_LAB["Frontier AI Labs<br/><small><i>Model Developers</i></small>"]:::econ
+        N_FRONTIER_MODEL("Frontier Foundation Model<br/><small><i>Globally Replicated Weights Fleet</i></small>"):::tech
     end
 
     %% Enterprise Deployer
@@ -90,20 +92,20 @@ flowchart TB
     end
 
     %% Capital Allocation Flows
-    N_CAPITAL == "$$$ Fab CapEx & Lithography Tool Procurement" ==> N_SILICON_CHOKEPOINT
-    N_CAPITAL == "$$$ Clean Energy PPAs & Grid Upgrades" ==> N_ENERGY_GRID
-    N_CAPITAL == "$$$ CapEx Infrastructure Project Debt & Equity" ==> N_TRAIN
+    N_CAPITAL == "$$$ Fab capex & lithography tool procurement" ==> N_SILICON
+    N_CAPITAL == "$$$ Clean-energy PPAs & grid upgrades" ==> N_ENERGY_GRID
+    N_CAPITAL == "$$$ Campus project debt & equity" ==> N_TRAIN
 
     %% Statutory & National Security Mandates
-    N_REGULATOR == "Export Controls, Entity List & Technology Sanctions" ==> N_SILICON_CHOKEPOINT
+    N_REGULATOR == "Export controls, entity listings & technology sanctions" ==> N_SILICON
 
     %% Physical Resource Constraints & Allocation
-    N_SILICON_CHOKEPOINT -->|"Leading-Edge GPU Allocation & Advanced Packaging"| N_TRAIN
-    N_ENERGY_GRID -. "Physical GW Power & Transformer Bottleneck" .-> N_TRAIN
+    N_SILICON -->|"Leading-edge GPU allocation & advanced packaging"| N_TRAIN
+    N_ENERGY_GRID -. "Physical GW power & transformer bottleneck" .-> N_TRAIN
 
     %% Compute into Foundation Weights
-    N_TRAIN -->|"Massive Distributed Training Runs"| N_FRONTIER
-    N_ENTERPRISE -. "Sovereignty Gap: Local Data on Foreign Silicon" .-> N_FRONTIER
+    N_FRONTIER_LAB -->|"Trains, gates and releases the model"| N_FRONTIER_MODEL
+    N_ENTERPRISE -. "Sovereignty Gap: Local Data on Foreign Silicon" .-> N_FRONTIER_MODEL
 ```
 
 ## 3. Systemic Mechanics & Walkthrough
@@ -112,9 +114,7 @@ flowchart TB
 
 In Stafford Beer’s cybernetics, **Ashby's Law of Requisite Variety** states that control requires variety to absorb disturbances. When looking at the physical supply chain, we see the inverse: extreme vulnerability via **hyper-concentration**:
 
-Text
-
-```
+```text
 [Downstream Invocations & Agents]      10^8 - 10^9 invocations/year
        ▲
 [Commercial Deployers]                 10^5 enterprises globally
@@ -128,15 +128,15 @@ Text
 [Semiconductor Monopolies]             10^0 - 10^1 (ASML, TSMC, Nvidia)
 ```
 
-The entire $600B global AI capital cycle rests on a needlepoint of single-digit physical entities.
+The entire global AI capital cycle rests on a needlepoint of single-digit physical entities.
 
-### 2. The Silicon Chokepoint — N_SILICON_CHOKEPOINT
+### 2. The Silicon Chokepoint — N_SILICON
 
 - **Single Point of Failure (Lithography):** All leading-edge training and inference silicon (\<5nm) relies on Extreme Ultraviolet (EUV) photolithography machines produced by a single company in Veldhoven, Netherlands (**ASML**).
 
 - **Single Point of Failure (Foundry & Packaging):** Over 90% of advanced AI accelerators are fabricated and packaged using proprietary chip-on-wafer-on-substrate (CoWoS) technology by **TSMC in Hsinchu and Tainan, Taiwan**.
 
-- **Geopolitical Weaponization (N_REGULATOR):** National trade authorities (e.g., the US Bureau of Industry and Security) enforce extraterritorial Export Administration Regulations (EAR) on this node, using advanced computing thresholds (e.g., interconnect bandwidth and total processing performance) to legally blockade adversary nations from acquiring leading-edge clusters.
+- **Geopolitical Weaponization (N_REGULATOR):** National trade authorities enforce extraterritorial Export Administration Regulations (EAR) on this node, using compute density and bandwidth thresholds to legally blockade adversary nations from acquiring leading-edge clusters.
 
 ### 3. The Energy Grid Ceiling — N_ENERGY_GRID
 
@@ -144,43 +144,31 @@ The entire $600B global AI capital cycle rests on a needlepoint of single-digit 
   
   - High-voltage substation transformers: **3–5 year manufacturing backlog**.
   
-  - Utility interconnection queue approvals: **4–7 years in PJM, ERCOT, and European grids**.
+  - Utility interconnection queue approvals: **4–7 years in major regional grids**.
 
-- **The Nuclear & Clean Power Shift:** Because training runs of 10<sup>26</sup> to 10<sup>27</sup> FLOPs require 100MW–1GW of continuous, non-intermittent baseline power, hyperscalers are bypassing public utility auctions by executing long-term private Power Purchase Agreements (PPAs) with dedicated nuclear plants and small modular reactor (SMR) developers.
+- **The Nuclear & Clean Power Shift:** Because training runs of 1026–1027 FLOPs require 100MW–1GW of continuous, non-intermittent baseline power, hyperscalers are executing long-term private Power Purchase Agreements (PPAs) with dedicated nuclear plants and small modular reactor (SMR) developers.
 
-- **Negative Feedback Polarity:** The relationship E_ENERGY_TO_TRAIN_CONSTRAINT carries a **negative (-) polarity**: as compute cluster demand accelerates, local grid capacity acts as a dampening feedback loop that halts physical construction regardless of available financial capital (N_CAPITAL).
-
-### 4. The Data Residency Illusion
-
-Many sovereign states (e.g., in the EU, Australia, and the Middle East) have enacted strict data residency laws requiring public-sector and enterprise data to remain within geographic borders.
-
-The model exposes why **data residency does not equal technological sovereignty**:
-
-- If an enterprise (N_ENTERPRISE) runs an on-premise or sovereign-cloud data center using Nvidia accelerators fabricated by TSMC on ASML tools, its operational continuity remains 100% dependent on foreign firmware updates, foreign spare-part supply chains, and foreign export licenses.
-
-- A disruption in the Taiwan Strait or a statutory export revocation by N_REGULATOR halts operations just as effectively as a cloud outage.
+- **Physical Constraint Polarity:** The relationship E_ENERGY_TO_TRAIN carries a **physical_constraint** type with **negative (-) polarity**: as compute cluster demand accelerates, local grid capacity acts as a dampening feedback loop that halts physical construction regardless of available financial capital (N_CAPITAL).
 
 ---
 
 ## 4. Cybernetic & Geopolitical Tensions
 
-| Node Pair                                                      | Structural Tension                     | Strategic / Economic Consequence                                                                                                                                                                   |
-| -------------------------------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| N_REGULATOR → N_SILICON_CHOKEPOINT | **Extraterritorial Sanctions**         | Export bans prevent foundries from servicing certain global markets, fragmenting the global compute supply chain into domestic bifurcated ecosystems.                                              |
-| N_ENERGY_GRID → N_TRAIN            | **Physical Infrastructure Bottleneck** | Capital investment cannot convert into operational inference capacity until physical high-voltage substations and cooling permits are cleared.                                                     |
-| N_CAPITAL → N_SILICON_CHOKEPOINT   | **Capital Intensity Overhang**         | Constructing a single leading-edge 2nm mega-fab costs upwards of $20B; failure of frontier labs to generate commercial software ROI creates systemic debt risks for semiconductor project finance. |
-| N_ENTERPRISE → N_FRONTIER          | **Sovereignty Decoupling**             | Deployers are caught between strict domestic regulatory compliance (e.g., EU AI Act, privacy) and total physical dependence on a concentrated foreign hardware oligopoly.                          |
+| Node Pair                                                   | Structural Tension                     | Strategic / Economic Consequence                                                                                                                        |
+| ----------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| N_REGULATOR → N_SILICON         | **Extraterritorial Sanctions**         | Export bans prevent foundries from servicing certain global markets, bifurcating the global hardware stack.                                             |
+| N_ENERGY_GRID → N_TRAIN         | **Physical Infrastructure Bottleneck** | Capital investment cannot convert into operational capacity until physical substations and cooling permits are cleared.                                 |
+| N_CAPITAL → N_SILICON           | **Capital Intensity Overhang**         | Constructing a single leading-edge fab costs upwards of $20B; failure of frontier labs to generate commercial software ROI creates systemic debt risks. |
+| N_ENTERPRISE → N_FRONTIER_MODEL | **Sovereignty Decoupling**             | Deployers are caught between strict domestic regulatory compliance and total physical dependence on a concentrated foreign hardware oligopoly.          |
 
 ---
 
 ## 5. Model Feedback & Audit Trail
 
-- **Entities Evaluated:** N_SILICON_CHOKEPOINT, N_ENERGY_GRID, N_CAPITAL, N_REGULATOR, N_TRAIN, N_FRONTIER, N_ENTERPRISE, N_AFFECTED_PARTY.
+- **Entities Evaluated:** N_SILICON, N_ENERGY_GRID, N_CAPITAL, N_REGULATOR, N_TRAIN, N_FRONTIER_LAB, N_FRONTIER_MODEL, N_ENTERPRISE, N_AFFECTED_PARTY.
 
-- **Ontological Additions Resolved:**
+- **Ontological Additions Resolved (v3.0):**
   
-  - Created N_SILICON_CHOKEPOINT to separate semiconductor fabrication and EUV tool manufacturing from general data-center training campuses.
+  - Renamed N_SILICON_CHOKEPOINT to N_SILICON.
   
-  - Created N_ENERGY_GRID to represent physical electrical interconnects, nuclear power contracts, and transformer manufacturing constraints.
-  
-  - Added corresponding export control (statutory_mandate) and energy ceiling (liability_exposure) edges.
+  - Classified the energy bottleneck as a physical_constraint rather than a liability_exposure.

@@ -8,31 +8,36 @@ target_audience: [Founders, Venture Investors, CFOs, Enterprise Strategists]
 active_nodes:
   - N_CAPITAL
   - N_TRAIN
-  - N_FRONTIER
+  - N_CLOUD_HYPERSCALER
+  - N_FRONTIER_LAB
+  - N_FRONTIER_MODEL
   - N_OPEN_MODEL
-  - N_ABSORBED
   - N_ISV_PRODUCT
   - N_ENTERPRISE
   - N_INSURER
   - N_OBSERVE
 active_edges:
   - from: N_CAPITAL
-    to: N_FRONTIER
+    to: N_FRONTIER_LAB
   - from: N_CAPITAL
     to: N_TRAIN
   - from: N_ENTERPRISE
     to: N_ISV_PRODUCT
+  - from: N_ENTERPRISE
+    to: N_CLOUD_HYPERSCALER
   - from: N_ISV_PRODUCT
-    to: N_FRONTIER
+    to: N_FRONTIER_LAB
   - from: N_ISV_PRODUCT
     to: N_OPEN_MODEL
-  - from: N_FRONTIER
+  - from: N_FRONTIER_LAB
     to: N_TRAIN
-  - from: N_TRAIN
+  - from: N_FRONTIER_LAB
     to: N_OPEN_MODEL
   - from: N_OPEN_MODEL
-    to: N_FRONTIER
-  - from: N_ABSORBED
+    to: N_FRONTIER_LAB
+  - from: N_FRONTIER_LAB
+    to: N_ISV_PRODUCT
+  - from: N_CLOUD_HYPERSCALER
     to: N_ISV_PRODUCT
   - from: N_ENTERPRISE
     to: N_INSURER
@@ -47,7 +52,7 @@ highlight_mode: dim_others
 Value in the AI ecosystem does not pool evenly; it behaves as an **asymmetric capital siphon** caught between heavy upstream CapEx and an enterprise return-on-investment (ROI) hurdle. 
 
 The canonical model illustrates that:
-1. **Upstream Labs & Infrastructure** survive on a mix of wholesale token tolls and massive **equity/compute subsidies from capital markets** to offset multi-gigawatt training runs.
+1. **Upstream Labs & Infrastructure** survive on a mix of wholesale token tolls and massive **equity subsidies from capital markets** to offset multi-gigawatt compute commitments.
 2. **Specialized Vertical ISVs** face a structural **"SaaS Margin Sandwich"**—squeezed between variable token COGS below and fixed SaaS pricing expectations above, while cloud platforms continually threaten to absorb their features.
 3. **Open-Weight Commons** act as a critical macroeconomic deflationary force, depressing the pricing power of proprietary frontier labs and offering ISVs an architectural escape hatch from the per-token toll.
 
@@ -63,104 +68,105 @@ flowchart TB
     classDef tension fill:#FFF1F0,stroke:#F5222D,stroke-width:2px;
     classDef dim fill:#F8FAFC,stroke:#E2E8F0,color:#94A3B8,stroke-dasharray: 3 3;
 
-    %% Dimmed Context (Governance & Target Rails)
-    N_REGULATOR[Market Surveillance Authorities]:::dim
-    N_AUDITOR[Conformity Body & ISO Auditor]:::dim
+    %% Dimmed Context
+    N_REGULATOR[Statutory Authorities]:::dim
+    N_AUDITOR[Conformity Bodies]:::dim
     N_TARGET_SYS[Target Systems & APIs]:::dim
-    N_AFFECTED_PARTY[Impacted Third Party]:::dim
+    N_AFFECTED_PARTY[Affected Individuals]:::dim
 
     %% Cluster 0: Capital & Macro Sphere
     subgraph cluster_regulatory ["0. Jurisdictional, Capital & Regulatory Sphere"]
-        N_CAPITAL["Capital Markets &amp; Venture Underwriters<br/><small><i>VC, Hyperscaler Treasuries &amp; Sovereign Wealth</i></small>"]:::econ
+        N_CAPITAL["Capital Markets &amp; Venture Underwriters<br/><small><i>VC, Hyperscaler Equity &amp; Sovereign Wealth</i></small>"]:::econ
         N_INSURER["AI Risk Underwriter &amp; Insurer<br/><small><i>Algorithmic Liability Carrier</i></small>"]:::econ
     end
 
     %% Cluster 1: Upstream Supply & Commons
-    subgraph cluster_supply ["1. Upstream Foundation &amp; Model Lab"]
-        N_TRAIN["Training Supply Chain<br/><small><i>Data Curators, Annotators, Mega-Compute Hubs</i></small>"]:::econ
-        N_FRONTIER("Frontier Foundation Model<br/><small><i>Proprietary Weights &amp; Wholesale Token Tolls</i></small>"):::econ
+    subgraph cluster_supply ["1. Upstream Silicon, Cloud &amp; Model Supply"]
+        N_TRAIN["Training Compute Campuses<br/><small><i>Mega Data Centers &amp; GW Power</i></small>"]:::econ
+        N_CLOUD_HYPERSCALER["Hyperscaler Cloud Platform<br/><small><i>Azure, AWS, GCP, OCI</i></small>"]:::econ
+        N_FRONTIER_LAB["Frontier AI Labs<br/><small><i>Proprietary Research &amp; Model Providers</i></small>"]:::econ
+        N_FRONTIER_MODEL("Frontier Foundation Model<br/><small><i>Serving Weights Fleet</i></small>"):::econ
         N_OPEN_MODEL("Open-Weight Model Commons<br/><small><i>Commoditized Checkpoints (Llama, DeepSeek)</i></small>"):::econ
-        N_ABSORBED["Platform Absorption Zone<br/><small><i>Native Tools, Hosted State (a16z Stack)</i></small>"]:::tension
     end
 
     %% Cluster 2: Product & Runtime
-    subgraph cluster_product ["2. Specialized Product &amp; Harness Domain"]
-        N_ISV_PRODUCT("Specialized AI Application<br/><small><i>Vertical SaaS (Legal, Medical, Finance)</i></small>"):::econ
+    subgraph cluster_product ["2. Application Domain"]
+        N_ISV_PRODUCT("AI Applications<br/><small><i>Vertical SaaS (Legal, Medical, Finance)</i></small>"):::econ
         N_OBSERVE("Observability &amp; Evals Engine<br/><small><i>Cost &amp; Token Telemetry</i></small>"):::econ
     end
 
     %% Cluster 3: Enterprise Principal
-    subgraph cluster_client ["3. Enterprise Deployer &amp; Principal Domain"]
+    subgraph cluster_client ["3. Enterprise Deployer Domain"]
         N_ENTERPRISE["Enterprise Deployer<br/><small><i>Legal Principal &amp; Economic Sponsor</i></small>"]:::econ
     end
 
     %% Capital & Equity Flows
-    N_CAPITAL == "$$$ Equity Subsidies & Compute Credits" ==> N_FRONTIER
-    N_CAPITAL == "$$$ CapEx Infrastructure Project Debt & Equity" ==> N_TRAIN
+    N_CAPITAL == "$$$ Equity Subsidies & Compute Credits" ==> N_FRONTIER_LAB
+    N_CAPITAL == "$$$ Campus Project Debt & Equity" ==> N_TRAIN
 
     %% Commercial Operating Revenue Flows
     N_ENTERPRISE == "$$$ SaaS Subscription / Outcome Fee" ==> N_ISV_PRODUCT
-    N_ISV_PRODUCT == "$$ Wholesale Token Consumption Cost" ==> N_FRONTIER
-    N_ISV_PRODUCT -->|"Self-Hosted / Private Inference (Zero Token Toll)"| N_OPEN_MODEL
-    N_FRONTIER == "$ Compute CapEx & Annotation" ==> N_TRAIN
+    N_ENTERPRISE == "$$$ Cloud Spend Commitments (MACC)" ==> N_CLOUD_HYPERSCALER
+    N_ISV_PRODUCT == "$$ Wholesale Token Consumption Cost" ==> N_FRONTIER_LAB
+    N_ISV_PRODUCT -->|"Self-Hosted Inference (Zero Token Toll)"| N_OPEN_MODEL
+    N_FRONTIER_LAB == "$ Compute Commitments & Offtake" ==> N_TRAIN
     N_ENTERPRISE == "$ Policy Premiums & Risk Transfer" ==> N_INSURER
 
     %% Tensions, Commons & Telemetry
-    N_TRAIN -->|"Sunk-Cost Open Weights Release"| N_OPEN_MODEL
-    N_OPEN_MODEL -. "Inference Price Deflation & Compression" .-> N_FRONTIER
-    N_ABSORBED -. "Platform Commoditization Pressure (a16z Stack)" .-> N_ISV_PRODUCT
+    N_FRONTIER_LAB -->|"Open-Weight Release of Sunk-Cost Models"| N_OPEN_MODEL
+    N_OPEN_MODEL -. "Inference Price Deflation & Compression" .-> N_FRONTIER_LAB
+    N_FRONTIER_LAB -. "Native Tools & Hosted State Absorb Wrapper Value" .-> N_ISV_PRODUCT
+    N_CLOUD_HYPERSCALER -. "Platform Services Commoditise Features" .-> N_ISV_PRODUCT
     N_OBSERVE -->|"Real-time Cost & Token Telemetry"| N_ENTERPRISE
 ```
 
 ## 3. Systemic Mechanics & Walkthrough
 
-### Tier 1: The Commercial Revenue Waterfall
+### 1. The Commercial Revenue Waterfall
 
 In a normalized software economy, revenue flows up from the buyer to the application, which passes margin down to suppliers. In the AI ecosystem, this waterfall has distinct friction points:
 
-1. **Enterprise Deployment (N_ENTERPRISE → N_ISV_PRODUCT):** The enterprise deploys capital via traditional SaaS recurring fees or emerging outcome-based contracts. However, the enterprise faces strict ROI payback pressure (the Sequoia "Act Two" hurdle).
+1. **Enterprise Deployment (N_ENTERPRISE → N_ISV_PRODUCT):** The enterprise deploys capital via traditional SaaS recurring fees or outcome-based contracts, under strict ROI payback pressure.
 
-2. **Wholesale Token Toll (N_ISV_PRODUCT →  N_FRONTIER):** Unlike traditional software where hosting represents 5–15% of revenue, vertical AI ISVs face variable marginal inference costs that scale with customer usage, degrading gross margins to 40–60%.
+2. **Wholesale Token Toll (N_ISV_PRODUCT → N_FRONTIER_LAB):** Unlike traditional software where hosting represents 5–15% of revenue, vertical AI ISVs face variable marginal inference costs that scale with customer usage, degrading gross margins.
 
-3. **CapEx Siphon (N_FRONTIER → N_TRAIN):** Foundation labs channel their token revenues directly into massive, continuous compute CapEx (GPU clusters, power procurement, human reinforcement data).
+3. **CapEx Commitments (N_FRONTIER_LAB → N_TRAIN):** Foundation labs channel their token revenues directly into massive, multi-year compute offtake agreements.
 
-4. **Risk Transfer (N_ENTERPRISE → N_INSURER):** Enterprise deployers pay insurance premiums to balance-sheet underwriters to offload tort and algorithmic liability exposure.
+### 2. The Equity Bridge & The Capital-Compute Flywheel (L_R1)
 
-### Tier 2: The Equity Bridge & Capital Overhang
+Commercial revenues alone do not cover the massive capital requirements of frontier training runs.
 
-Commercial revenues alone currently do not cover the massive capital requirements of frontier training runs.
+To bridge this gap, **Capital Markets (N_CAPITAL)** inject billions in equity financing, debt facilities, and cloud compute credits directly into N_FRONTIER_LAB and N_TRAIN. This fuels the **Capital-Compute Flywheel (L_R1_CAPITAL_COMPUTE_FLYWHEEL)**: capital buys compute; compute yields capabilities and valuation uplift; valuation uplift attracts more capital.
 
-To bridge this gap, **Capital Markets (N_CAPITAL)** inject billions in equity financing, debt facilities, and cloud compute credits directly into N_FRONTIER and N_TRAIN. This creates high multiple valuations for foundation labs, but also generates an aggressive payback imperative: if N_ENTERPRISE does not unlock proportional productivity gains, upstream valuations experience sharp corrections.
+### 3. The Deflationary Counterweight (L_B1_OPEN_RELEASE_BRAKE)
 
-### Tier 3: The Deflationary Counterweight (Open Weights)
+When frontier labs or hyperscalers release open-weight checkpoints (N_OPEN_MODEL), they trigger the **Open-Release Margin Brake (L_B1_OPEN_RELEASE_BRAKE)**:
 
-The emergence of **Open-Weight Models (N_OPEN_MODEL)** breaks the pricing monopoly of proprietary frontier APIs:
+- Open weights exert continuous downward price pressure on proprietary per-token inference APIs.
 
-- Hyperscalers and research consortia absorb training costs and open-source foundation checkpoints.
-
-- This exerts continuous **downward price pressure** on N_FRONTIER per-token fees.
-
-- It provides N_ISV_PRODUCT with an architectural alternative: replacing variable per-token tolls with predictable, self-hosted GPU cloud instances.
+- This provides N_ISV_PRODUCT with an architectural alternative: replacing variable per-token tolls with predictable, self-hosted cloud instances.
 
 ---
 
 ## 4. Cybernetic & Strategic Tensions
 
-| Node Pair                   | Economic Friction            | Impact on Company Structure                                                                                                                |
-| --------------------------- | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| N_ISV_PRODUCT vs N_ABSORBED | **Platform Commoditization** | ISVs risk building "thin wrapper" capabilities that frontier labs incorporate as native platform features.                                 |
-| N_ISV_PRODUCT vs N_FRONTIER | **Gross Margin Erosion**     | Selling fixed-price subscriptions while paying variable-rate API bills exposes vertical SaaS to negative unit economics during high usage. |
-| N_OPEN_MODEL vs N_FRONTIER  | **Price Deflation**          | Near-frontier open weights limit the ability of proprietary labs to charge premium margins for commoditized reasoning tasks.               |
-| N_ENTERPRISE vs N_OBSERVE   | **FinOps & Throttling**      | Real-time observability gives enterprise CFOs the telemetry needed to throttle agent autonomy when token spend exceeds value creation.     |
+| Node Pair                       | Economic Friction        | Impact on Company Structure                                                                                                            |
+| ------------------------------- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| N_FRONTIER_LAB vs N_ISV_PRODUCT | **Platform Absorption**  | Labs bundle prompt caching, tool brokerage, and memory into native APIs, commoditizing thin wrappers.                                  |
+| N_ISV_PRODUCT vs N_FRONTIER_LAB | **Gross Margin Erosion** | Selling fixed-price subscriptions while paying variable API fees exposes vertical SaaS to negative unit economics during high usage.   |
+| N_OPEN_MODEL vs N_FRONTIER_LAB  | **Price Deflation**      | Near-frontier open weights limit the ability of proprietary labs to charge premium margins for commoditized reasoning tasks.           |
+| N_ENTERPRISE vs N_OBSERVE       | **FinOps & Throttling**  | Real-time observability gives enterprise CFOs the telemetry needed to throttle agent autonomy when token spend exceeds value creation. |
 
 ---
 
 ## 5. Model Feedback & Audit Trail
 
-- **Entities Evaluated:** N_ENTERPRISE, N_ISV_PRODUCT, N_FRONTIER, N_TRAIN, N_ABSORBED, N_OBSERVE, N_INSURER, N_CAPITAL, N_OPEN_MODEL.
+- **Entities Evaluated:** N_ENTERPRISE, N_ISV_PRODUCT, N_FRONTIER_LAB, N_FRONTIER_MODEL, N_TRAIN, N_CLOUD_HYPERSCALER, N_OPEN_MODEL, N_OBSERVE, N_INSURER, N_CAPITAL.
 
-- **Ontological Additions Resolved:**
+- **Ontological Additions Resolved (v3.0):**
   
-  - Synchronized the capital direction on E_ENT_TO_INSURER_PREMIUM.
+  - Separated the corporate lab (N_FRONTIER_LAB) from the model weights (N_FRONTIER_MODEL).
   
-  - Fully integrated N_CAPITAL and N_OPEN_MODEL with typed LinkML properties.
+  - Integrated N_CLOUD_HYPERSCALER as the enterprise tenancy and compute aggregator.
+  
+  - Formally mapped feedback loops L_R1 (Flywheel) and L_B1 (Open-Weight Margin Brake).

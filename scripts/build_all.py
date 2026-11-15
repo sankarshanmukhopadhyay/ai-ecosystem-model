@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Master build script for AI Ecosystem Model.
-1. Validates model against LinkML schema
-2. Generates canonical docs/index.md
+Master build script for AI Ecosystem Model (v3.0).
+1. Executes Claude's relational and cybernetic validator (validate_ecosystem.py)
+2. Compiles canonical master docs/index.md (generate_docs.py)
 3. Validates referential integrity of inquiry pages
-4. Exports to Draw.io, yEd GraphML, and Kumu JSON
+4. Generates multi-format visual exports (Draw.io, yEd, Kumu)
 """
 
 import sys
@@ -14,7 +14,7 @@ import time
 import yaml
 from pathlib import Path
 
-# Force UTF-8 encoding on Windows
+# Force UTF-8 on Windows
 if sys.platform == "win32":
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -24,14 +24,15 @@ if sys.platform == "win32":
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 MODEL_FILE = PROJECT_ROOT / "model" / "ai_ecosystem.yaml"
+SCHEMA_FILE = PROJECT_ROOT / "schema" / "ai_ecosystem_schema.yaml"
 INQUIRIES_DIR = PROJECT_ROOT / "docs" / "inquiries"
 
 PIPELINE = [
-    ("LinkML Schema Validation",       "validate_model.py"),
-    ("Master Documentation Portal",   "generate_docs.py"),
-    ("Draw.io Multi-Page Diagram",     "export_drawio.py"),
-    ("yEd GraphML Export",             "export_yed.py"),
-    ("Kumu Dynamic JSON Export",        "export_kumu.py"),
+    ("Ecosystem & Cybernetic Validation", "validate_ecosystem.py", [str(MODEL_FILE), str(SCHEMA_FILE)]),
+    ("Master Documentation Portal",      "generate_docs.py", []),
+    ("Draw.io Multi-Page Diagram",        "export_drawio.py", []),
+    ("yEd GraphML Export",                "export_yed.py", []),
+    ("Kumu Dynamic JSON Export",           "export_kumu.py", []),
 ]
 
 def validate_inquiries():
@@ -66,11 +67,13 @@ def validate_inquiries():
 
 def main():
     print("=" * 60)
-    print("[START] AI Ecosystem Model Build Pipeline")
+    print("[START] AI Ecosystem Model Build Pipeline (v3.0)")
     print("=" * 60)
 
     if not MODEL_FILE.exists():
         sys.exit(f"[FATAL] Model file not found at: {MODEL_FILE}")
+    if not SCHEMA_FILE.exists():
+        sys.exit(f"[FATAL] Schema file not found at: {SCHEMA_FILE}")
 
     (PROJECT_ROOT / "docs").mkdir(parents=True, exist_ok=True)
     (PROJECT_ROOT / "docs" / "inquiries").mkdir(parents=True, exist_ok=True)
@@ -84,15 +87,16 @@ def main():
     start_time = time.time()
 
     # Run core scripts
-    for desc, script_name in PIPELINE:
+    for desc, script_name, extra_args in PIPELINE:
         script_path = SCRIPT_DIR / script_name
         if not script_path.exists():
             sys.exit(f"[FATAL] Script not found: {script_path}")
 
         print(f"\n[BUILD] {desc} ({script_name})...")
         step_start = time.time()
+        cmd = [sys.executable, str(script_path)] + extra_args
         result = subprocess.run(
-            [sys.executable, str(script_path)],
+            cmd,
             cwd=str(PROJECT_ROOT),
             env=env,
             capture_output=True,
