@@ -51,10 +51,12 @@ Use the interactive viewer below to explore the global model. You can switch bet
     height="100%" 
     style={{ border: '1px solid #282d3c', borderRadius: '8px', backgroundColor: '#14161d' }} 
     title="AI Ecosystem Interactive Model Viewer"
-  />
+  ></iframe>
 </div>
 
 *(Tip: You can also toggle the **Matrix** tab in the viewer toolbar to inspect cluster connectivity and gap analysis).*
+
+You can see a whole page version of this here: https://ai-ecosystem.sezoo.digital/viewer/
 
 ---
 
