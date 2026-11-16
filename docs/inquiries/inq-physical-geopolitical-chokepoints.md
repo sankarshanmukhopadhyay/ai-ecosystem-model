@@ -38,7 +38,7 @@ highlight_mode: dim_others
 ## 1. Executive Summary & Core Thesis
 Conventional AI discourse treats AI as a cloud-based software abstraction governed by algorithmic breakthroughs and software APIs. 
 
-The canonical model exposes this framing as an illusion. The entire global AI ecosystem is governed by an extreme **cardinality inversion (Ashby's Variety in Reverse)**: while downstream software agent invocations number in the billions ($10^9$) across hundreds of thousands of commercial deployers ($10^5$), the entire physical foundation converges into an apex of **monopolistic manufacturing chokepoints ($10^0$)** and **rigid physical electrical grids ($10^2$)**.
+The canonical model exposes this framing as an illusion. The entire global AI ecosystem is governed by an extreme **cardinality inversion (Ashby's Variety in Reverse)**: while downstream software agent invocations number in the billions (10<sup>9</sup>) across hundreds of thousands of commercial deployers (10<sup>5</sup>), the entire physical foundation converges into an apex of **monopolistic manufacturing chokepoints (10<sup>0</sup>)** and **rigid physical electrical grids (10<sup>2</sup>)**.
 
 True sovereignty and strategic vulnerability do not reside in the software weights or local data residency laws; they are determined by:
 1. **Extreme Lithography Concentration:** Complete physical dependence on ASML (extreme ultraviolet optics) and TSMC (3nm/2nm foundries and CoWoS advanced packaging).
