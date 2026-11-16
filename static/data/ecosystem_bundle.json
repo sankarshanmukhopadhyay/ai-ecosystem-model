@@ -2382,14 +2382,14 @@
           "liable_node": "N_ENTERPRISE",
           "upstream_recourse": [
             {
-              "supplier": "N_CLOUD_HYPERSCALER",
+              "supplier": "N_ISV_PRODUCT",
               "hops": 1,
               "state": "NO recourse edge modelled",
               "edge_id": null,
               "label": ""
             },
             {
-              "supplier": "N_ISV_PRODUCT",
+              "supplier": "N_CLOUD_HYPERSCALER",
               "hops": 1,
               "state": "NO recourse edge modelled",
               "edge_id": null,

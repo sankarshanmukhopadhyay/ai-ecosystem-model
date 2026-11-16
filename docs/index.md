@@ -12,37 +12,44 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This model is an interactive conceptual map designed to help decision-makers, architects, and regulators explore and make sense of the global AI ecosystem. 
 
-Most analyses view AI through a single, isolated lens: engineers focus on model weights and APIs; economists analyze CapEx and subscription margins; lawyers debate liability regimes; and safety researchers evaluate model alignment. In reality, these domains are coupled in continuous cybernetic feedback. 
+Most analyses view AI through a single, isolated lens: engineers focus on model weights and APIs; economists analyze CapEx and subscription margins; lawyers debate liability regimes; and safety researchers evaluate model alignment. In reality, these domains are coupled by explicit and implicit relationships. There is no hierarchy in these relationships - no view is "superior" to the other, but there are side-effects and condequences. Pulling one thread can affect many others. 
 
-Our goal is to balance **sufficient conceptual richness with sufficient visual simplicity**—providing a map rigorous enough to stress-test real-world decisions, yet clear enough to build shared understanding.
+Our goal with this model is to balance **sufficient conceptual richness with sufficient visual simplicity**. Providing a map rigorous enough to stress-test real-world decisions, yet clear enough to build shared understanding. Two favourite quotes/sayings spring to mind:
 
 > *"All models are wrong, but some are useful."* — George Box
+
+> *"A model is only useful **because** it simplifies reality"* - Borges' Map
 
 ---
 
 ## The Theoretical Foundations
 
-The model integrates four foundational systems frameworks into a unified, computable property graph:
+The model integrates four systems frameworks into a single, machine readable property graph:
 
 ### 1. Cybernetic Control: Stafford Beer’s Viable System Model (VSM)
-Traditional governance models rely on static organizational charts. In contrast, Beer’s VSM assesses whether a system possesses the operational variety and regulatory feedback required to remain **viable** under environmental turbulence. 
+Traditional governance models rely on static organizational charts. In contrast, Beer’s VSM[^1] assesses whether a system possesses the operational variety and regulatory feedback required to remain **viable** under dynamic (changing) conditions. The model divides an organization into two main halves: System 1 (\"S<sub>1</sub>\", Operations), which does the primary work, and Systems 2–5 (\"S<sub>2-5</sub>\", the Meta-System), which coordinate, control, plan, and govern the whole enterprise. Two other key concepts are recursion: a viable system is considered a fractal; and algedonic signals, emergency alert channels.  
+
 * **Viewpoint-Relative Recursion:** VSM roles are not intrinsic node tags. An entity's role depends on the chosen system-in-focus. We model two primary recursion levels:
   * **Level 0 (Enterprise AI Operations):** How an enterprise balances autonomous agent operations (*S<sub>1</sub>*) through coordination (*S<sub>2</sub>*), policy kernels and audit stores (*S<sub>3</sub>*), risk intelligence (*S<sub>4</sub>*), and executive direction (*S<sub>5</sub>*).
-  * **Level +1 (Societal & Jurisdictional Governance):** How global markets (*S<sub>1</sub>*), standards bodies (*S<sub>2</sub>*), regulators and courts (*S<sub>3</sub>*), safety institutes (*S<sub>4</sub>*), and legislatures (*S<sub>5</sub>*) maintain macro-societal viability.
+  * **Level +1 (Societal & Jurisdictional Governance):** How global markets (*S<sub>1</sub>*), standards bodies (*S<sub>2</sub>*), regulators and courts (*S<sub>3</sub>*), safety institutes (*S<sub>4</sub>*), and legislature (*S<sub>5</sub>*) maintain macro-societal viability.
 * **The Algedonic Channel:** A dedicated emergency tripwire that bypasses intermediate bureaucratic layers (*S<sub>3</sub>*) directly to ultimate policy closure (*S<sub>5</sub>*) when critical failures or systemic harms occur.
 
 ### 2. Value Chains & Capital Constraints: Simon Wardley’s Evolution Mapping
-Components in the AI stack do not share the same economic properties. We track the evolution of value-chain components from **Genesis** → **Custom-Built** → **Product** → **Commodity**:
+Components in the AI stack do not share the same economic properties. We track the evolution of value-chain components using a Wardley Maps[^2] scale from from **Genesis** → **Custom-Built** → **Product** → **Commodity**:
 * **Physical & Capital Chokepoints:** Photolithography equipment (ASML EUV) and leading-edge semiconductor packaging (TSMC CoWoS) remain rare, highly centralized capital assets with multi-year construction lead times and *prohibitive* switching costs.
 * **Artificial Lock-In on Utilities:** Cloud compute and raw storage are commodity utilities, yet hyperscalers construct artificial switching costs through egress fees, proprietary IAM meshes, and bundled foundation models.
 
+**Note:** There is significant scope to further develop the use of the Wardley Map evaluation in the model, but we think this is best done as a worked use-case exercise. At present we have ensured that the model *can* represent Wardley Map maturity. 
+
 ### 3. Non-Linear Feedback Dynamics (Jay Forrester & Donella Meadows)
-The AI ecosystem is governed by non-linear delays and feedback loops:
+Donella Meadows added value to Jay Forrester's earlier work[^3] and encouraged us to include the observation that the AI ecosystem includes non-linear delays and feedback loops. For example:
 * **Reinforcing Flywheels (*R<sub>1</sub>*):** Capital markets subsidize training compute, producing frontier capability and valuation uplift, which in turn attracts more capital, driving extreme market concentration.
 * **Balancing Brakes (*B<sub>1</sub>*–*B<sub>4</sub>*):** Open-weight model releases compress commercial inference margins (*B<sub>1</sub>*), while real-world blast radius harms trigger regulatory penalties, social-licence revocation, and legislative intervention (*B<sub>2</sub>*–*B<sub>4</sub>*).
 
 ### 4. Computable Schema & Referential Integrity (LinkML)
-The model is backed by a formal LinkML metamodel (`ai_ecosystem_schema.yaml`). Every archetype, edge, polarity, Ashby variety order of magnitude, and regulatory obligation is validated through strict relational rules before compiling into visual diagrams and web pages.
+Early iterations of this model used a stand-alone data model instance "loosely" defined in YAML. As we evolved our thinking we abstracted the schema from the model instance and introduced a more formal (LinkML) structure for the schema (expressed using YAML). 
+
+The current model is built on a structured blueprint (`ai_ecosystem_schema.yaml`). Before any diagrams or web pages are created, every component, connection, system complexity level, and legal requirement is automatically checked against strict rules to make sure it fits together properly.
 
 ---
 
@@ -88,6 +95,8 @@ You can use the model to evaluate novel policy questions, architectural changes,
 4. **Explore Conversationally:** Interrogate the graph (e.g., *"What happens to systemic viability if independent safety institutes are removed?"* or *"How does token deflation affect ISV application margins?"*).
 5. **Draft & Contribute:** Prompt the AI to *"Draft the inquiry artifact following the Sezoo inquiry template"*, verify the referential integrity using `validate_ecosystem.py --refs`, and submit a Pull Request to our GitHub repository.
 
+**Note:** We anticipate that inquries may identify gaps and / or opportunities to improve the model. Suggestions on model improvement supported by justifications and explanations are welcome. 
+
 ---
 
 ## Canonical Model Sources & Visual Exports
@@ -97,6 +106,12 @@ The complete, computable representation is maintained in our open repository:
 * **Model Instance:** [`model/ai_ecosystem.yaml`](https://raw.githubusercontent.com/sezoo-digital/ai-ecosystem-model/refs/heads/main/model/ai_ecosystem.yaml)
 
 Below, the master architecture is documented via static visual keys, feedback loops, VSM frame assignments, and the complete element dictionary.
+
+[^1]: There are many sources and books on VSM, this is the wikipedia entry: https://en.wikipedia.org/wiki/Viable_system_model 
+
+[^2]: There are many places to learn about Simon Wadley Maps, here's one: https://www.wardleymaps.com/guides/wardley-mapping-101
+
+[^3]: Meadows, D. H. (2008). Thinking in systems: A primer (D. Wright, Ed.). Chelsea Green Publishing.
 
 :::tip Download Canonical Models
 Download the raw model to query in external visual modeling tools:
