@@ -12,9 +12,9 @@ import useBaseUrl from '@docusaurus/useBaseUrl';
 
 This model is an interactive conceptual map designed to help decision-makers, architects, and regulators explore and make sense of the global AI ecosystem. 
 
-Most analyses view AI through a single, isolated lens: engineers focus on model weights and APIs; economists analyze CapEx and subscription margins; lawyers debate liability regimes; and safety researchers evaluate model alignment. In reality, these domains are coupled by explicit and implicit relationships. There is no hierarchy in these relationships - no view is "superior" to the other, but there are side-effects and condequences. Pulling one thread can affect many others. 
+Most analyses view AI through a single, isolated lens: engineers focus on model weights and APIs; economists analyze CapEx and subscription margins; lawyers debate liability regimes; and safety researchers evaluate model alignment. In reality, these domains are connected by explicit and implicit relationships. There is no hierarchy in these relationships - no view is "superior" to the other, but there are side-effects and consequences. Pulling one thread can affect many others, and sometimes with unexpected consequences. 
 
-Our goal with this model is to balance **sufficient conceptual richness with sufficient visual simplicity**. Providing a map rigorous enough to stress-test real-world decisions, yet clear enough to build shared understanding. Two favourite quotes/sayings spring to mind:
+Our goal with this model is to balance **sufficient conceptual richness with sufficient visual simplicity**. Providing a map rigorous enough to stress-test real-world decisions, yet clear enough to build shared understanding. Two favourite quotes/sayings have been front of mind during the development:
 
 > *"All models are wrong, but some are useful."* — George Box
 
@@ -24,7 +24,7 @@ Our goal with this model is to balance **sufficient conceptual richness with suf
 
 ## The Theoretical Foundations
 
-The model integrates four systems frameworks into a single, machine readable property graph:
+The model uses four frameworks to create a single, machine readable property graph:
 
 ### 1. Cybernetic Control: Stafford Beer’s Viable System Model (VSM)
 Traditional governance models rely on static organizational charts. In contrast, Beer’s VSM[^1] assesses whether a system possesses the operational variety and regulatory feedback required to remain **viable** under dynamic (changing) conditions. The model divides an organization into two main halves: System 1 (\"S<sub>1</sub>\", Operations), which does the primary work, and Systems 2–5 (\"S<sub>2-5</sub>\", the Meta-System), which coordinate, control, plan, and govern the whole enterprise. Two other key concepts are recursion: a viable system is considered a fractal; and algedonic signals, emergency alert channels.  
@@ -42,7 +42,7 @@ Components in the AI stack do not share the same economic properties. We track t
 **Note:** There is significant scope to further develop the use of the Wardley Map evaluation in the model, but we think this is best done as a worked use-case exercise. At present we have ensured that the model *can* represent Wardley Map maturity. 
 
 ### 3. Non-Linear Feedback Dynamics (Jay Forrester & Donella Meadows)
-Donella Meadows added value to Jay Forrester's earlier work[^3] and encouraged us to include the observation that the AI ecosystem includes non-linear delays and feedback loops. For example:
+Donella Meadows added value to Jay Forrester's earlier work[^3] and their work encouraged us to include the observation that the AI ecosystem includes non-linear delays and feedback loops. For example:
 * **Reinforcing Flywheels (*R<sub>1</sub>*):** Capital markets subsidize training compute, producing frontier capability and valuation uplift, which in turn attracts more capital, driving extreme market concentration.
 * **Balancing Brakes (*B<sub>1</sub>*–*B<sub>4</sub>*):** Open-weight model releases compress commercial inference margins (*B<sub>1</sub>*), while real-world blast radius harms trigger regulatory penalties, social-licence revocation, and legislative intervention (*B<sub>2</sub>*–*B<sub>4</sub>*).
 
@@ -83,6 +83,7 @@ We have pre-computed analytical investigations into core strategic questions acr
 * **[Macroeconomics & Valuations](./inquiries/inq-ai-economics-valuations.md):** How CapEx cycles, token deflation, and open-weight commoditization interact.
 * **[Public Trust & Liability](./inquiries/inq-public-trust-and-social-acceptance.md):** Where recourse breaks when autonomous systems cause downstream harm.
 * **[Standards & Certification](./inquiries/inq-standards-certification-efficiency.md):** How voluntary standards attenuate technical variety into compliance baselines.
+* **[Continuing Assurance](./inquiries/inq-continuing-assurance.md):** How approvals remain trustworthy as systems drift and how permissions are revoked.
 
 Visit the **[Sense-Making Inquiries](./inquiries)** section to explore the full library.
 
