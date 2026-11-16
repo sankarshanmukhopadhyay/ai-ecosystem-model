@@ -2382,23 +2382,23 @@
           "liable_node": "N_ENTERPRISE",
           "upstream_recourse": [
             {
-              "supplier": "N_CLOUD_HYPERSCALER",
+              "supplier": "N_ISV_PRODUCT",
               "hops": 1,
-              "state": "NO recourse edge modelled",
+              "state": "NO RECOURSE EDGE [Type 3 Unallocated Exposure]",
               "edge_id": null,
               "label": ""
             },
             {
-              "supplier": "N_ISV_PRODUCT",
+              "supplier": "N_CLOUD_HYPERSCALER",
               "hops": 1,
-              "state": "NO recourse edge modelled",
+              "state": "NO RECOURSE EDGE [Type 3 Unallocated Exposure]",
               "edge_id": null,
               "label": ""
             },
             {
               "supplier": "N_FRONTIER_LAB",
               "hops": 2,
-              "state": "DISCLAIMED",
+              "state": "DISCLAIMED [Type 3 Liability Gap]",
               "edge_id": "E_LAB_DISCLAIMS_ENT",
               "label": "Disclaims liability (ToS as-is / recourse gap)"
             }
@@ -2457,7 +2457,7 @@
           "channels": [
             {
               "channel": "S5 -> S3 (policy/mandate)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_ENT_TO_GUARDRAIL",
@@ -2468,7 +2468,7 @@
             },
             {
               "channel": "S4 -> S5 (intelligence)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_GOV_TO_ENT_ADVICE",
@@ -2479,7 +2479,7 @@
             },
             {
               "channel": "S3 -> S1 (control)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_USER_TO_AGENT_HITL",
@@ -2495,7 +2495,7 @@
             },
             {
               "channel": "S3* -> S1 (audit/probe)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_OBSERVE_PROBE_TARGET",
@@ -2506,7 +2506,7 @@
             },
             {
               "channel": "S2 -> S1 (coordination)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_IDP_TO_AGENT_A2E",
@@ -2521,8 +2521,8 @@
               ]
             },
             {
-              "channel": "algedonic -> S5",
-              "status": "ok",
+              "channel": "algedonic -> S5 (alarm bypass)",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_ALGEDONIC_TARGET_ENT",
@@ -2566,7 +2566,7 @@
           "channels": [
             {
               "channel": "S5 -> S3 (policy/mandate)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_LEG_TO_REG_MANDATE",
@@ -2577,7 +2577,7 @@
             },
             {
               "channel": "S4 -> S5 (intelligence)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_SAFETY_TO_LEG",
@@ -2588,7 +2588,7 @@
             },
             {
               "channel": "S3 -> S1 (control)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_REG_TO_ENT",
@@ -2619,7 +2619,7 @@
             },
             {
               "channel": "S3* -> S1 (audit/probe)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_AUDITOR_TO_ENT",
@@ -2630,7 +2630,7 @@
             },
             {
               "channel": "S2 -> S1 (coordination)",
-              "status": "ok",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_STANDARDS_TO_ISV",
@@ -2640,8 +2640,8 @@
               ]
             },
             {
-              "channel": "algedonic -> S5",
-              "status": "ok",
+              "channel": "algedonic -> S5 (alarm bypass)",
+              "status": "OPERATIONAL [Type 1]",
               "edges": [
                 {
                   "edge_id": "E_CIVIL_TO_LEG_ALARM",
@@ -2927,15 +2927,15 @@
       ],
       "trigger_routes": [
         {
-          "label": "runtime evaluation",
+          "label": "runtime evaluation (N_OBSERVE)",
           "source": "N_OBSERVE",
           "available": true,
           "any_route": true,
           "independent_path": null,
-          "verdict": "n/a (source is enterprise-operated)"
+          "verdict": "N/A (Telemetry is enterprise-operated, not independent)"
         },
         {
-          "label": "affected-party complaint",
+          "label": "affected-party complaint (N_AFFECTED_PARTY)",
           "source": "N_AFFECTED_PARTY",
           "available": true,
           "any_route": true,
@@ -2944,10 +2944,10 @@
             "N_REGULATOR",
             "N_AUDITOR"
           ],
-          "verdict": "Affected Individuals & Consumers > Statutory & Trade Authorities > Conformity & Certification Bodies"
+          "verdict": "INDEPENDENT [Type 1]: Affected Individuals & Consumers > Statutory & Trade Authorities > Conformity & Certification Bodies"
         },
         {
-          "label": "civil-society alarm",
+          "label": "civil-society alarm (N_CIVIL_SOCIETY)",
           "source": "N_CIVIL_SOCIETY",
           "available": true,
           "any_route": true,
@@ -2957,10 +2957,10 @@
             "N_REGULATOR",
             "N_AUDITOR"
           ],
-          "verdict": "Civil Society, Researchers & Media > Legislatures & Executive Policy-Makers > Statutory & Trade Authorities > Conformity & Certification Bodies"
+          "verdict": "INDEPENDENT [Type 1]: Civil Society, Researchers & Media > Legislatures & Executive Policy-Makers > Statutory & Trade Authorities > Conformity & Certification Bodies"
         },
         {
-          "label": "regulator action",
+          "label": "regulator action (N_REGULATOR)",
           "source": "N_REGULATOR",
           "available": true,
           "any_route": true,
@@ -2968,7 +2968,7 @@
             "N_REGULATOR",
             "N_AUDITOR"
           ],
-          "verdict": "Statutory & Trade Authorities > Conformity & Certification Bodies"
+          "verdict": "INDEPENDENT [Type 1]: Statutory & Trade Authorities > Conformity & Certification Bodies"
         }
       ],
       "authority_chain": {

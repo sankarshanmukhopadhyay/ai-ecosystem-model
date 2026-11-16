@@ -2,10 +2,10 @@ id: https://w3id.org/ai-ecosystem/schema
 name: ai_ecosystem_schema
 title: AI Ecosystem Metamodel Specification
 description: >-
-  Property-graph metamodel of the AI ecosystem. Core structure: nodes (archetypes) and typed,
-  directed edges. Analytical lenses sit on top of the core and are detachable: viewpoint-relative
-  VSM frames, named feedback loops, Wardley evolution stage, and optional framework tags
-  (EU AI Act, NIST AI RMF). Views are the queryable entry points (each carries the question it answers).
+  Property-graph metamodel of the empirical AI ecosystem. It is strictly descriptive,
+  not normative: broken recourse paths, unvalidated authority channels, and asymmetric
+  chokepoints are modeled to surface real-world vulnerabilities and failures, not to
+  represent an idealized cybernetic architecture.
 version: "3.1.0"
 
 prefixes:

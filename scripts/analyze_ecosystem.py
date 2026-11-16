@@ -14,8 +14,15 @@ Inquiries (each answers the question of the matching view):
                auditor independently, and who can rely on the result?       (V_ASSURANCE)
   all          Everything (default)
 
---remove deletes nodes first, so `viability --remove N_SAFETY_INSTITUTE` answers
-"what breaks if the safety institutes disappear?".
+--remove deletes nodes first, enabling counterfactual stress testing:
+  viability --remove N_SAFETY_INSTITUTE  "What breaks if the safety institutes disappear?"
+  liability --remove N_COURTS            "What happens if judicial recourse is unavailable?"
+
+THREE-OUTCOME TYPOLOGY FOR FINDINGS:
+  - Type 1: OPERATIONAL [Type 1]         Mechanism exists in model and reality; explains 'how it works'.
+  - Type 2: MODEL GAP [Type 2]           Reality has a working practice omitted from the YAML; model needs update.
+  - Type 3: REAL-WORLD GAP [Type 3]      Empirical vulnerability, broken recourse, or severed kill-chain in the
+                                         wild. DO NOT patch the model with synthetic edges; document the gap!
 """
 import sys
 import json
@@ -98,34 +105,35 @@ def run_chokepoints(nodes, edges):
 
 def print_chokepoints(nodes, data):
     name = lambda i: nodes[i]["label"]
-    header("CHOKEPOINTS: who holds power over whom, with high switching cost")
+    header("CHOKEPOINTS: Power Concentration, Lock-in & Physical Ceilings (V_VALUE_CHAIN)")
     if not data["power_holders"]:
-        print("  none found")
+        print("  None detected with high/prohibitive switching cost")
         return
-    print("\nPower holders (dependents with high/prohibitive switching cost):")
+
+    print("\nPower Holders [Type 1 Market Concentration] (Dependents face high/prohibitive switching cost):")
     for row in data["power_holders"]:
         dom = row["dominant_node"]
         deps = {d["node"] for d in row["dependents"]}
-        print(f"  {name(dom):44} dependents={len(deps)}  population<=10^{row['cardinality_max']:g}")
+        print(f"  {name(dom):44} dependents={len(deps):<2} population<=10^{row['cardinality_max']:g}")
         for dep_info in row["dependents"]:
             print(f"      -> {name(dep_info['node']):40} [{dep_info['relation_kind']}, {dep_info['switching_cost']}]")
 
-    print("\nMost exposed (dependent on the most dominant parties):")
+    print("\nMost Exposed Nodes [Captive Dependency]:")
     for row in data["most_exposed"]:
         dep = row["dependent_node"]
         doms = row["dominant_nodes"]
-        print(f"  {name(dep):44} dominant parties={len(doms)}: " + ", ".join(name(d) for d in doms))
+        print(f"  {name(dep):44} dominant counterparties={len(doms)}: " + ", ".join(name(d) for d in doms))
 
-    print("\nSingle points of failure (dominant, population <= 10^1.5, prohibitive switching):")
+    print("\nSingle Points of Failure [Type 3 Structural Chokepoints] (Population <= 10^1.5 & Prohibitive Switching):")
     for dom in data["single_points_of_failure"]:
-        print(f"  {name(dom)}")
+        print(f"  ⚠️  {name(dom)} [Single point of physical failure for the global stack]")
     if not data["single_points_of_failure"]:
-        print("  none")
+        print("  None identified")
 
     if data["physical_ceilings"]:
-        print("\nPhysical ceilings:")
+        print("\nPhysical Ceilings [Type 3 Hard Environmental Constraints]:")
         for phys in data["physical_ceilings"]:
-            print(f"  {name(phys['from'])} -> {name(phys['to'])}: {phys['affects']}")
+            print(f"  🛑 {name(phys['from'])} -> {name(phys['to'])}: affects '{phys['affects']}'")
 
 
 # ------------------------------------------------------------------ liability
@@ -168,11 +176,11 @@ def run_liability(nodes, edges):
             direct = [e for e in contract[l] if e["from"] == sup]
             if direct:
                 for e in direct:
-                    state = "DISCLAIMED" if e["polarity"] == "negative" else "term present"
+                    state = "DISCLAIMED [Type 3 Liability Gap]" if e["polarity"] == "negative" else "TERMS PRESENT [Type 1]"
                     sup_rows.append({"supplier": sup, "hops": hops, "state": state, "edge_id": e["id"], "label": e["label"]})
                     highlight_edges.add(e["id"])
             else:
-                sup_rows.append({"supplier": sup, "hops": hops, "state": "NO recourse edge modelled", "edge_id": None, "label": ""})
+                sup_rows.append({"supplier": sup, "hops": hops, "state": "NO RECOURSE EDGE [Type 3 Unallocated Exposure]", "edge_id": None, "label": ""})
         recourse_chains.append({"liable_node": l, "upstream_recourse": sup_rows})
 
     highlight_nodes = affected | liable | courts | {r["supplier"] for c in recourse_chains for r in c["upstream_recourse"]}
@@ -189,20 +197,26 @@ def run_liability(nodes, edges):
 
 def print_liability(nodes, data):
     name = lambda i: nodes[i]["label"]
-    header("LIABILITY: harm, liability, redress and recourse")
-    print("\nHarm sources (impact edges):")
+    header("LIABILITY: Harm, Redress and Upstream Recourse Chains (V_LIABILITY)")
+    print("\nHarm Sources (Direct blast-radius impact edges):")
     for imp in data["impact_edges"]:
-        print(f"  {name(imp['from'])} -> {name(imp['to'])}")
-    print("\nParties modelled as liable to affected persons:", ", ".join(name(x) for x in data["liable_nodes"]) or "none")
-    print("Adjudication path (claim -> ruling):",
-          "complete" if data["claims_adjudicated"] else "BROKEN: no claim edge reaches an adjudicator that rules on the liable party")
+        print(f"  💥 {name(imp['from'])} -> {name(imp['to'])}")
 
-    print("\nRecourse upstream of each liable party (suppliers it pays, up to 2 hops):")
+    print("\nParties Liable to Affected Individuals (Respondeat Superior):",
+          ", ".join(name(x) for x in data["liable_nodes"]) or "None identified")
+
+    if data["claims_adjudicated"]:
+        print("Adjudication Path (Claim -> Court -> Redress): OPERATIONAL [Type 1] (Statutory claims reach an adjudicator with mandate over the liable party)")
+    else:
+        print("Adjudication Path (Claim -> Court -> Redress): RECOURSE VOID [Type 3 Real-World Gap] (Claim cannot reach an adjudicator with mandate over the liable party)")
+
+    print("\nUpstream Recourse of Liable Parties (Suppliers paid by the deployer, up to 2 hops):")
     for row in data["recourse_chains"]:
         l = row["liable_node"]
         for sup in row["upstream_recourse"]:
             edge_lbl = f" ({sup['label']})" if sup['label'] else ""
-            print(f"  {name(l)} <- {name(sup['supplier'])} [{sup['hops']} hop]: {sup['state']}{edge_lbl}")
+            prefix = "  🛑" if "Type 3" in sup['state'] else "  ✅"
+            print(f"{prefix} {name(l)} <- {name(sup['supplier'])} [{sup['hops']} hop]: {sup['state']}{edge_lbl}")
 
 
 # ------------------------------------------------------------------ viability
@@ -223,7 +237,7 @@ def run_viability(nodes, edges, frames):
             ("S3 -> S1 (control)", {"s3_control"}, {"s1_operations"}, None, False),
             ("S3* -> S1 (audit/probe)", {"s3_star_audit"}, {"s1_operations"}, None, False),
             ("S2 -> S1 (coordination)", {"s2_coordination"}, {"s1_operations"}, None, False),
-            ("algedonic -> S5", {"s1_operations"}, {"s5_policy"}, {"algedonic_signal"}, True),
+            ("algedonic -> S5 (alarm bypass)", {"s1_operations"}, {"s5_policy"}, {"algedonic_signal"}, True),
         ]
 
         channels_res = []
@@ -236,7 +250,7 @@ def run_viability(nodes, edges, frames):
                 all_hl_edges.add(h["id"])
             channels_res.append({
                 "channel": label,
-                "status": "ok" if hits else "MISSING",
+                "status": "OPERATIONAL [Type 1]" if hits else "VIABILITY GAP [Type 3]",
                 "edges": [{"edge_id": e["id"], "from": e["from"], "to": e["to"]} for e in hits]
             })
 
@@ -257,18 +271,21 @@ def run_viability(nodes, edges, frames):
 
 def print_viability(nodes, data):
     name = lambda i: nodes[i]["label"]
-    header("VIABILITY: VSM functions and channels per frame")
+    header("VIABILITY: Cybernetic Roles & Communication Channels (V_*_VSM)")
     for f in data["frames"]:
         print(f"\n{f['label']}")
-        print(f"  question: {f['viability_question'] or '(none)'}")
+        print(f"  Viability Inquiry: {f['viability_question'] or '(none)'}")
         for r in ROLES:
-            members = ", ".join(name(n) for n in f["roles"].get(r, [])) or "MISSING"
+            assigned = f["roles"].get(r, [])
+            members = ", ".join(name(n) for n in assigned) if assigned else "UNASSIGNED [Type 3 Viability Gap]"
             print(f"  {r:16} {members}")
-        print("  Channels:")
+        print("  Cybernetic Channels:")
         for ch in f["channels"]:
-            mark = "ok     " if ch["status"] == "ok" else "MISSING"
+            is_ok = "OPERATIONAL" in ch["status"]
+            mark = "ok [Type 1]          " if is_ok else "VIABILITY GAP [Type 3]"
             via = "; ".join(f"{name(e['from'])} -> {name(e['to'])}" for e in ch["edges"][:2])
-            print(f"  channel {mark} {ch['channel']:30} {via}")
+            via_str = f" via {via}" if via else " (No communication edge exists)"
+            print(f"  channel {mark} {ch['channel']:32}{via_str}")
 
 
 # ------------------------------------------------------------------ loops
@@ -319,20 +336,20 @@ def run_loops(nodes, edges, loops_def):
 
 def print_loops(nodes, data):
     name = lambda i: nodes[i]["label"]
-    header("LOOPS: structure, speed and leverage points")
+    header("LOOPS: Feedback Topology, Delays and Shared Actuators (V_FEEDBACK)")
     for lp in data["loops"]:
         if lp.get("broken"):
-            print(f"\n{lp['label']}: BROKEN by removed nodes")
+            print(f"\n{lp['label']}: SEVERED by counterfactual node removal [Type 3]")
             continue
-        ny = f" ({lp['delay_years_count']} such)" if lp['delay_years_count'] else ""
-        print(f"\n{lp['label']} [{lp['loop_type']}] key variable: {lp['key_variable'] or '?'}")
-        print(f"  {len(lp['edges'])} edges, slowest link: {lp['slowest_delay']}{ny}")
-        print("  " + " -> ".join(name(n) for n in lp["nodes"]))
+        ny = f" ({lp['delay_years_count']} edge(s) take years to propagate)" if lp['delay_years_count'] else ""
+        print(f"\n{lp['label']} [{lp['loop_type']}] Key Variable: '{lp['key_variable'] or '?'}'")
+        print(f"  {len(lp['edges'])} edges | Bottleneck latency: {lp['slowest_delay']}{ny}")
+        print("  Cycle: " + " -> ".join(name(n) for n in lp["nodes"]))
 
     if data["leverage_points"]:
-        print("\nLeverage points (edges shared by 2+ loops):")
+        print("\nShared Leverage Points [Single Actuators Shared by 2+ Balancing Loops]:")
         for lp in data["leverage_points"]:
-            print(f"  {lp['count']} loops: {name(lp['from'])} -> {name(lp['to'])} ({lp['label']})")
+            print(f"  ⚡ {lp['count']} loops actuate via: {name(lp['from'])} -> {name(lp['to'])} ({lp['label']})")
 
 
 # ------------------------------------------------------------------ assurance
@@ -349,8 +366,10 @@ def run_assurance(nodes, edges, frames):
     rel = [e for e in edges if e["from"] == AUDITOR]
     third = [e for e in rel if e["to"] != "N_ENTERPRISE"]
 
-    triggers = [("runtime evaluation", "N_OBSERVE"), ("affected-party complaint", "N_AFFECTED_PARTY"),
-                ("civil-society alarm", "N_CIVIL_SOCIETY"), ("regulator action", "N_REGULATOR")]
+    triggers = [("runtime evaluation (N_OBSERVE)", "N_OBSERVE"),
+                ("affected-party complaint (N_AFFECTED_PARTY)", "N_AFFECTED_PARTY"),
+                ("civil-society alarm (N_CIVIL_SOCIETY)", "N_CIVIL_SOCIETY"),
+                ("regulator action (N_REGULATOR)", "N_REGULATOR")]
     trigger_routes = []
     hl_nodes = {AUDITOR, "N_IDP", "N_TOOL_GATEWAY", "N_AGENT"}
     hl_edges = set()
@@ -362,15 +381,18 @@ def run_assurance(nodes, edges, frames):
 
     for label, src in triggers:
         if src not in nodes:
-            trigger_routes.append({"label": label, "source": src, "available": False})
+            trigger_routes.append({"label": label, "source": src, "available": False, "verdict": "Source node removed in counterfactual"})
             continue
         anyp = find_path(src, AUDITOR, edges)
         indep = None
         if src in ent_controlled:
-            verdict = "n/a (source is enterprise-operated)"
+            verdict = "N/A (Telemetry is enterprise-operated, not independent)"
         else:
             indep = find_path(src, AUDITOR, edges, allowed_mid=lambda n: n not in ent_controlled)
-            verdict = " > ".join(nodes[n]["label"] for n in indep) if indep else "NONE: route passes through enterprise-controlled systems"
+            if indep:
+                verdict = "INDEPENDENT [Type 1]: " + " > ".join(nodes[n]["label"] for n in indep)
+            else:
+                verdict = "INSULATED [Type 3 Gap]: Route passes through enterprise-controlled systems"
 
         if anyp:
             for a, b in zip(anyp, anyp[1:]):
@@ -412,37 +434,42 @@ def run_assurance(nodes, edges, frames):
 
 def print_assurance(nodes, data):
     name = lambda i: nodes[i]["label"]
-    header("ASSURANCE: continuing reliance on a determination")
+    header("ASSURANCE: Continuing Assurance, Independent Alarms & Revocation (V_ASSURANCE)")
     if not data["auditor_present"]:
-        print("  N_AUDITOR not in model; nothing to assess")
+        print("  ⚠️  N_AUDITOR removed: No independent conformity baseline exists in this frame")
         return
 
-    print("\nAuthority over the conformity body (recognition, supervision, suspension):")
+    print("\nSupervisory Oversight over Conformity Body (Recognition, Supervision, Suspension):")
     for s in data["supervision_edges"]:
-        print(f"  {name(s['from'])} [{s['normative_status']}]")
+        print(f"  ✅ {name(s['from'])} [{s['normative_status']}] -> Holds statutory reassessment mandate over auditor")
     if not data["supervision_edges"]:
-        print("  NONE modelled: nobody can restrict or withdraw the auditor's standing")
+        print("  🛑 GOVERNANCE GAP [Type 3]: No external authority holds a mandate to suspend or reassess the auditor")
 
-    print("\nParties the determination reaches:")
+    print("\nDownstream Reliance on Conformity Determination:")
     for r in data["reliance_edges"]:
-        tag = "relying party" if r["is_third_party"] else "assessed enterprise"
-        print(f"  {name(r['to'])} ({tag})")
+        tag = "Third-Party Underwriting Gate [Type 1]" if r["is_third_party"] else "Assessed Enterprise Internal Use"
+        print(f"  ✅ {name(r['to'])} ({tag})")
     if not any(r["is_third_party"] for r in data["reliance_edges"]):
-        print("  NO third-party reliance modelled (only the assessed enterprise)")
+        print("  🛑 ECONOMIC DISCONNECT [Type 3]: No third-party relies on determination (certification is decorative)")
 
-    print("\nRoutes from triggers to the auditor:")
-    print(f"  {'trigger':34} {'any route':10} {'independent of enterprise'}")
+    print("\nAdverse Evidence Routes to Auditor (Post-Market Surveillance):")
+    print(f"  {'Trigger Source':42} {'Route':8} {'Independence Verdict'}")
     for tr in data["trigger_routes"]:
         if not tr["available"]:
-            print(f"  {tr['label']:34} (source node removed)")
+            print(f"  {tr['label']:42} (Removed in counterfactual)")
             continue
-        print(f"  {tr['label']:34} {'yes' if tr['any_route'] else 'NO':10} {tr['verdict']}")
+        route_str = "Yes" if tr["any_route"] else "None"
+        print(f"  {tr['label']:42} {route_str:<8} {tr['verdict']}")
 
     ac = data["authority_chain"]
-    print("\nDelegated-authority chain (authority source -> credential -> enforcement):")
-    print(f"  principal grants/revokes authority via IdP : {'ok' if ac['principal_to_idp'] else 'MISSING'}")
-    print(f"  IdP issues credentials to the agent        : {'ok' if ac['idp_to_agent'] else 'MISSING'}")
-    print(f"  gateway validates credentials at call time : {'ok' if ac['idp_to_gateway'] else 'MISSING (agent may keep technical capability after authority is withdrawn)'}")
+    print("\nDelegated Authority Kill-Chain (Principal -> IdP -> Tool Gateway):")
+    p_to_idp = "OPERATIONAL [Type 1]" if ac['principal_to_idp'] else "GOVERNANCE GAP [Type 3] (Principal lacks IAM governance line)"
+    idp_to_ag = "OPERATIONAL [Type 1]" if ac['idp_to_agent'] else "AUTHENTICATION GAP [Type 3] (Agent operates without managed IAM tokens)"
+    idp_to_gw = "OPERATIONAL [Type 1]" if ac['idp_to_gateway'] else "REAL-WORLD GAP [Type 3] (Gateway does not introspect tokens; agent retains reach after revocation)"
+
+    print(f"  1. Principal grants/revokes via IdP       : {p_to_idp}")
+    print(f"  2. IdP issues short-lived A2E credentials : {idp_to_ag}")
+    print(f"  3. Gateway validates tokens at call time  : {idp_to_gw}")
 
 
 # ------------------------------------------------------------------ main execution
@@ -497,11 +524,11 @@ def main():
         results["assurance"] = run_assurance(nodes, edges, frames)
 
     if json_output:
-        print(json.dumps(results, indent=2))
+        print(json.dumps(results, indent=2, default=str))
         return
 
     if remove:
-        print(f"Removed nodes: {', '.join(sorted(remove))} ({len(M['edges']) - len(edges)} edges dropped)")
+        print(f"Counterfactual simulation: Removed nodes: {', '.join(sorted(remove))} ({len(M['edges']) - len(edges)} edges dropped)")
 
     printers = {
         "chokepoints": lambda: print_chokepoints(nodes, results["chokepoints"]),

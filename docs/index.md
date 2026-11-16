@@ -6,9 +6,9 @@ slug: /
 
 import useBaseUrl from '@docusaurus/useBaseUrl';
 
-# AI Ecosystem: Multi-Lens Architecture & Governance
+## AI Ecosystem: Multi-Lens Architecture & Governance
 
-## Welcome to Sezoo's **AI Ecosystem Model**
+### Welcome to Sezoo's **AI Ecosystem Model**
 
 This model is an interactive conceptual map designed to help decision-makers, architects, and regulators explore and make sense of the global AI ecosystem. 
 
@@ -22,11 +22,22 @@ Our goal with this model is to balance **sufficient conceptual richness with suf
 
 ---
 
-## The Theoretical Foundations
+### Modeling Reality, Warts and All (Descriptive, Not Prescriptive)
+
+A common flaw in governance modeling is to design an idealized world where every control works and every loop closes cleanly. This model takes the opposite approach: **it maps empirical reality, warts and all.**
+
+When exploring inquiries on this site, findings fall into three categories:
+* **The System Works (Type 1):** The model traces how existing statutory, economic, or technical mechanisms function.
+* **The Model Has a Gap (Type 2):** Reality has a working practice that our map hasn't captured yet (which we actively patch via community issues).
+* **Reality Has a Gap (Type 3):** The model reveals a severed recourse chain, an unverified credential, or an insurmountable chokepoint **because reality is currently broken**.
+
+Inquiries that highlight a real-world gap are our most valuable outputs—they point directly to where liability is unassigned, where safety checks are superficial, or where market captivity exists.
+
+### The Theoretical Foundations
 
 The model uses four frameworks to create a single, machine readable property graph:
 
-### 1. Cybernetic Control: Stafford Beer’s Viable System Model (VSM)
+#### 1. Cybernetic Control: Stafford Beer’s Viable System Model (VSM)
 Traditional governance models rely on static organizational charts. In contrast, Beer’s VSM[^1] assesses whether a system possesses the operational variety and regulatory feedback required to remain **viable** under dynamic (changing) conditions. The model divides an organization into two main halves: System 1 (\"S<sub>1</sub>\", Operations), which does the primary work, and Systems 2–5 (\"S<sub>2-5</sub>\", the Meta-System), which coordinate, control, plan, and govern the whole enterprise. Two other key concepts are recursion: a viable system is considered a fractal; and algedonic signals, emergency alert channels.  
 
 * **Viewpoint-Relative Recursion:** VSM roles are not intrinsic node tags. An entity's role depends on the chosen system-in-focus. We model two primary recursion levels:
@@ -34,19 +45,19 @@ Traditional governance models rely on static organizational charts. In contrast,
   * **Level +1 (Societal & Jurisdictional Governance):** How global markets (*S<sub>1</sub>*), standards bodies (*S<sub>2</sub>*), regulators and courts (*S<sub>3</sub>*), safety institutes (*S<sub>4</sub>*), and legislature (*S<sub>5</sub>*) maintain macro-societal viability.
 * **The Algedonic Channel:** A dedicated emergency tripwire that bypasses intermediate bureaucratic layers (*S<sub>3</sub>*) directly to ultimate policy closure (*S<sub>5</sub>*) when critical failures or systemic harms occur.
 
-### 2. Value Chains & Capital Constraints: Simon Wardley’s Evolution Mapping
+#### 2. Value Chains & Capital Constraints: Simon Wardley’s Evolution Mapping
 Components in the AI stack do not share the same economic properties. We track the evolution of value-chain components using a Wardley Maps[^2] scale from from **Genesis** → **Custom-Built** → **Product** → **Commodity**:
 * **Physical & Capital Chokepoints:** Photolithography equipment (ASML EUV) and leading-edge semiconductor packaging (TSMC CoWoS) remain rare, highly centralized capital assets with multi-year construction lead times and *prohibitive* switching costs.
 * **Artificial Lock-In on Utilities:** Cloud compute and raw storage are commodity utilities, yet hyperscalers construct artificial switching costs through egress fees, proprietary IAM meshes, and bundled foundation models.
 
 **Note:** There is significant scope to further develop the use of the Wardley Map evaluation in the model, but we think this is best done as a worked use-case exercise. At present we have ensured that the model *can* represent Wardley Map maturity. 
 
-### 3. Non-Linear Feedback Dynamics (Jay Forrester & Donella Meadows)
+#### 3. Non-Linear Feedback Dynamics (Jay Forrester & Donella Meadows)
 Donella Meadows added value to Jay Forrester's earlier work[^3] and their work encouraged us to include the observation that the AI ecosystem includes non-linear delays and feedback loops. For example:
 * **Reinforcing Flywheels (*R<sub>1</sub>*):** Capital markets subsidize training compute, producing frontier capability and valuation uplift, which in turn attracts more capital, driving extreme market concentration.
 * **Balancing Brakes (*B<sub>1</sub>*–*B<sub>4</sub>*):** Open-weight model releases compress commercial inference margins (*B<sub>1</sub>*), while real-world blast radius harms trigger regulatory penalties, social-licence revocation, and legislative intervention (*B<sub>2</sub>*–*B<sub>4</sub>*).
 
-### 4. Computable Schema & Referential Integrity (LinkML)
+#### 4. Computable Schema & Referential Integrity (LinkML)
 Early iterations of this model used a stand-alone data model instance "loosely" defined in YAML. As we evolved our thinking we abstracted the schema from the model instance and introduced a more formal (LinkML) structure for the schema (expressed using YAML). 
 
 The current model is built on a structured blueprint (`ai_ecosystem_schema.yaml`). Before any diagrams or web pages are created, every component, connection, system complexity level, and legal requirement is automatically checked against strict rules to make sure it fits together properly.
@@ -78,14 +89,17 @@ You can see a whole page version of this here: https://ai-ecosystem.sezoo.digita
 ## How to Use the Model for Sense-Making
 
 ### 1. Review Pre-Computed Inquiries
-We have pre-computed analytical investigations into core strategic questions across the stack. These include:
+
+Each inquiry in this section investigates a specific strategic question against the canonical model. 
+
+When an inquiry reveals a broken path (e.g., no recourse upstream of an enterprise deployer, or missing token validation at an agent gateway), **that is the insight**. We do not smooth over real-world cracks to make the diagrams look complete. We have produced a number of outputs from analytical investigations into core strategic questions. These include:
 * **[Physical & Geopolitical Chokepoints](./inquiries/inq-physical-geopolitical-chokepoints.md):** Where power concentrates and single points of failure reside.
 * **[Macroeconomics & Valuations](./inquiries/inq-ai-economics-valuations.md):** How CapEx cycles, token deflation, and open-weight commoditization interact.
 * **[Public Trust & Liability](./inquiries/inq-public-trust-and-social-acceptance.md):** Where recourse breaks when autonomous systems cause downstream harm.
 * **[Standards & Certification](./inquiries/inq-standards-certification-efficiency.md):** How voluntary standards attenuate technical variety into compliance baselines.
 * **[Continuing Assurance](./inquiries/inq-continuing-assurance.md):** How approvals remain trustworthy as systems drift and how permissions are revoked.
 
-Visit the **[Sense-Making Inquiries](./inquiries)** section to explore the full library.
+Visit the **[Sense-Making Inquiries](./inquiries)** section to explore the library.
 
 ### 2. Formulate a New Line of Inquiry
 You can use the model to evaluate novel policy questions, architectural changes, or strategic investments using an LLM-assisted workflow:
