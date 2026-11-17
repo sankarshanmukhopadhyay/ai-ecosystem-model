@@ -2,7 +2,9 @@
 id: inq-continuing-assurance
 title: "Continuing Assurance: Can We Still Trust Yesterday's Approval Today?"
 sidebar_label: Continuing Assurance
-description: How the ecosystem ensures approvals, insurance, and safety checks stay valid over time, and how permissions are revoked when things go wrong.
+description: How existing model relationships represent continuing assurance, external oversight, insurance reliance, and delegated authority, with their evidentiary limits.
+domains: [governance, technical, economic]
+target_audience: [Regulators, Compliance Officers, Enterprise Architects, Enterprise Risk Officers]
 active_nodes:
   - N_AUDITOR
   - N_REGULATOR
@@ -18,6 +20,20 @@ active_nodes:
   - N_CIVIL_SOCIETY
   - N_LEGISLATURE
   - N_TARGET_SYS
+active_edges:
+  - {from: N_REGULATOR, to: N_AUDITOR}
+  - {from: N_OBSERVE, to: N_AUDITOR}
+  - {from: N_AUDIT_STORE, to: N_AUDITOR}
+  - {from: N_AUDITOR, to: N_ENTERPRISE}
+  - {from: N_AUDITOR, to: N_INSURER}
+  - {from: N_AFFECTED_PARTY, to: N_REGULATOR}
+  - {from: N_CIVIL_SOCIETY, to: N_LEGISLATURE}
+  - {from: N_LEGISLATURE, to: N_REGULATOR}
+  - {from: N_INSURER, to: N_ENTERPRISE}
+  - {from: N_ENTERPRISE, to: N_IDP}
+  - {from: N_IDP, to: N_AGENT}
+  - {from: N_IDP, to: N_TOOL_GATEWAY}
+highlight_mode: dim_others
 ---
 
 # Continuing Assurance: Can We Still Trust Yesterday's Approval Today?
@@ -30,7 +46,7 @@ active_nodes:
 
 ## The Interactive View
 
-Select the **Continuing Assurance** (`V_ASSURANCE`) view in the interactive graphic below. With that view selected, the non-participating nodes in the wider ecosystem are dimmed into the background, highlighting the supervisory lines, independent evidence pathways, and the delegated authority kill-chain:
+Select the **Continuing Assurance** (`V_ASSURANCE`) view in the interactive graphic below. With that view selected, the non-participating nodes in the wider ecosystem are dimmed into the background, highlighting supervisory relationships, evidence and complaint routes, and delegated-authority controls:
 
 <div style={{ position: 'relative', width: '100%', height: '540px', margin: '24px 0' }}>
   <iframe
@@ -48,20 +64,20 @@ Select the **Continuing Assurance** (`V_ASSURANCE`) view in the interactive grap
 
 ## The Sense-Making Context: The Point-in-Time Fallacy
 
-Traditional enterprise compliance operates on a **static certification model**: an accredited conformity body audits an application at deployment time (*T<sub>0</sub>*), issues an ISO/IEC 42001 or EU AI Act certificate, and walks away until the annual renewal.
+A point-in-time assessment at deployment (*T<sub>0</sub>*) cannot, by itself, establish that the assessed conditions continue to hold. Conformity assessment and management-system certification can involve surveillance and reassessment; the problem is the possible divergence between the current operating system and the scope and evidence supporting an earlier determination.
 
-In the AI ecosystem, this model fails. Autonomous systems drift across three dimensions:
+In the AI ecosystem, that divergence can arise as systems change. Autonomous systems drift across three dimensions:
 1. **Model Drift & Evals:** Foundation model inference endpoints (`N_FRONTIER_MODEL`) receive upstream weight updates, prompt mitigations, and latency-optimized distillation.
 2. **Context & Tool Poisoning:** Agent reasoning loops dynamically consume external tools (`N_TOOL_GATEWAY`) and vector retrieval data, expanding their operational blast radius.
 3. **Adversarial Exploitation:** New prompt injection vectors (`N_THREAT_ACTOR`) emerge post-deployment.
 
-If assurance is static, an organization can operate an agent that possesses valid compliance paperwork while actively inflicting real-world harm. For an ecosystem to be cybernetically viable, assurance must be **continuous**, **independently testable**, and backed by **real-time authority revocation**.
+If assurance evidence is not refreshed when conditions materially change, a formally current certificate may no longer justify the same reliance. Continuing evaluation, independent scrutiny where available, and effective enforcement of delegated authority are relevant controls, but their actual operation and consequences require separate evidence.
 
 ---
 
 ## Architectural Mechanisms in the Model
 
-The model formalizes continuing assurance across four distinct cybernetic loops:
+The model represents several pathways relevant to continuing assurance; their presence does not establish that they form closed or effective feedback loops:
 
 ```mermaid
 flowchart TB
@@ -70,14 +86,14 @@ flowchart TB
     classDef tech fill:#E6F7FF,stroke:#1890FF,stroke-width:2px;
 
     %% Nodes
-    N_REGULATOR{{"Statutory Authority<br/><small>N_REGULATOR</small>"}}:::gov
-    N_AUDITOR(["Conformity Body<br/><small>N_AUDITOR</small>"]):::gov
-    N_INSURER["Risk Carrier & Insurer<br/><small>N_INSURER</small>"]:::econ
-    N_OBSERVE("Telemetry & Evals<br/><small>N_OBSERVE</small>"):::tech
-    N_ENTERPRISE["Deployer Principal<br/><small>N_ENTERPRISE</small>"]:::econ
-    N_IDP[["Enterprise IdP<br/><small>N_IDP</small>"]]:::tech
-    N_TOOL_GATEWAY[["Capability Gateway<br/><small>N_TOOL_GATEWAY</small>"]]:::tech
-    N_AGENT("Agent Runtime<br/><small>N_AGENT</small>"):::tech
+    N_REGULATOR{{"Statutory &amp; Trade Authorities<br/><small><i>EU AI Office &amp; national authorities, FTC/state AGs, BIS export controls, China CAC, UK &amp; APAC regulators</i></small>"}}:::gov
+    N_AUDITOR(["Conformity &amp; Certification Bodies<br/><small><i>EU notified bodies, ISO/IEC 42001 certifiers</i></small>"]):::gov
+    N_INSURER["AI Risk Underwriter &amp; Insurer<br/><small><i>Algorithmic liability and cyber risk carriers</i></small>"]:::econ
+    N_OBSERVE("Observability &amp; Evals Engine<br/><small><i>Continuous evaluation, traces, cost telemetry</i></small>"):::tech
+    N_ENTERPRISE["Enterprise Deployer<br/><small><i>Legal principal and economic sponsor</i></small>"]:::econ
+    N_IDP[["Enterprise Identity &amp; Auth (IdP)<br/><small><i>OAuth, OIDC, workload IAM, ephemeral tokens</i></small>"]]:::tech
+    N_TOOL_GATEWAY[["Capability &amp; Tool Gateway<br/><small><i>Decoupled tool broker and context provider (MCP)</i></small>"]]:::tech
+    N_AGENT("Agent Runtime<br/><small><i>Plan-act loop: reasoning, tool use, working and episodic state</i></small>"):::tech
 
     %% External Assurance & Oversight Layer
     N_REGULATOR == "Binding supervision<br/>(E_REG_TO_AUDITOR)" ==> N_AUDITOR
@@ -92,35 +108,41 @@ flowchart TB
 ```    
 
 ### 1. Supervisory Reassessment & Suspension
-Conformity assessment bodies cannot operate in an unconstrained market. 
-Under edge `E_REG_TO_AUDITOR`, statutory authorities (`N_REGULATOR`) maintain binding oversight over notified and certification bodies (`N_AUDITOR`). When systemic failures or threshold-breaching incidents occur, the regulator has the statutory power to suspend accreditation or mandate immediate post-market reassessment.
+Edge `E_REG_TO_AUDITOR` represents recognition, supervision, potential suspension of conformity bodies, and regulator-required reassessment after incidents. The applicability and exercise of those powers depend on the legal regime and circumstances. Supervising a conformity body is distinct from changing an individual certificate's formal status, or determining whether its underlying evidence remains applicable.
 
-### 2. Independent Evidence Pathways (Avoiding the Self-Reporting Trap)
-Can an enterprise hide adverse behavior from its auditor?
-The model evaluates whether adverse signals can reach the conformity body **independently of the enterprise’s internal management line**:
-* **Direct Telemetry:** Enterprise evaluation platforms (`N_OBSERVE`) feed runtime behavioral logs via `E_OBSERVE_TO_AUDITOR`. However, because `N_OBSERVE` is enterprise-operated, this evidence is considered internal.
-* **External Whistleblower & Complaint Route:** When harm impacts consumers (`N_AFFECTED_PARTY`), complaints flow via `E_AFFECTED_TO_REG_COMPLAINT` to `N_REGULATOR`, which directly compels `N_AUDITOR` via `E_REG_TO_AUDITOR`.
-* **Civil Society & Investigative Alarm:** If regulatory capture delays formal complaints, investigative journalists and researchers (`N_CIVIL_SOCIETY`) trigger an emergency algedonic alarm `E_CIVIL_TO_LEG_ALARM` to the legislature (`N_LEGISLATURE`), which widens the statutory powers of `N_REGULATOR` via `E_LEG_TO_REG_MANDATE`.
+### 2. Evidence and External Reporting Pathways
+Can adverse evidence reach actors competent to reassess an existing determination, and is that evidence sufficiently independent?
+* **Enterprise-operated telemetry:** `E_OBSERVE_TO_AUDITOR` carries behavioral evaluation evidence to `N_AUDITOR`. It establishes an evidence route, not independent verification, since the evaluation is enterprise-operated. `E_AUDIT_TO_AUDITOR` likewise supplies audit-store evidence without establishing its completeness.
+* **Affected-party complaints:** `E_AFFECTED_TO_REG_COMPLAINT` brings complaints to `N_REGULATOR`; `E_REG_TO_AUDITOR` represents supervisory powers that may be used in response. The path does not guarantee investigation, a changed determination, or timely enforcement.
+* **Civil-society and policy attention:** `E_CIVIL_TO_LEG_ALARM` represents reports reaching `N_LEGISLATURE`, while `E_LEG_TO_REG_MANDATE` represents the legislature's authority over regulators. These are routes for public and institutional pressure, not automatic changes in statutory powers or assurance outcomes. Both relationships carry delays in the canonical model.
+
+External reporting bypasses the enterprise's internal management channel, but the source, integrity, evaluation, and legal significance of the resulting evidence remain separate questions.
 
 ### 3. Third-Party Economic Reliance
-Certifications are meaningless if no market participant relies on them to constrain behavior. 
-Under edge `E_AUDITOR_TO_INSURER`, risk underwriters and insurers (`N_INSURER`) use the conformity determination from `N_AUDITOR` as an objective gate for algorithmic liability policies. If an auditor suspends certification, insurance coverage lapses, activating the underwriting gate `E_INSURER_TO_ENT_GATE` and economically halting uninsured deployment.
+`E_AUDITOR_TO_INSURER` represents certification status and scope informing an insurer's underwriting assessment. `E_INSURER_TO_ENT_GATE` represents contractual underwriting requirements for audit trails and human oversight. A restriction or withdrawal of certification may prompt reassessment of cover or deployment risk, but neither edge establishes automatic policy lapse, coverage denial, or cessation of operation. Those outcomes depend on the applicable contract, decisions, and enforcement.
 
-### 4. The Delegated Authority Kill-Chain (Solving the "Confused Deputy")
-If an auditor or enterprise principal revokes an agent's authority, how does the technical stack enforce that decision?
-In flawed architectures, an enterprise disables an agent in its prompt harness, but the agent still holds long-lived OAuth tokens or API keys, allowing it to continue making unauthenticated calls.
+### 4. Delegated-Authority Controls and Their Limits
+When an enterprise principal withdraws delegated authority, which execution paths actually enforce that change? Disabling an agent's instructions alone may leave previously issued credentials or alternative access paths usable.
 
-The model proves that the delegation chain is structurally closed:
-1. **Authority Delegation:** The enterprise principal delegates authority to its Identity Provider (`N_IDP`) via `E_ENT_TO_IDP`.
-2. **Credential Scoping:** `N_IDP` issues short-lived, scoped A2E workload credentials to the agent (`N_AGENT`) via `E_IDP_TO_AGENT_A2E`.
-3. **Call-Time Gateway Verification:** Crucially, under `E_IDP_TO_GATEWAY`, the Capability & Tool Gateway (`N_TOOL_GATEWAY`) validates the credential with `N_IDP` at invocation time. 
+The model represents three relevant relationships:
+1. **Authority governance:** `E_ENT_TO_IDP` connects `N_ENTERPRISE` to `N_IDP` for granting, scoping, and revoking delegated authority.
+2. **Workload credentials:** `E_IDP_TO_AGENT_A2E` represents A2E workload identity delegation to `N_AGENT`.
+3. **Gateway verification:** `E_IDP_TO_GATEWAY` represents credential validation at call time by `N_TOOL_GATEWAY`.
 
-If authority is revoked at the IdP, the tool gateway immediately blocks execution on target operational systems (`N_TARGET_SYS`), even if the agent is actively attempting to run an autonomous loop.
+These edges describe controls that can prevent calls made without current authority **when the gateway mediates the execution path and validates the relevant status**. They do not establish universal mediation, revocation propagation latency, coverage of alternate credentials, or that every `N_TARGET_SYS` rejects an unauthorized action. In particular, a change in an assurance determination does not automatically revoke an agent's delegated authority in the graph.
 
 ### Strategic Takeaways for Leaders & Architects
 
-1. **Never Rely on Static Paperwork:** Point-in-time compliance certificates provide zero assurance against autonomous drift. Continuous evaluation telemetry (N_OBSERVE) and sovereign tamper-evident record keeping (N_AUDIT_STORE) must be continuously mapped to the conformity baseline.
+1. **Assess continuing applicability:** Certificate status and the adequacy of evidence for the present configuration are distinct. `N_OBSERVE` and `N_AUDIT_STORE` can supply evidence, but completeness, independence, and reassessment consequences remain to be established.
 
-2. **Independent Alarms Must Bypass Deployers:** An assurance system where all incident reporting flows through enterprise PR or legal channels is cybernetically unstable. External algedonic channels (regulators, research bodies, civil society) are essential counterweights.
+2. **Separate reporting from determination:** Complaints and public alarms can reach supervisory actors without passing through enterprise management. Reachability alone does not establish evidence credibility, investigation, or an enforceable decision.
 
-3. **Decouple Tool Brokering from Agent Reasoning:** Autonomous agents should never hold direct, long-lived credentials to databases or transactional APIs. All tool calls must be brokered through a hardened capability gateway (N_TOOL_GATEWAY) that performs call-time validation against the enterprise Identity Provider (N_IDP).
+3. **Test the execution boundary:** The `N_IDP` and `N_TOOL_GATEWAY` relationships represent delegated-authority controls. Their effectiveness depends on actual mediation, credential validity checks, and coverage of relevant execution paths.
+
+---
+
+## Model Audit & Feedback Trail
+
+- **Entities Tested:** `N_REGULATOR`, `N_AUDITOR`, `N_OBSERVE`, `N_AUDIT_STORE`, `N_INSURER`, `N_ENTERPRISE`, `N_AFFECTED_PARTY`, `N_CIVIL_SOCIETY`, `N_LEGISLATURE`, `N_IDP`, `N_AGENT`, and `N_TOOL_GATEWAY`.
+- **Grounding & Evidence Limits:** The canonical graph represents supervision, evidence routes, insurance reliance inputs, and identity-based control pathways. It does not by itself prove that reported harm changes an assurance determination, that coverage lapses, or that every execution path enforces a revoked delegation.
+- **Ontological Gaps Identified:** No specific model addition is established by this inquiry revision. Questions about certificate-state transitions, independent evidence, and actual control effectiveness remain open for further model-grounded and external examination; their absence from this description is not itself proof of a real-world failure.
