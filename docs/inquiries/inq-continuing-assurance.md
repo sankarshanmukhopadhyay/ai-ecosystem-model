@@ -86,14 +86,14 @@ flowchart TB
     classDef tech fill:#E6F7FF,stroke:#1890FF,stroke-width:2px;
 
     %% Nodes
-    N_REGULATOR{{"Statutory Authority<br/><small>N_REGULATOR</small>"}}:::gov
-    N_AUDITOR(["Conformity Body<br/><small>N_AUDITOR</small>"]):::gov
-    N_INSURER["Risk Carrier & Insurer<br/><small>N_INSURER</small>"]:::econ
-    N_OBSERVE("Telemetry & Evals<br/><small>N_OBSERVE</small>"):::tech
-    N_ENTERPRISE["Deployer Principal<br/><small>N_ENTERPRISE</small>"]:::econ
-    N_IDP[["Enterprise IdP<br/><small>N_IDP</small>"]]:::tech
-    N_TOOL_GATEWAY[["Capability Gateway<br/><small>N_TOOL_GATEWAY</small>"]]:::tech
-    N_AGENT("Agent Runtime<br/><small>N_AGENT</small>"):::tech
+    N_REGULATOR{{"Statutory &amp; Trade Authorities<br/><small><i>EU AI Office &amp; national authorities, FTC/state AGs, BIS export controls, China CAC, UK &amp; APAC regulators</i></small>"}}:::gov
+    N_AUDITOR(["Conformity &amp; Certification Bodies<br/><small><i>EU notified bodies, ISO/IEC 42001 certifiers</i></small>"]):::gov
+    N_INSURER["AI Risk Underwriter &amp; Insurer<br/><small><i>Algorithmic liability and cyber risk carriers</i></small>"]:::econ
+    N_OBSERVE("Observability &amp; Evals Engine<br/><small><i>Continuous evaluation, traces, cost telemetry</i></small>"):::tech
+    N_ENTERPRISE["Enterprise Deployer<br/><small><i>Legal principal and economic sponsor</i></small>"]:::econ
+    N_IDP[["Enterprise Identity &amp; Auth (IdP)<br/><small><i>OAuth, OIDC, workload IAM, ephemeral tokens</i></small>"]]:::tech
+    N_TOOL_GATEWAY[["Capability &amp; Tool Gateway<br/><small><i>Decoupled tool broker and context provider (MCP)</i></small>"]]:::tech
+    N_AGENT("Agent Runtime<br/><small><i>Plan-act loop: reasoning, tool use, working and episodic state</i></small>"):::tech
 
     %% External Assurance & Oversight Layer
     N_REGULATOR == "Binding supervision<br/>(E_REG_TO_AUDITOR)" ==> N_AUDITOR
