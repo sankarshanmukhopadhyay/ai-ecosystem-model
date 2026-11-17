@@ -251,7 +251,7 @@ def main():
 
     for lp in model.get("loops", []):
         ltype = "**Reinforcing (R)**" if lp.get("loop_type") == "reinforcing" else "*Balancing (B)*"
-        edges_str = " $\\to$<br/>".join([f"`{e}`" for e in lp.get("loop_edges", [])])
+        edges_str = " →<br/>".join([f"`{e}`" for e in lp.get("loop_edges", [])])
         md.append(f"| `{lp['id']}` | {ltype} | **{lp.get('label', '')}** | {lp.get('description', '')} | {edges_str} |")
 
     md.extend([
