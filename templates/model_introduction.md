@@ -102,7 +102,7 @@ You can use the model to evaluate novel policy questions, architectural changes,
 4. **Explore Conversationally:** Interrogate the graph (e.g., *"What happens to systemic viability if independent safety institutes are removed?"* or *"How does token deflation affect ISV application margins?"*).
 5. **Draft & Contribute:** Prompt the AI to *"Draft the inquiry artifact following the Sezoo inquiry template"*, verify the referential integrity using `validate_ecosystem.py --refs`, and submit a Pull Request to our GitHub repository.
 
-**Note:** We anticipate that inquries may identify gaps and / or opportunities to improve the model. Suggestions on model improvement supported by justifications and explanations are welcome. 
+**Remember:** We expect that some inquiries will identify gaps and / or opportunities to improve the model. Suggestions on model improvement supported by justifications and explanations are welcome. 
 
 ---
 
