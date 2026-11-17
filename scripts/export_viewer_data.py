@@ -83,11 +83,12 @@ def main():
         enriched_node["vsm_roles"] = vsm_map.get(nid, {})
         enriched_nodes.append(enriched_node)
 
-    # 3. Enrich edges with derived domains
+    # 3. Enrich edges with derived domains and preserve jurisdictions
     enriched_edges = []
     for e in edges_list:
         ee = dict(e)
         ee["domains"] = RELATION_DOMAINS.get(e.get("relation_kind"), ["technical"])
+        ee["jurisdictions"] = e.get("jurisdictions", ["global"])
         enriched_edges.append(ee)
 
     # 4. Run standing inquiries to generate active overlays

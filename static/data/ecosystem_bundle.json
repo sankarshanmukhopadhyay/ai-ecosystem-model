@@ -1,9 +1,9 @@
 {
   "metadata": {
     "title": "AI Ecosystem Governance, Economic & Architecture Model",
-    "version": "3.2",
-    "schema_version": "3.1.0",
-    "as_of": "2026-11-15",
+    "version": "3.3",
+    "schema_version": "3.2.0",
+    "as_of": "2026-11-17",
     "description": "Property graph of the AI ecosystem: value chain, control structure (viewpoint-relative VSM frames), liability, adversaries and named feedback loops, with Wardley evolution stage on value-chain components.",
     "provenance_note": "Cardinalities are order-of-magnitude estimates and are unsourced; weaker ones are flagged confidence: low. Sources are attached only to claims checked on 2026-11-15 (EU AI Act fine tiers, GPAI fining powers, safety-institute names). Other EU AI Act article references (e.g. Art. 12, 14, 43, 85) are unverified; check against the current consolidated text."
   },
@@ -881,6 +881,9 @@
       "affects": "silicon capex capacity",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -893,6 +896,9 @@
       "affects": "generation and grid capex",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -906,6 +912,9 @@
       "normative_status": "binding",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -921,6 +930,9 @@
       "domains": [
         "economic",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -935,6 +947,9 @@
       "domains": [
         "technical",
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -950,6 +965,9 @@
       "delay": "months",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -964,6 +982,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -979,6 +1000,9 @@
       "delay": "months",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -995,6 +1019,9 @@
       "domains": [
         "economic",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1009,6 +1036,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1024,6 +1054,9 @@
       "domains": [
         "economic",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1037,6 +1070,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1050,6 +1086,9 @@
       "delay": "months",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1065,6 +1104,9 @@
       "delay": "months",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1078,6 +1120,9 @@
       "domains": [
         "economic",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1091,6 +1136,9 @@
       "domains": [
         "governance",
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1106,6 +1154,9 @@
       "delay": "years",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1120,6 +1171,9 @@
       "switching_cost": "moderate",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1134,6 +1188,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1148,6 +1205,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1162,6 +1222,9 @@
       "switching_cost": "moderate",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1176,6 +1239,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1190,6 +1256,9 @@
       "switching_cost": "high",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1205,6 +1274,9 @@
       "switching_cost": "low",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1219,6 +1291,9 @@
       "switching_cost": "low",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1231,6 +1306,9 @@
       "affects": "consumer access to AI services",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1246,6 +1324,9 @@
       "delay": "months",
       "domains": [
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1258,6 +1339,9 @@
       "affects": "regulator situational awareness",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1271,6 +1355,9 @@
       "normative_status": "voluntary_standard",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1284,6 +1371,9 @@
       "normative_status": "voluntary_standard",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1296,6 +1386,9 @@
       "affects": "evaluator access to frontier capability",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1310,6 +1403,9 @@
       "delay": "years",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1321,6 +1417,9 @@
       "polarity": "negative",
       "affects": "freedom to release without risk and transparency duties",
       "normative_status": "binding",
+      "jurisdictions": [
+        "eu"
+      ],
       "sources": [
         "https://artificialintelligenceact.eu/article/101/"
       ],
@@ -1339,6 +1438,9 @@
       "normative_status": "binding",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1352,6 +1454,9 @@
       "normative_status": "voluntary_standard",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1368,6 +1473,9 @@
       "domains": [
         "economic",
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1381,6 +1489,9 @@
       "domains": [
         "governance",
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1391,6 +1502,9 @@
       "relation_kind": "data_flow",
       "polarity": "positive",
       "affects": "regulator awareness of harm",
+      "jurisdictions": [
+        "eu"
+      ],
       "delay": "months",
       "domains": [
         "technical"
@@ -1407,6 +1521,9 @@
       "normative_status": "contractual",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1420,6 +1537,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1434,6 +1554,9 @@
       "delay": "months",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1447,6 +1570,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1460,6 +1586,9 @@
       "normative_status": "binding",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1474,6 +1603,9 @@
       "delay": "immediate",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1486,6 +1618,9 @@
       "affects": "guardrail awareness of intended actions",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1498,6 +1633,9 @@
       "affects": "audit evidence completeness",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1510,6 +1648,9 @@
       "affects": "auditor evidence base",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1523,6 +1664,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1537,6 +1681,9 @@
       "domains": [
         "governance",
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1551,6 +1698,9 @@
       "delay": "years",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1563,6 +1713,9 @@
       "affects": "policy-maker understanding of frontier risk",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1576,6 +1729,9 @@
       "normative_status": "voluntary_standard",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1589,6 +1745,9 @@
       "domains": [
         "governance",
         "economic"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1603,6 +1762,9 @@
       "delay": "years",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1616,6 +1778,9 @@
       "delay": "months",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1630,6 +1795,9 @@
       "domains": [
         "governance",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1640,6 +1808,25 @@
       "relation_kind": "data_flow",
       "polarity": "positive",
       "affects": "enterprise strategic awareness of AI risk",
+      "domains": [
+        "technical"
+      ],
+      "jurisdictions": [
+        "global"
+      ]
+    },
+    {
+      "id": "E_LAB_TO_REG_INCIDENT",
+      "from": "N_FRONTIER_LAB",
+      "to": "N_REGULATOR",
+      "label": "Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)",
+      "relation_kind": "data_flow",
+      "polarity": "positive",
+      "affects": "regulator awareness of critical model failure",
+      "jurisdictions": [
+        "eu"
+      ],
+      "delay": "immediate",
       "domains": [
         "technical"
       ]
@@ -1655,6 +1842,9 @@
       "normative_status": "binding",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1667,6 +1857,9 @@
       "affects": "auditor behavioural evidence base",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1679,6 +1872,9 @@
       "affects": "insurer assurance basis",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1692,6 +1888,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1705,6 +1904,9 @@
       "affects": "tool-call authority verification",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1718,6 +1920,9 @@
       "normative_status": "practice",
       "domains": [
         "governance"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1731,6 +1936,9 @@
       "domains": [
         "governance",
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1743,6 +1951,9 @@
       "affects": "agent integrity",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1755,6 +1966,9 @@
       "affects": "model safeguards",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1767,6 +1981,9 @@
       "affects": "task context",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1780,6 +1997,9 @@
       "affects": "agent delegated authority",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1792,6 +2012,9 @@
       "affects": "agent task activation",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1807,6 +2030,9 @@
       "switching_cost": "high",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1819,6 +2045,9 @@
       "affects": "agent working-context grounding",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1832,6 +2061,9 @@
       "affects": "multi-agent task capacity",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1844,6 +2076,9 @@
       "affects": "evaluation evidence",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1856,6 +2091,9 @@
       "affects": "enterprise cost visibility",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1868,6 +2106,9 @@
       "affects": "governance situational awareness",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1882,6 +2123,9 @@
       "delay": "immediate",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     },
     {
@@ -1895,6 +2139,27 @@
       "delay": "immediate",
       "domains": [
         "technical"
+      ],
+      "jurisdictions": [
+        "global"
+      ]
+    },
+    {
+      "id": "E_AGENT_TO_OPEN_MODEL_MIP",
+      "from": "N_AGENT",
+      "to": "N_OPEN_MODEL",
+      "label": "Self-hosted / private open inference (MIP)",
+      "relation_kind": "protocol_call",
+      "protocol_plane": "mip",
+      "polarity": "positive",
+      "affects": "agent reasoning capability",
+      "power_asymmetry": "source_dominant",
+      "switching_cost": "low",
+      "domains": [
+        "technical"
+      ],
+      "jurisdictions": [
+        "global"
       ]
     }
   ],

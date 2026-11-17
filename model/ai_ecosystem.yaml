@@ -1,9 +1,9 @@
 # yaml-language-server: $schema=../schema/ai_ecosystem.json
 metadata:
   title: "AI Ecosystem Governance, Economic & Architecture Model"
-  version: "3.2"
-  schema_version: "3.1.0"
-  as_of: 2026-11-15
+  version: "3.3"
+  schema_version: "3.2.0"
+  as_of: 2026-11-17
   description: "Property graph of the AI ecosystem: value chain, control structure (viewpoint-relative VSM frames), liability, adversaries and named feedback loops, with Wardley evolution stage on value-chain components."
   provenance_note: "Cardinalities are order-of-magnitude estimates and are unsourced; weaker ones are flagged confidence: low. Sources are attached only to claims checked on 2026-11-15 (EU AI Act fine tiers, GPAI fining powers, safety-institute names). Other EU AI Act article references (e.g. Art. 12, 14, 43, 85) are unverified; check against the current consolidated text."
 
@@ -531,12 +531,12 @@ edges:
   - {id: E_STANDARDS_TO_GUARDRAIL, from: N_STANDARDS_BODY, to: N_GUARDRAIL, label: "Technical control standards & interoperability profiles", relation_kind: governance_control, polarity: positive, affects: "control specification", normative_status: voluntary_standard}
   - {id: E_LAB_TO_SAFETY_EVAL, from: N_FRONTIER_LAB, to: N_SAFETY_INSTITUTE, label: "Pre-release model access for red-teaming", relation_kind: data_flow, polarity: positive, affects: "evaluator access to frontier capability"}
   - {id: E_REG_TO_ENT, from: N_REGULATOR, to: N_ENTERPRISE, label: "Statutory penalties & enforcement", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to deploy non-compliant AI", normative_status: binding, delay: years}
-  - {id: E_REG_TO_LAB_GPAI, from: N_REGULATOR, to: N_FRONTIER_LAB, label: "GPAI codes of practice & transparency duties", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to release without risk and transparency duties", normative_status: binding, sources: ["https://artificialintelligenceact.eu/article/101/"]}
+  - {id: E_REG_TO_LAB_GPAI, from: N_REGULATOR, to: N_FRONTIER_LAB, label: "GPAI codes of practice & transparency duties", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to release without risk and transparency duties", normative_status: binding, jurisdictions: [eu], sources: ["https://artificialintelligenceact.eu/article/101/"]}
   - {id: E_REG_TO_ISV_HIGH_RISK, from: N_REGULATOR, to: N_ISV_PRODUCT, label: "High-risk system compliance & surveillance", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to market non-conformant systems", normative_status: binding}
   - {id: E_AUDITOR_TO_ENT, from: N_AUDITOR, to: N_ENTERPRISE, label: "Conformity audits & certification", relation_kind: governance_control, polarity: positive, affects: "enterprise assurance evidence", normative_status: voluntary_standard}
   - {id: E_LAB_DISCLAIMS_ENT, from: N_FRONTIER_LAB, to: N_ENTERPRISE, label: "Disclaims liability (ToS as-is / recourse gap)", relation_kind: contractual_term, polarity: negative, affects: "enterprise recourse against supplier", power_asymmetry: source_dominant, switching_cost: high, normative_status: contractual}
   - {id: E_ENT_LIABILITY_AFFECTED, from: N_ENTERPRISE, to: N_AFFECTED_PARTY, label: "Vicarious liability for harm (respondeat superior)", relation_kind: liability_exposure, polarity: positive, affects: "affected party recourse"}
-  - {id: E_AFFECTED_TO_REG_COMPLAINT, from: N_AFFECTED_PARTY, to: N_REGULATOR, label: "Complaints & redress demands (Art. 85)", relation_kind: data_flow, polarity: positive, affects: "regulator awareness of harm", delay: months}
+  - {id: E_AFFECTED_TO_REG_COMPLAINT, from: N_AFFECTED_PARTY, to: N_REGULATOR, label: "Complaints & redress demands (Art. 85)", relation_kind: data_flow, polarity: positive, affects: "regulator awareness of harm", jurisdictions: [eu], delay: months}
   - {id: E_INSURER_TO_ENT_GATE, from: N_INSURER, to: N_ENTERPRISE, label: "Underwriting gate: audit trail & human oversight required", relation_kind: governance_control, polarity: negative, affects: "freedom to run uninsured autonomous agents", normative_status: contractual}
   - {id: E_ENT_TO_GOV, from: N_ENTERPRISE, to: N_AI_GOVERNANCE, label: "Mandate & resourcing of AI governance", relation_kind: governance_control, polarity: positive, affects: "governance mandate", normative_status: practice}
   - {id: E_ENT_TO_GUARDRAIL, from: N_ENTERPRISE, to: N_GUARDRAIL, label: "Delegates authority & safety boundaries (S5 to S3)", relation_kind: governance_control, polarity: positive, affects: "delegated authority and boundaries", normative_status: practice, delay: months}
@@ -557,6 +557,7 @@ edges:
   - {id: E_AFFECTED_TO_CIVIL, from: N_AFFECTED_PARTY, to: N_CIVIL_SOCIETY, label: "Reports harm to advocates, researchers & media", relation_kind: data_flow, polarity: positive, affects: "public visibility of harm", delay: months}
   - {id: E_CIVIL_TO_LEG_ALARM, from: N_CIVIL_SOCIETY, to: N_LEGISLATURE, label: "Public alarm: investigations, advocacy & media pressure bypassing regulators", relation_kind: algedonic_signal, polarity: positive, affects: "policy-maker awareness of systemic harm", delay: months}
   - {id: E_GOV_TO_ENT_ADVICE, from: N_AI_GOVERNANCE, to: N_ENTERPRISE, label: "Risk assessments & policy recommendations (S4 to S5)", relation_kind: data_flow, polarity: positive, affects: "enterprise strategic awareness of AI risk"}
+  - {id: E_LAB_TO_REG_INCIDENT, from: N_FRONTIER_LAB, to: N_REGULATOR, label: "Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)", relation_kind: data_flow, polarity: positive, affects: "regulator awareness of critical model failure", jurisdictions: [eu], delay: immediate}
 
   # ---- Assurance continuity & delegated authority ----
   - {id: E_REG_TO_AUDITOR, from: N_REGULATOR, to: N_AUDITOR, label: "Recognition, supervision & suspension of conformity bodies; can require reassessment after incidents", relation_kind: statutory_mandate, polarity: negative, affects: "freedom to certify without supervision", normative_status: binding}
@@ -583,6 +584,7 @@ edges:
   - {id: E_OBSERVE_TO_GOV, from: N_OBSERVE, to: N_AI_GOVERNANCE, label: "Evaluation results & incident telemetry", relation_kind: data_flow, polarity: positive, affects: "governance situational awareness"}
   - {id: E_AGENT_TO_GATEWAY_A2T, from: N_AGENT, to: N_TOOL_GATEWAY, label: "A2T tool calling & context protocol (MCP / OpenAPI)", relation_kind: protocol_call, protocol_plane: a2t, polarity: positive, affects: "agent tool reach", delay: immediate}
   - {id: E_GATEWAY_TO_TARGET, from: N_TOOL_GATEWAY, to: N_TARGET_SYS, label: "Authenticated operations execution", relation_kind: data_flow, polarity: positive, affects: "target system state (actuation)", delay: immediate}
+  - {id: E_AGENT_TO_OPEN_MODEL_MIP, from: N_AGENT, to: N_OPEN_MODEL, label: "Self-hosted / private open inference (MIP)", relation_kind: protocol_call, protocol_plane: mip, polarity: positive, affects: "agent reasoning capability", power_asymmetry: source_dominant, switching_cost: low}
 
 # ===================================================================
 # FEEDBACK LOOPS

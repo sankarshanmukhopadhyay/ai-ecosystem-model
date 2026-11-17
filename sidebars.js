@@ -9,6 +9,11 @@ const sidebars = {
       label: 'Canonical Ecosystem Model',
     },
     {
+      type: 'link',
+      label: 'Interactive Explorer ↗',
+      href: 'pathname:///viewer/',
+    },
+    {
       type: 'category',
       label: 'Sense-Making Inquiries',
       link: {

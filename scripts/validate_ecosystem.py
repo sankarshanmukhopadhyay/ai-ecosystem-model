@@ -92,6 +92,9 @@ for e in M["edges"]:
                        ("delay", "DelayEnum")):
         if slot in e:
             check_enum(f"{w}.{slot}", e[slot], enum)
+    # Validate edge-level jurisdictions if present
+    if "jurisdictions" in e:
+        check_enum(f"{w}.jurisdictions", e["jurisdictions"], "JurisdictionEnum") 
     if (rk == "protocol_call") != ("protocol_plane" in e):
         err(f"{w}: protocol_plane must be present iff relation_kind == protocol_call")
     if rk in no_market and ("power_asymmetry" in e or "switching_cost" in e):

@@ -345,6 +345,9 @@
         <mxCell id="E_GOV_TO_ENT_ADVICE" value="Risk assessments &amp; policy recommendations (S4 to S5)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_AI_GOVERNANCE" target="N_ENTERPRISE" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
+        <mxCell id="E_LAB_TO_REG_INCIDENT" value="Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_FRONTIER_LAB" target="N_REGULATOR" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
         <mxCell id="E_REG_TO_AUDITOR" value="Recognition, supervision &amp; suspension of conformity bodies; can require reassessment after incidents" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#722ED1;strokeWidth=3;html=1;" edge="1" source="N_REGULATOR" target="N_AUDITOR" parent="1" power_asymmetry="" switching_cost="" polarity="negative" protocol_plane="NONE" relation_kind="statutory_mandate">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
@@ -403,6 +406,9 @@
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_GATEWAY_TO_TARGET" value="Authenticated operations execution" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_TOOL_GATEWAY" target="N_TARGET_SYS" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_AGENT_TO_OPEN_MODEL_MIP" value="Self-hosted / private open inference (MIP)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2563EB;strokeWidth=2;html=1;" edge="1" source="N_AGENT" target="N_OPEN_MODEL" parent="1" power_asymmetry="source_dominant" switching_cost="low" polarity="positive" protocol_plane="mip" relation_kind="protocol_call">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
       </root>
@@ -951,6 +957,9 @@
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
         <mxCell id="E_GATEWAY_TO_TARGET" value="Authenticated operations execution" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;" edge="1" source="N_TOOL_GATEWAY" target="N_TARGET_SYS" parent="1" power_asymmetry="" switching_cost="" polarity="positive" protocol_plane="NONE" relation_kind="data_flow">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="E_AGENT_TO_OPEN_MODEL_MIP" value="Self-hosted / private open inference (MIP)" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2563EB;strokeWidth=2;html=1;" edge="1" source="N_AGENT" target="N_OPEN_MODEL" parent="1" power_asymmetry="source_dominant" switching_cost="low" polarity="positive" protocol_plane="mip" relation_kind="protocol_call">
           <mxGeometry relative="1" as="geometry"/>
         </mxCell>
       </root>

@@ -6,7 +6,7 @@ description: >-
   not normative: broken recourse paths, unvalidated authority channels, and asymmetric
   chokepoints are modeled to surface real-world vulnerabilities and failures, not to
   represent an idealized cybernetic architecture.
-version: "3.1.0"
+version: "3.2.0"
 
 prefixes:
   linkml: https://w3id.org/linkml/
@@ -141,6 +141,7 @@ classes:
       - delay
       - power_asymmetry
       - switching_cost
+      - jurisdictions
       - confidence
       - sources
     slot_usage:
@@ -156,6 +157,10 @@ classes:
       polarity:
         range: PolarityEnum
         required: true
+      jurisdictions:
+        range: JurisdictionEnum
+        multivalued: true
+        description: "Legal or geographic regimes where this relationship is formally in force. If omitted, applies across all regimes common to both endpoints."
     rules:
       - description: "protocol_plane is required for protocol calls."
         preconditions:
