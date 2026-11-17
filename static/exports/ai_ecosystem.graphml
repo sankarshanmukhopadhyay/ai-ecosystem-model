@@ -2051,6 +2051,25 @@
         </y:PolyLineEdge>
       </data>
     </edge>
+    <edge id="E_LAB_TO_REG_INCIDENT" source="N_FRONTIER_LAB" target="N_REGULATOR">
+      <data key="d_edge_id">E_LAB_TO_REG_INCIDENT</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">data_flow</data>
+      <data key="d_edge_protocol_plane">NONE</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">regulator awareness of critical model failure</data>
+      <data key="d_edge_normative"></data>
+      <data key="d_edge_delay">immediate</data>
+      <data key="d_edge_asym"></data>
+      <data key="d_edge_scost"></data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#64748B" type="line" width="1.5"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
     <edge id="E_REG_TO_AUDITOR" source="N_REGULATOR" target="N_AUDITOR">
       <data key="d_edge_id">E_REG_TO_AUDITOR</data>
       <data key="d_edge_domains">governance</data>
@@ -2428,6 +2447,25 @@
           <y:LineStyle color="#64748B" type="line" width="1.5"/>
           <y:Arrows source="none" target="standard"/>
           <y:EdgeLabel alignment="center">Authenticated operations execution</y:EdgeLabel>
+        </y:PolyLineEdge>
+      </data>
+    </edge>
+    <edge id="E_AGENT_TO_OPEN_MODEL_MIP" source="N_AGENT" target="N_OPEN_MODEL">
+      <data key="d_edge_id">E_AGENT_TO_OPEN_MODEL_MIP</data>
+      <data key="d_edge_domains">technical</data>
+      <data key="d_edge_relation_kind">protocol_call</data>
+      <data key="d_edge_protocol_plane">mip</data>
+      <data key="d_edge_polarity">positive</data>
+      <data key="d_edge_affects">agent reasoning capability</data>
+      <data key="d_edge_normative"></data>
+      <data key="d_edge_delay"></data>
+      <data key="d_edge_asym">source_dominant</data>
+      <data key="d_edge_scost">low</data>
+      <data key="d_edge_graphics">
+        <y:PolyLineEdge>
+          <y:LineStyle color="#2563EB" type="line" width="2.0"/>
+          <y:Arrows source="none" target="standard"/>
+          <y:EdgeLabel alignment="center">Self-hosted / private open inference (MIP)</y:EdgeLabel>
         </y:PolyLineEdge>
       </data>
     </edge>

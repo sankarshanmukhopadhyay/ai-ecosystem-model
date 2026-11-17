@@ -64,9 +64,14 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'ecosystemSidebar', // Point to our unified sidebar
+            sidebarId: 'ecosystemSidebar',
             position: 'left',
             label: 'AI Ecosystem Model',
+          },
+          {
+            href: 'pathname:///viewer/',
+            label: 'Interactive Explorer',
+            position: 'left',
           },
           {
             href: 'https://sezoo.digital',

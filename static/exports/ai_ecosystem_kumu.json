@@ -1675,6 +1675,23 @@
       "description": "Kind: data_flow | Polarity: positive | Affects: enterprise strategic awareness of AI risk"
     },
     {
+      "id": "E_LAB_TO_REG_INCIDENT",
+      "from": "N_FRONTIER_LAB",
+      "to": "N_REGULATOR",
+      "label": "Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)",
+      "type": "data_flow",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "NONE",
+      "Polarity": "positive",
+      "Affects": "regulator awareness of critical model failure",
+      "Normative Status": "None",
+      "Delay": "immediate",
+      "description": "Kind: data_flow | Polarity: positive | Affects: regulator awareness of critical model failure"
+    },
+    {
       "id": "E_REG_TO_AUDITOR",
       "from": "N_REGULATOR",
       "to": "N_AUDITOR",
@@ -2016,6 +2033,25 @@
       "Normative Status": "None",
       "Delay": "immediate",
       "description": "Kind: data_flow | Polarity: positive | Affects: target system state (actuation)"
+    },
+    {
+      "id": "E_AGENT_TO_OPEN_MODEL_MIP",
+      "from": "N_AGENT",
+      "to": "N_OPEN_MODEL",
+      "label": "Self-hosted / private open inference (MIP)",
+      "type": "protocol_call",
+      "direction": "directed",
+      "tags": [
+        "technical"
+      ],
+      "Protocol Plane": "mip",
+      "Polarity": "positive",
+      "Affects": "agent reasoning capability",
+      "Normative Status": "None",
+      "Delay": "Immediate",
+      "description": "Kind: protocol_call | Polarity: positive | Affects: agent reasoning capability",
+      "Power Asymmetry": "source_dominant",
+      "Switching Cost": "low"
     }
   ]
 }

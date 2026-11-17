@@ -323,6 +323,7 @@ flowchart TB
     N_AFFECTED_PARTY -->|"Reports harm to advocates, researchers & media"| N_CIVIL_SOCIETY
     N_CIVIL_SOCIETY == "🚨 Public alarm: investigations, advocacy & media pressure bypassing regulators" ==> N_LEGISLATURE
     N_AI_GOVERNANCE -->|"Risk assessments & policy recommendations (S4 to S5)"| N_ENTERPRISE
+    N_FRONTIER_LAB -->|"Mandatory rapid incident notifications (Art. 55 GPAI systemic risk)"| N_REGULATOR
     N_REGULATOR == "Recognition, supervision & suspension of conformity bodies; can require reassessment after incidents" ==> N_AUDITOR
     N_OBSERVE -->|"Behavioural evaluation evidence for continuing surveillance (enterprise-operated)"| N_AUDITOR
     N_AUDITOR -->|"Certification status & scope as an underwriting basis (third-party reliance)"| N_INSURER
@@ -343,6 +344,7 @@ flowchart TB
     N_OBSERVE -->|"Evaluation results & incident telemetry"| N_AI_GOVERNANCE
     N_AGENT -->|"A2T tool calling & context protocol (MCP / OpenAPI)"| N_TOOL_GATEWAY
     N_TOOL_GATEWAY -->|"Authenticated operations execution"| N_TARGET_SYS
+    N_AGENT -->|"Self-hosted / private open inference (MIP)"| N_OPEN_MODEL
 ```
 
 ## 1. Named Cybernetic Feedback Loops
