@@ -236,7 +236,7 @@ def main():
         "</details>",
         "",
         "## Unified Ecosystem Architecture",
-        "",
+        "The diagram below is generated from the full model instance using the `ai_ecosystem.yaml` file content and mermaid to render the diagram.",
         "```mermaid",
         full_mermaid,
         "```",

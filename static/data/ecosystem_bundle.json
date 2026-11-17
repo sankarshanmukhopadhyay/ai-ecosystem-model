@@ -2647,14 +2647,14 @@
           "liable_node": "N_ENTERPRISE",
           "upstream_recourse": [
             {
-              "supplier": "N_ISV_PRODUCT",
+              "supplier": "N_CLOUD_HYPERSCALER",
               "hops": 1,
               "state": "NO RECOURSE EDGE [Type 3 Unallocated Exposure]",
               "edge_id": null,
               "label": ""
             },
             {
-              "supplier": "N_CLOUD_HYPERSCALER",
+              "supplier": "N_ISV_PRODUCT",
               "hops": 1,
               "state": "NO RECOURSE EDGE [Type 3 Unallocated Exposure]",
               "edge_id": null,
