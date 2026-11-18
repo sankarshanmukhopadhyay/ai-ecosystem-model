@@ -1,3 +1,9 @@
+#!/usr/bin/env python3
+"""
+Draw.io Multi-Page XML Exporter for AI Ecosystem Model (v3.1).
+Outputs: static/exports/ai_ecosystem.drawio
+"""
+
 import sys
 import yaml
 import html
@@ -11,7 +17,37 @@ if sys.platform == "win32":
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-def get_drawio_style(shape, domains):
+# Corrected to snake_case to match v3 NodeKindEnum
+KIND_TO_SHAPE = {
+    "statutory_authority":   "shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;",
+    "public_authority":      "shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;",
+    "private_oversight_body":"rounded=1;whiteSpace=wrap;html=1;arcSize=50;",
+    "organisation":          "rounded=0;whiteSpace=wrap;html=1;",
+    "person":                "ellipse;whiteSpace=wrap;html=1;",
+    "threat_actor":          "shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;",
+    "software_service":      "rounded=1;whiteSpace=wrap;html=1;arcSize=15;",
+    "control_component":     "shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;",
+    "data_store":            "shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;",
+    "commons":               "rounded=1;whiteSpace=wrap;html=1;arcSize=50;",
+}
+
+RELATION_DOMAINS = {
+    "commercial_flow": ["economic"],
+    "resource_supply": ["economic", "technical"],
+    "statutory_mandate": ["governance"],
+    "governance_control": ["governance"],
+    "liability_exposure": ["governance", "economic"],
+    "competitive_pressure": ["economic"],
+    "physical_constraint": ["technical", "economic"],
+    "impact": ["governance", "economic"],
+    "adversarial_attack": ["technical"],
+    "contractual_term": ["economic", "governance"],
+    "protocol_call": ["technical"],
+    "data_flow": ["technical"],
+    "algedonic_signal": ["governance", "technical"],
+}
+
+def get_drawio_style(kind, domains):
     if "governance" in domains:
         fill, stroke = "#FFF1F0", "#F5222D"
     elif "economic" in domains:
@@ -21,33 +57,21 @@ def get_drawio_style(shape, domains):
     else:
         fill, stroke = "#F8FAFC", "#64748B"
 
-    if shape == "cylinder":
-        base = "shape=cylinder;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;"
-    elif shape == "hexagon":
-        base = "shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;"
-    elif shape == "circle":
-        base = "ellipse;whiteSpace=wrap;html=1;"
-    elif shape == "stadium":
-        base = "rounded=1;whiteSpace=wrap;html=1;arcSize=50;"
-    elif shape == "subproc":
-        base = "shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;"
-    elif shape == "rounded":
-        base = "rounded=1;whiteSpace=wrap;html=1;arcSize=15;"
-    else:
-        base = "rounded=0;whiteSpace=wrap;html=1;"
+    base_shape = KIND_TO_SHAPE.get(kind, "rounded=0;whiteSpace=wrap;html=1;")
+    return f"{base_shape}fillColor={fill};strokeColor={stroke};strokeWidth=2;fontColor=#0F172A;"
 
-    return f"{base}fillColor={fill};strokeColor={stroke};strokeWidth=2;fontColor=#0F172A;"
-
-def get_edge_style(etype):
-    if etype == "money":
+def get_edge_style(relation_kind):
+    if relation_kind == "algedonic_signal":
+        return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#B91C1C;strokeWidth=4;html=1;"
+    elif relation_kind in ["commercial_flow", "resource_supply"]:
         return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#16A34A;strokeWidth=3;html=1;"
-    elif etype == "authority":
+    elif relation_kind == "statutory_mandate":
         return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#722ED1;strokeWidth=3;html=1;"
-    elif etype in ["tension", "disclaim"]:
+    elif relation_kind in ["liability_exposure", "contractual_term", "impact"]:
         return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#DC2626;strokeWidth=2;dashed=1;html=1;"
-    elif etype == "governance_control":
+    elif relation_kind == "governance_control":
         return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#E11D48;strokeWidth=2;dashed=1;html=1;"
-    elif etype == "protocol":
+    elif relation_kind == "protocol_call":
         return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#2563EB;strokeWidth=2;html=1;"
     return "edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#64748B;strokeWidth=1.5;html=1;"
 
@@ -60,7 +84,6 @@ def render_diagram_page(page_id, page_name, clusters, nodes, edges):
         '        <mxCell id="1" parent="0"/>'
     ]
 
-    # Group nodes by cluster
     nodes_by_cluster = {}
     for n in nodes.values():
         cid = n.get("cluster", "cluster_default")
@@ -68,20 +91,17 @@ def render_diagram_page(page_id, page_name, clusters, nodes, edges):
 
     cluster_map = {c["id"]: c.get("label", c["id"]) for c in clusters}
 
-    # Render Visual Cluster Containers (Swimlanes)
     cluster_x = 40
     for cid, cnodes in nodes_by_cluster.items():
         clabel = html.escape(cluster_map.get(cid, cid), quote=True)
         container_width = 280
-        container_height = 80 + (len(cnodes) * 110)
+        container_height = 80 + (len(cnodes) * 115)
 
-        # Container Swimlane cell
         container_style = "swimlane;startSize=30;rounded=1;arcSize=8;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontStyle=1;fontSize=12;fontColor=#334155;"
         xml.append(f'        <mxCell id="{page_id}_{cid}" value="{clabel}" style="{container_style}" vertex="1" parent="1">')
         xml.append(f'          <mxGeometry x="{cluster_x}" y="40" width="{container_width}" height="{container_height}" as="geometry"/>')
         xml.append('        </mxCell>')
 
-        # Render Nodes as children of this cluster container
         node_y = 50
         for n in cnodes:
             raw_label = f"<b>{n['label']}</b>"
@@ -89,30 +109,49 @@ def render_diagram_page(page_id, page_name, clusters, nodes, edges):
                 raw_label += f"<br/><small>{n['sublabel']}</small>"
 
             lbl_escaped = html.escape(raw_label, quote=True)
-            style = get_drawio_style(n.get("shape", "rect"), n.get("domains", []))
-            domains_str = html.escape(", ".join(n.get("domains", [])), quote=True)
-            cluster_str = html.escape(cid, quote=True)
-            
-            # Lossless property extraction
-            props_attrs = " ".join([
-                f'{html.escape(k, quote=True)}="{html.escape(str(v), quote=True)}"' 
-                for k, v in n.get("properties", {}).items()
-            ])
+            kind = n.get("kind", "organisation")
+            domains_list = n.get("domains", [])
+            style = get_drawio_style(kind, domains_list)
 
-            xml.append(f'        <object id="{n["id"]}" label="{lbl_escaped}" domains="{domains_str}" cluster="{cluster_str}" shape="{n.get("shape", "rect")}" {props_attrs}>')
+            attrs = {
+                "kind": kind,
+                "domains": ", ".join(domains_list),
+                "cluster": cid,
+                "jurisdictions": ", ".join(n.get("jurisdictions", ["global"])),
+                "eu_ai_act_roles": ", ".join(n.get("eu_ai_act_roles", [])),
+                "nist_functions": ", ".join(n.get("nist_functions", [])),
+                "evolution_stage": n.get("evolution_stage") or "",
+                "cardinality_min": str(n.get("cardinality_log10_min", "")),
+                "cardinality_max": str(n.get("cardinality_log10_max", "")),
+                "cardinality_unit": str(n.get("cardinality_unit", "")),
+            }
+            for k, v in n.get("properties", {}).items():
+                attrs[k] = str(v)
+
+            attrs_str = " ".join([f'{html.escape(k, quote=True)}="{html.escape(str(v), quote=True)}"' for k, v in attrs.items()])
+
+            xml.append(f'        <object id="{n["id"]}" label="{lbl_escaped}" {attrs_str}>')
             xml.append(f'          <mxCell style="{style}" vertex="1" parent="{page_id}_{cid}">')
-            xml.append(f'            <mxGeometry x="30" y="{node_y}" width="220" height="70" as="geometry"/>')
+            xml.append(f'            <mxGeometry x="30" y="{node_y}" width="220" height="75" as="geometry"/>')
             xml.append('          </mxCell>')
             xml.append('        </object>')
-            node_y += 105
+            node_y += 110
 
         cluster_x += 320
 
-    # Render Edges
-    for i, e in enumerate(edges):
+    for e in edges:
         elbl = html.escape(e.get("label", ""), quote=True)
-        style = get_edge_style(e.get("type", "flow"))
-        xml.append(f'        <mxCell id="{page_id}_edge_{i}" value="{elbl}" style="{style}" edge="1" source="{e["from"]}" target="{e["to"]}" parent="1">')
+        rkind = e.get("relation_kind", "data_flow")
+        style = get_edge_style(rkind)
+        eid = html.escape(e.get("id", f"{page_id}_{e['from']}_{e['to']}"), quote=True)
+        asym = html.escape(str(e.get("power_asymmetry", "")), quote=True)
+        scost = html.escape(str(e.get("switching_cost", "")), quote=True)
+        polarity = html.escape(str(e.get("polarity", "neutral")), quote=True)
+        plane = html.escape(str(e.get("protocol_plane", "NONE")), quote=True)
+
+        edge_attrs = f'power_asymmetry="{asym}" switching_cost="{scost}" polarity="{polarity}" protocol_plane="{plane}" relation_kind="{html.escape(rkind, quote=True)}"'
+
+        xml.append(f'        <mxCell id="{eid}" value="{elbl}" style="{style}" edge="1" source="{e["from"]}" target="{e["to"]}" parent="1" {edge_attrs}>')
         xml.append('          <mxGeometry relative="1" as="geometry"/>')
         xml.append('        </mxCell>')
 
@@ -140,21 +179,25 @@ def main():
     all_nodes = {n["id"]: n for n in model["nodes"]}
     xml.append(render_diagram_page("master_view", "1. Master Model (All Elements)", clusters, all_nodes, model["edges"]))
 
-    # View Pages
-    for v in model.get("views", []):
-        view_domains = set(v["domains"])
-        filtered_nodes = {n["id"]: n for n in model["nodes"] if any(d in view_domains for d in n.get("domains", []))}
-        filtered_edges = [
+    # Pages 2-4: Dedicated Domain Projections (using derived relation_kind domains)
+    domain_views = [
+        ("view_economic",   "2. Economic & Capital Flows",        "economic"),
+        ("view_governance", "3. Governance & Regulatory Lens",    "governance"),
+        ("view_technical",  "4. Technical & Protocol Architecture","technical"),
+    ]
+
+    for vid, vtitle, dom in domain_views:
+        f_nodes = {n["id"]: n for n in model["nodes"] if dom in n.get("domains", [])}
+        f_edges = [
             e for e in model["edges"]
-            if any(d in view_domains for d in e.get("domains", [])) 
-            and e["from"] in filtered_nodes 
-            and e["to"] in filtered_nodes
+            if dom in RELATION_DOMAINS.get(e.get("relation_kind", ""), [])
+            and e["from"] in f_nodes and e["to"] in f_nodes
         ]
-        xml.append(render_diagram_page(v["id"], v["title"], clusters, filtered_nodes, filtered_edges))
+        xml.append(render_diagram_page(vid, vtitle, clusters, f_nodes, f_edges))
 
     xml.append('</mxfile>')
     target_file.write_text("\n".join(xml), encoding="utf-8")
-    print(f"[OK] Draw.io file created with cluster containers: {target_file.name}")
+    print(f"[OK] Draw.io multi-page export created: {target_file.name}")
 
 if __name__ == "__main__":
     main()

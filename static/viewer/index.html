@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AI Ecosystem Interactive Model Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Cytoscape Core & Layout Extensions (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.30.2/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/layout-base/layout-base.js"></script>
+    <script src="https://unpkg.com/cose-base/cose-base.js"></script>
+    <script src="https://unpkg.com/cytoscape-fcose/cytoscape-fcose.js"></script>
+
+    <style>
+        :root {
+            --bg: #14161d;
+            --surface: #1c1f2a;
+            --surface-border: #282d3c;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --brand-blue: #00B2E3;
+            --brand-green: #80bc00;
+            --brand-red: #d50057;
+            --accent-yellow: #eddb00;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Top Navigation Toolbar */
+        #toolbar {
+            height: 54px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            gap: 12px;
+            z-index: 10;
+        }
+
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        select,
+        button {
+            background: #242938;
+            color: var(--text);
+            border: 1px solid var(--surface-border);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.15s ease;
+        }
+
+        select:hover,
+        button:hover {
+            border-color: var(--brand-blue);
+        }
+
+        button.active {
+            background: var(--brand-blue);
+            color: #000;
+            font-weight: 600;
+            border-color: var(--brand-blue);
+        }
+
+        /* Canvas & Panes */
+        #main-content {
+            position: relative;
+            flex: 1;
+            width: 100%;
+            height: calc(100% - 54px);
+        }
+
+        #cy {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        #matrix-view {
+            display: none;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            padding: 24px;
+            background: var(--bg);
+        }
+
+        /* Slide-out Inspector Drawer */
+        #drawer {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            bottom: 12px;
+            width: 380px;
+            max-width: calc(100vw - 24px);
+            background: rgba(28, 31, 42, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--surface-border);
+            border-radius: 8px;
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+            display: none;
+            flex-direction: column;
+            z-index: 20;
+        }
+
+        #drawer-header {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--surface-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #drawer-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--brand-blue);
+        }
+
+        #drawer-close {
+            background: transparent;
+            border: none;
+            font-size: 18px;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        #drawer-close:hover {
+            color: var(--text);
+        }
+
+        #drawer-body {
+            padding: 16px;
+            overflow-y: auto;
+            font-size: 13px;
+            flex: 1;
+        }
+
+        .prop-row {
+            margin-bottom: 12px;
+        }
+
+        .prop-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+            font-weight: 600;
+        }
+
+        .prop-val {
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-right: 4px;
+            margin-top: 3px;
+        }
+
+        .tag-econ {
+            background: rgba(128, 188, 0, 0.2);
+            color: #80bc00;
+            border: 1px solid #80bc00;
+        }
+
+        .tag-gov {
+            background: rgba(213, 0, 87, 0.2);
+            color: #ff4d88;
+            border: 1px solid #d50057;
+        }
+
+        .tag-tech {
+            background: rgba(0, 178, 227, 0.2);
+            color: #00B2E3;
+            border: 1px solid #00B2E3;
+        }
+
+        /* Matrix Table Styling */
+        table.matrix {
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+
+        table.matrix th,
+        table.matrix td {
+            border: 1px solid #282d3c;
+            padding: 6px;
+            text-align: center;
+        }
+
+        table.matrix th {
+            background: #1c1f2a;
+            color: var(--text-muted);
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+
+        table.matrix th.row-header {
+            position: sticky;
+            left: 0;
+            background: #1c1f2a;
+            text-align: left;
+            z-index: 3;
+        }
+
+        .cell-hit {
+            background: rgba(0, 178, 227, 0.3);
+            font-weight: bold;
+            color: var(--brand-blue);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="toolbar">
+            <div class="tool-group">
+                <!-- Return link back to Docusaurus docs -->
+                <a href="/"
+                    style="color: var(--brand-blue); text-decoration: none; font-size: 13px; font-weight: 700; margin-right: 14px; display: flex; align-items: center; gap: 4px;">
+                    &larr; Back to Docs
+                </a>
+
+                <span class="tool-label">View</span>
+                <select id="view-select">
+                    <option value="all">Unified Ecosystem (All 31 Nodes)</option>
+                </select>
+                <span class="tool-label" style="margin-left: 10px;">Inquiry Overlay</span>
+                <select id="inquiry-select">
+                    <option value="none">None (Standard View)</option>
+                    <option value="chokepoints">Chokepoints & SPOFs</option>
+                    <option value="liability">Liability & Recourse Breaks</option>
+                    <option value="viability">VSM Channel Integrity</option>
+                    <option value="loops">Feedback Loops & Delays</option>
+                    <option value="assurance">Continuing Assurance & Revocation</option>
+                </select>
+            </div>
+
+            <div class="tool-group">
+                <button id="btn-fit" title="Fit to screen">Fit</button>
+                <button id="btn-reset" title="Reset layout">Reset</button>
+                <button id="btn-tab-graph" class="active">Graph</button>
+                <button id="btn-tab-matrix">Matrix</button>
+            </div>
+        </div>
+
+        <div id="main-content">
+            <div id="cy"></div>
+            <div id="matrix-view"></div>
+
+            <div id="drawer">
+                <div id="drawer-header">
+                    <div id="drawer-title">Details</div>
+                    <button id="drawer-close">&times;</button>
+                </div>
+                <div id="drawer-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cy = null;
+        let bundle = null;
+        let activeOverlay = null;
+
+        // Relative path works both under Docusaurus and local development
+        const DATA_URL = '../data/ecosystem_bundle.json';
+
+        async function init() {
+            try {
+                const res = await fetch(DATA_URL);
+                if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${DATA_URL}`);
+                bundle = await res.json();
+            } catch (e) {
+                console.error("Could not load bundle from relative path, trying /data/...", e);
+                const res = await fetch('/data/ecosystem_bundle.json');
+                bundle = await res.json();
+            }
+
+            initDropdowns();
+            initCytoscape();
+            renderMatrix();
+            handleUrlParams();
+        }
+
+        function initDropdowns() {
+            const vSelect = document.getElementById('view-select');
+            bundle.views.forEach(v => {
+                const opt = document.createElement('option');
+                opt.value = v.id;
+                opt.textContent = `${v.title} (${v.id})`;
+                vSelect.appendChild(opt);
+            });
+
+            vSelect.addEventListener('change', (e) => applyView(e.target.value));
+            document.getElementById('inquiry-select').addEventListener('change', (e) => applyInquiry(e.target.value));
+
+            document.getElementById('btn-fit').addEventListener('click', () => {
+                cy.animate({ fit: { padding: 40 }, duration: 400 });
+            });
+
+            document.getElementById('btn-reset').addEventListener('click', () => {
+                applyView(document.getElementById('view-select').value);
+            });
+
+            document.getElementById('btn-tab-graph').addEventListener('click', () => switchTab('graph'));
+            document.getElementById('btn-tab-matrix').addEventListener('click', () => switchTab('matrix'));
+            document.getElementById('drawer-close').addEventListener('click', closeDrawer);
+        }
+
+        function switchTab(tab) {
+            const isGraph = tab === 'graph';
+            document.getElementById('cy').style.display = isGraph ? 'block' : 'none';
+            document.getElementById('matrix-view').style.display = isGraph ? 'none' : 'block';
+            document.getElementById('btn-tab-graph').classList.toggle('active', isGraph);
+            document.getElementById('btn-tab-matrix').classList.toggle('active', !isGraph);
+            if (isGraph && cy) cy.resize();
+        }
+
+        function getNodeShape(kind) {
+            if (kind === 'person') return 'ellipse';
+            if (['statutory_authority', 'public_authority', 'threat_actor'].includes(kind)) return 'hexagon';
+            if (kind === 'organisation') return 'rectangle';
+            return 'round-rectangle';
+        }
+
+        function getNodeColor(domains) {
+            if (domains.includes('governance')) return '#F5222D';
+            if (domains.includes('economic')) return '#52C41A';
+            if (domains.includes('technical')) return '#1890FF';
+            return '#64748B';
+        }
+
+        function getEdgeColor(relationKind) {
+            if (relationKind === 'algedonic_signal') return '#DC2626';
+            if (['commercial_flow', 'resource_supply'].includes(relationKind)) return '#16A34A';
+            if (relationKind === 'statutory_mandate') return '#722ED1';
+            if (['liability_exposure', 'contractual_term', 'impact'].includes(relationKind)) return '#E11D48';
+            if (relationKind === 'protocol_call') return '#2563EB';
+            return '#64748B';
+        }
+
+        function initCytoscape() {
+            const elements = [];
+
+            // 1. Clusters
+            bundle.clusters.forEach(c => {
+                elements.push({
+                    group: 'nodes',
+                    data: { id: c.id, label: c.label, isCluster: true },
+                    classes: 'cluster-node'
+                });
+            });
+
+            // 2. Nodes
+            bundle.nodes.forEach(n => {
+                elements.push({
+                    group: 'nodes',
+                    data: {
+                        id: n.id,
+                        parent: n.cluster,
+                        label: n.label,
+                        sublabel: n.sublabel || '',
+                        kind: n.kind,
+                        domains: n.domains || [],
+                        variety: n.ashby_variety || '',
+                        evolution_stage: n.evolution_stage || '',
+                        raw: n
+                    },
+                    classes: 'element-node'
+                });
+            });
+
+            // 3. Edges
+            bundle.edges.forEach(e => {
+                elements.push({
+                    group: 'edges',
+                    data: {
+                        id: e.id,
+                        source: e.from,
+                        target: e.to,
+                        label: e.label,
+                        relation_kind: e.relation_kind,
+                        polarity: e.polarity,
+                        affects: e.affects || '',
+                        normative_status: e.normative_status || '',
+                        delay: e.delay || '',
+                        protocol_plane: e.protocol_plane || '',
+                        raw: e
+                    }
+                });
+            });
+
+            cy = cytoscape({
+                container: document.getElementById('cy'),
+                elements: elements,
+                style: [
+                    {
+                        selector: 'node.cluster-node',
+                        style: {
+                            'background-color': '#181b24',
+                            'background-opacity': 0.8,
+                            'border-width': 1.5,
+                            'border-color': '#2e3547',
+                            'border-style': 'dashed',
+                            'label': 'data(label)',
+                            'text-valign': 'top',
+                            'text-halign': 'center',
+                            'text-margin-y': -8,
+                            'font-size': 12,
+                            'font-weight': 'bold',
+                            'color': '#00B2E3',
+                            'padding': 24
+                        }
+                    },
+                    {
+                        selector: 'node.element-node',
+                        style: {
+                            'label': 'data(label)',
+                            'text-valign': 'center',
+                            'text-halign': 'center',
+                            'text-wrap': 'wrap',
+                            'text-max-width': 140,
+                            'font-size': 11,
+                            'font-weight': 600,
+                            'color': '#f8fafc',
+                            'width': 150,
+                            'height': 50,
+                            'shape': ele => getNodeShape(ele.data('kind')),
+                            'background-color': '#1c202d',
+                            'border-width': 2,
+                            'border-color': ele => getNodeColor(ele.data('domains')),
+                            'transition-property': 'opacity, border-color, border-width',
+                            'transition-duration': '0.2s'
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                            'width': ele => ele.data('relation_kind') === 'algedonic_signal' ? 4 : 2,
+                            'line-color': ele => getEdgeColor(ele.data('relation_kind')),
+                            'target-arrow-color': ele => getEdgeColor(ele.data('relation_kind')),
+                            'target-arrow-shape': 'triangle',
+                            'curve-style': 'bezier',
+                            'line-style': ele => ['liability_exposure', 'contractual_term', 'governance_control', 'adversarial_attack'].includes(ele.data('relation_kind')) ? 'dashed' : 'solid',
+                            'opacity': 0.85,
+                            'transition-property': 'opacity, line-color, width',
+                            'transition-duration': '0.2s'
+                        }
+                    },
+                    {
+                        selector: '.dimmed',
+                        style: {
+                            'opacity': 0.12,
+                            'border-opacity': 0.2
+                        }
+                    },
+                    {
+                        selector: '.highlighted',
+                        style: {
+                            'opacity': 1.0,
+                            'border-width': 3,
+                            'border-color': '#00B2E3',
+                            'shadow-blur': 12,
+                            'shadow-color': '#00B2E3',
+                            'shadow-opacity': 0.4
+                        }
+                    },
+                    {
+                        selector: 'edge.highlighted',
+                        style: {
+                            'width': 3.5,
+                            'opacity': 1.0,
+                            'z-index': 999
+                        }
+                    }
+                ],
+                layout: {
+                    name: 'fcose',
+                    quality: 'proof',
+                    randomize: false,
+                    animate: false,
+                    fit: true,
+                    padding: 40,
+                    nodeSeparation: 80,
+                    nodeRepulsion: 6500,
+                    idealEdgeLength: 110,
+                    nestingFactor: 0.1
+                }
+            });
+
+            // Events
+            cy.on('tap', 'node.element-node', (evt) => showNodeDetails(evt.target.data('raw')));
+            cy.on('tap', 'edge', (evt) => showEdgeDetails(evt.target.data('raw')));
+            cy.on('tap', (evt) => {
+                if (evt.target === cy) closeDrawer();
+            });
+
+            // Crucial: Only execute URL parameters AFTER layout settles
+            let paramsHandled = false;
+            const onLayoutReady = () => {
+                if (paramsHandled) return;
+                paramsHandled = true;
+                cy.resize();
+                handleUrlParams();
+            };
+
+            cy.once('layoutstop', onLayoutReady);
+            // Fallback in case layoutstop already fired
+            setTimeout(onLayoutReady, 600);
+        }
+
+        function applyView(viewId, isInitial = false) {
+            if (!cy) return;
+            cy.batch(() => {
+                cy.elements().removeClass('dimmed highlighted');
+                if (viewId === 'all') {
+                    cy.fit(40);
+                    return;
+                }
+
+                const v = bundle.views.find(x => x.id === viewId);
+                if (!v) return;
+
+                let activeNodes = new Set(v.focus_nodes || []);
+                let activeEdges = new Set();
+
+                if (v.frame) {
+                    const frame = bundle.frames.find(f => f.id === v.frame);
+                    if (frame) {
+                        frame.roles.forEach(r => activeNodes.add(r.node));
+                    }
+                }
+
+                if (v.relation_kinds && v.relation_kinds.length > 0) {
+                    bundle.edges.forEach(e => {
+                        if (v.relation_kinds.includes(e.relation_kind)) {
+                            if (activeNodes.size === 0 || (activeNodes.has(e.from) && activeNodes.has(e.to))) {
+                                activeEdges.add(e.id);
+                                activeNodes.add(e.from);
+                                activeNodes.add(e.to);
+                            }
+                        }
+                    });
+                }
+
+                if (v.loops_shown && v.loops_shown.length > 0) {
+                    v.loops_shown.forEach(lid => {
+                        const lp = bundle.loops.find(l => l.id === lid);
+                        if (lp) {
+                            lp.loop_edges.forEach(eid => activeEdges.add(eid));
+                        }
+                    });
+                    bundle.edges.forEach(e => {
+                        if (activeEdges.has(e.id)) {
+                            activeNodes.add(e.from);
+                            activeNodes.add(e.to);
+                        }
+                    });
+                }
+
+                cy.elements('node.element-node').forEach(n => {
+                    if (activeNodes.has(n.id())) n.addClass('highlighted');
+                    else n.addClass('dimmed');
+                });
+                cy.edges().forEach(e => {
+                    if (activeEdges.has(e.id())) e.addClass('highlighted');
+                    else e.addClass('dimmed');
+                });
+            });
+
+            const hl = cy.elements('.highlighted');
+            if (hl.length > 0) {
+                if (isInitial) {
+                    cy.fit(hl, 50);
+                } else {
+                    cy.animate({ fit: { eles: hl, padding: 50 }, duration: 400 });
+                }
+            }
+        }
+
+        function applyInquiry(inqKey, isInitial = false) {
+            if (!cy || inqKey === 'none') {
+                applyView(document.getElementById('view-select').value, isInitial);
+                return;
+            }
+            const data = bundle.inquiries[inqKey];
+            if (!data) return;
+
+            cy.batch(() => {
+                cy.elements().removeClass('dimmed highlighted');
+                const activeNodes = new Set(data.highlight_nodes || []);
+                const activeEdges = new Set(data.highlight_edges || []);
+
+                cy.elements('node.element-node').forEach(n => {
+                    if (activeNodes.has(n.id())) n.addClass('highlighted');
+                    else n.addClass('dimmed');
+                });
+                cy.edges().forEach(e => {
+                    if (activeEdges.has(e.id())) e.addClass('highlighted');
+                    else e.addClass('dimmed');
+                });
+            });
+
+            const hl = cy.elements('.highlighted');
+            if (hl.length > 0) {
+                if (isInitial) {
+                    cy.fit(hl, 50);
+                } else {
+                    cy.animate({ fit: { eles: hl, padding: 50 }, duration: 400 });
+                }
+            }
+        }
+
+        function showNodeDetails(n) {
+            const drawer = document.getElementById('drawer');
+            const title = document.getElementById('drawer-title');
+            const body = document.getElementById('drawer-body');
+
+            title.textContent = n.label;
+            const vsmRoles = Object.entries(n.vsm_roles || {})
+                .map(([f, r]) => `<li><b>${f === 'F_ENTERPRISE' ? 'Enterprise (0)' : 'Societal (+1)'}:</b> <code>${r}</code></li>`)
+                .join('');
+
+            body.innerHTML = `
+        <div class="prop-row">
+          <div class="prop-label">Archetype ID & Kind</div>
+          <div class="prop-val"><code>${n.id}</code> (${n.kind})</div>
+        </div>
+        ${n.sublabel ? `<div class="prop-row"><div class="prop-label">Scope</div><div class="prop-val">${n.sublabel}</div></div>` : ''}
+        <div class="prop-row">
+          <div class="prop-label">Domains</div>
+          <div class="prop-val">
+            ${(n.domains || []).map(d => `<span class="tag tag-${d.slice(0, 3)}">${d}</span>`).join('')}
+          </div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label">Ashby Variety & Cardinality</div>
+          <div class="prop-val">${n.ashby_variety}</div>
+        </div>
+        ${n.evolution_stage ? `<div class="prop-row"><div class="prop-label">Wardley Evolution</div><div class="prop-val"><code>${n.evolution_stage}</code></div></div>` : ''}
+        ${vsmRoles ? `<div class="prop-row"><div class="prop-label">VSM Frame Roles</div><ul style="padding-left:16px; margin-top:4px;">${vsmRoles}</ul></div>` : ''}
+        ${n.eu_ai_act_roles ? `<div class="prop-row"><div class="prop-label">EU AI Act Roles</div><div class="prop-val">${n.eu_ai_act_roles.join(', ')}</div></div>` : ''}
+      `;
+            drawer.style.display = 'flex';
+        }
+
+        function showEdgeDetails(e) {
+            const drawer = document.getElementById('drawer');
+            const title = document.getElementById('drawer-title');
+            const body = document.getElementById('drawer-body');
+
+            title.textContent = e.label || e.relation_kind;
+            body.innerHTML = `
+        <div class="prop-row">
+          <div class="prop-label">Edge ID & Kind</div>
+          <div class="prop-val"><code>${e.id}</code> (${e.relation_kind})</div>
+        </div>
+        <div class="prop-row">
+          <div class="prop-label">Pathway</div>
+          <div class="prop-val"><code>${e.from}</code> &rarr; <code>${e.to}</code></div>
+        </div>
+        ${e.normative_status ? `<div class="prop-row"><div class="prop-label">Normative Force</div><div class="prop-val"><code>${e.normative_status}</code></div></div>` : ''}
+        ${e.polarity ? `<div class="prop-row"><div class="prop-label">Polarity & Target Variable</div><div class="prop-val">${e.polarity === 'positive' ? '📈 (+)' : '📉 (-)'} affects <i>${e.affects || 'unspecified'}</i></div></div>` : ''}
+        ${e.delay ? `<div class="prop-row"><div class="prop-label">Dynamic Delay</div><div class="prop-val"><code>${e.delay}</code></div></div>` : ''}
+        ${e.switching_cost ? `<div class="prop-row"><div class="prop-label">Switching Cost & Power</div><div class="prop-val">${e.switching_cost} (Asymmetry: ${e.power_asymmetry || 'balanced'})</div></div>` : ''}
+      `;
+            drawer.style.display = 'flex';
+        }
+
+        function closeDrawer() {
+            document.getElementById('drawer').style.display = 'none';
+        }
+
+        function renderMatrix() {
+            const container = document.getElementById('matrix-view');
+            const nodes = bundle.nodes;
+            const edgeMap = new Set(bundle.edges.map(e => `${e.from}->${e.to}`));
+
+            let html = '<table class="matrix"><thead><tr><th>Node (From \\ To)</th>';
+            nodes.forEach(n => {
+                html += `<th title="${n.label}">${n.id.replace('N_', '')}</th>`;
+            });
+            html += '</tr></thead><tbody>';
+
+            nodes.forEach(r => {
+                html += `<tr><th class="row-header" title="${r.label}">${r.id.replace('N_', '')}</th>`;
+                nodes.forEach(c => {
+                    const hit = edgeMap.has(`${r.id}->${c.id}`);
+                    html += hit ? `<td class="cell-hit" title="${r.id} &rarr; ${c.id}">●</td>` : '<td>·</td>';
+                });
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function handleUrlParams() {
+            const params = new URLSearchParams(window.location.search);
+            const v = params.get('view');
+            const inq = params.get('inquiry');
+
+            // If an inquiry is specified, it takes priority as the active overlay
+            if (inq && inq !== 'none') {
+                document.getElementById('inquiry-select').value = inq;
+                if (v) document.getElementById('view-select').value = v;
+                applyInquiry(inq, true);
+            } else if (v && v !== 'all') {
+                document.getElementById('view-select').value = v;
+                applyView(v, true);
+            } else {
+                cy.fit(40);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+
+</html>

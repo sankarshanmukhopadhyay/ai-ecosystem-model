@@ -64,9 +64,14 @@ const config = {
         items: [
           {
             type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
+            sidebarId: 'ecosystemSidebar',
             position: 'left',
-            label: 'AI Ecosystem Models',
+            label: 'AI Ecosystem Model',
+          },
+          {
+            href: 'pathname:///viewer/',
+            label: 'Interactive Explorer',
+            position: 'left',
           },
           {
             href: 'https://sezoo.digital',
@@ -118,7 +123,7 @@ const config = {
         darkTheme: prismThemes.dracula,
       },
       mermaid: {
-        theme: { light: 'neutral', dark: 'forest' },
+        theme: { light: 'neutral', dark: 'dark' },
       },
     }),
 };

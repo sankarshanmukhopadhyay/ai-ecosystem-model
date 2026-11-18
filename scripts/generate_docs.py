@@ -1,9 +1,17 @@
+#!/usr/bin/env python3
+"""
+Generates the canonical docs/index.md page for Model v3.0.
+- Decouples presentation styles from ontology (snake_case NodeKindEnum to Mermaid shapes)
+- Renders full unified Mermaid ecosystem diagram with adversaries & algedonic signals
+- Renders tables for Wardley Stages, Named Feedback Loops, and Viewpoint-Relative VSM Frames
+"""
+
 import sys
 import yaml
 import html
 from pathlib import Path
 
-# Force UTF-8 console output on Windows
+# Force UTF-8 on Windows
 if sys.platform == "win32":
     if hasattr(sys.stdout, "reconfigure"):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -11,48 +19,58 @@ if sys.platform == "win32":
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+INTRO_TEMPLATE = PROJECT_ROOT / "templates" / "model_introduction.md"
+MODEL_FILE = PROJECT_ROOT / "model" / "ai_ecosystem.yaml"
+OUTPUT_FILE = PROJECT_ROOT / "docs" / "index.md"
 
-def format_node_shape(node_id, label, sublabel, shape):
+KIND_TO_SHAPE = {
+    "statutory_authority":   "hexagon",
+    "public_authority":      "hexagon",
+    "private_oversight_body":"stadium",
+    "organisation":          "rect",
+    "person":                "circle",
+    "threat_actor":          "hexagon",
+    "software_service":      "rounded",
+    "control_component":     "subproc",
+    "data_store":            "cylinder",
+    "commons":               "stadium",
+}
+
+def format_node_shape(node_id, label, sublabel, kind):
+    shape = KIND_TO_SHAPE.get(kind, "rect")
     sub = f"<br/><small><i>{html.escape(sublabel)}</i></small>" if sublabel else ""
     content = f'"{html.escape(label)}{sub}"'
     
-    if shape == "hexagon":
-        return f"{node_id}{{{{{content}}}}}"
-    elif shape == "cylinder":
-        return f"{node_id}[({content})]"
-    elif shape == "subproc":
-        return f"{node_id}[[{content}]]"
-    elif shape == "stadium":
-        return f"{node_id}([{content}])"
-    elif shape == "circle":
-        return f"{node_id}(({content}))"
-    elif shape == "rounded":
-        return f"{node_id}({content})"
-    else:
-        return f"{node_id}[{content}]"
+    if shape == "hexagon": return f"{node_id}{{{{{content}}}}}"
+    elif shape == "cylinder": return f"{node_id}[({content})]"
+    elif shape == "subproc": return f"{node_id}[[{content}]]"
+    elif shape == "stadium": return f"{node_id}([{content}])"
+    elif shape == "circle": return f"{node_id}(({content}))"
+    elif shape == "rounded": return f"{node_id}({content})"
+    return f"{node_id}[{content}]"
 
 def edge_to_mermaid(e):
-    etype = e.get("type", "flow")
+    rkind = e.get("relation_kind", "data_flow")
     label = e.get("label", "").replace('"', "'")
-    if etype in ["money", "authority"]:
+    if rkind == "algedonic_signal":
+        return f'== "🚨 {label}" ==>'
+    elif rkind in ["commercial_flow", "resource_supply", "statutory_mandate"]:
         return f'== "{label}" ==>'
-    elif etype in ["tension", "disclaim", "governance_control"]:
+    elif rkind in ["liability_exposure", "contractual_term", "governance_control", "competitive_pressure", "physical_constraint"]:
         return f'-. "{label}" .->'
+    elif rkind == "adversarial_attack":
+        return f'-. "⚡ {label}" .->'
     return f'-->|"{label}"|'
 
 def get_node_class(node):
     domains = node.get("domains", [])
+    if node.get("kind") == "threat_actor": return "gov"
     if "governance" in domains: return "gov"
     if "economic" in domains: return "econ"
     if "technical" in domains: return "tech"
     return "default"
 
-def build_visual_key_mermaid(styles_def):
-    """Builds a compact visual legend diagram rendering actual Mermaid shapes."""
-    shapes = styles_def.get("shapes", {})
-    if not shapes:
-        return ""
-
+def build_visual_key_mermaid():
     lines = [
         "flowchart LR",
         "    classDef gov fill:#FFF1F0,stroke:#F5222D,stroke-width:2px;",
@@ -62,128 +80,144 @@ def build_visual_key_mermaid(styles_def):
         "",
         '    subgraph LegendShapes ["Architectural Node Archetypes"]'
     ]
-
-    sample_classes = {
-        "hexagon": "gov",
-        "circle": "gov",
-        "subproc": "tech",
-        "cylinder": "tech",
-        "stadium": "tech",
-        "rounded": "tech",
-        "rect": "econ"
-    }
-
-    for shape_name, info in shapes.items():
-        node_id = f"K_{shape_name.upper()}"
-        lbl = info.get("label", shape_name)
-        rendered = format_node_shape(node_id, lbl, f"shape: {shape_name}", shape_name)
-        cls = sample_classes.get(shape_name, "default")
+    key_samples = [
+        ("K_STA", "Statutory Authority", "statutory_authority", "gov"),
+        ("K_PUB", "Public Authority (AISI)", "public_authority", "gov"),
+        ("K_PRV", "Private Oversight Body", "private_oversight_body", "gov"),
+        ("K_ORG", "Organisation", "organisation", "econ"),
+        ("K_PER", "Person", "person", "gov"),
+        ("K_THR", "Threat Actor", "threat_actor", "gov"),
+        ("K_SWS", "Software Service", "software_service", "tech"),
+        ("K_CTR", "Control Component", "control_component", "tech"),
+        ("K_STO", "Data Store", "data_store", "tech"),
+        ("K_COM", "Commons", "commons", "tech"),
+    ]
+    for nid, lbl, kind, cls in key_samples:
+        rendered = format_node_shape(nid, lbl, f"kind: {kind}", kind)
         lines.append(f"        {rendered}:::{cls}")
-
     lines.append("    end")
     return "\n".join(lines)
 
-def build_notation_table(styles_def):
-    """Generates markdown reference tables explaining shapes, edges, and colors."""
-    shapes = styles_def.get("shapes", {})
-    edge_types = styles_def.get("edge_types", {})
-    md = []
-    
-    # 1. Shapes Table
-    if shapes:
-        md.append("### Node Archetypes (Shapes)\n")
-        md.append("| Shape | Archetype / Meaning | Description |")
-        md.append("| :---: | :--- | :--- |")
-        for s_name, s_info in shapes.items():
-            md.append(f"| `{s_name}` | **{s_info.get('label', '')}** | {s_info.get('description', '')} |")
-    
-    # 2. Edge Table
-    if edge_types:
-        md.append("\n### Relationship & Edge Types\n")
-        md.append("| Line Style | Relationship Type | Semantic Meaning |")
-        md.append("| :---: | :--- | :--- |")
-        for e_type, e_info in edge_types.items():
-            md.append(f"| `{e_info.get('syntax', '')}` | **{e_info.get('label', '')}** (`{e_type}`) | {e_info.get('description', '')} |")
+def build_notation_table():
+    return """### Node Archetypes (Kinds)
 
-    # 3. Domain Colors Table
-    md.append("\n### Domain Boundary Colors\n")
-    md.append("| Color | Domain | Scope |")
-    md.append("| :---: | :--- | :--- |")
-    md.append("| 🔴 **Red / Pink** | `governance` | Statutory duties, liability allocation, compliance controls, human oversight. |")
-    md.append("| 🟢 **Green** | `economic` | SaaS contracts, token consumption costs, GPU CapEx, underwriting fees. |")
-    md.append("| 🔵 **Blue** | `technical` | API execution protocols, JSON-RPC (MCP), state persistence, telemetry. |")
-    
-    return "\n".join(md)
+| Kind | Semantic Meaning | Visual Shape |
+| :--- | :--- | :---: |
+| `statutory_authority` | Legal authorities, enforcement agencies, courts, market surveillance | `hexagon` |
+| `public_authority` | Non-statutory public bodies: national AI safety institutes, horizon evaluators | `hexagon` |
+| `private_oversight_body` | Standards bodies, accredited certification and audit bodies (ISO/CEN) | `stadium` |
+| `organisation` | Commercial firms, labs, cloud platforms, deployers, insurers, capital funds | `rect` |
+| `person` | Natural persons or populations (delegators, overseers, citizens, consumers) | `circle` |
+| `threat_actor` | Hostile adversaries (prompt injectors, jailbreakers, model poisoners) | `hexagon` |
+| `software_service` | Models, vertical applications, agent runtimes, observability engines | `rounded` |
+| `control_component` | Deterministic gates, policy kernels, identity brokers, tool gateways | `subproc` |
+| `data_store` | Vector knowledge bases, sovereign audit ledgers, production ERP systems | `cylinder` |
+| `commons` | Open-weight model weights, open-source codebases, shared artifacts | `stadium` |
 
-def build_view_mermaid(model, view_def):
-    view_domains = set(view_def["domains"])
-    active_nodes = {n["id"]: n for n in model["nodes"] if any(d in view_domains for d in n.get("domains", []))}
-    active_edges = [
-        e for e in model["edges"] 
-        if any(d in view_domains for d in e.get("domains", [])) and e["from"] in active_nodes and e["to"] in active_nodes
-    ]
-    
+### Relationship & Edge Types
+
+| Line Style | Semantic Relation Kind | Description |
+| :---: | :--- | :--- |
+| `== '🚨 label' ==>` | `algedonic_signal` | **VSM Emergency Tripwire:** Direct crisis bypass from S1 operations to S5 board/policy |
+| `== 'label' ==>` | `commercial_flow` | Capital investment, SaaS fees, wholesale token tolls, insurance premiums |
+| `== 'label' ==>` | `resource_supply` | Hardware allocation, compute capacity delivery, training data corpus |
+| `== 'label' ==>` | `statutory_mandate` | Statutory orders, compliance mandates, export control sanctions |
+| `-. 'label' .->` | `governance_control` | Policy bounds, audit trail logging, S3* independent sampling probes |
+| `-. 'label' .->` | `liability_exposure` | Real-world tort liability, blast radius causation, direct civil exposure |
+| `-. 'label' .->` | `competitive_pressure` | Market margin compression, platform absorption, open-weight price deflation |
+| `-. 'label' .->` | `physical_constraint` | Hard physical limits: power grid capacity, transformer delays, fab throughput |
+| `-. '⚡ label' .->` | `adversarial_attack` | Hostile prompt injection, jailbreaking, data poisoning, credential theft |
+| `-. 'label' .->` | `contractual_term` | Contractual liability carve-outs, ToS 'AS-IS' disclaimers |
+| `-->|'label'|` | `protocol_call` | Technical protocols (A2E, MIP, A2T via MCP, A2A) |
+| `-->|'label'|` | `data_flow` | Telemetry traces, prompt context (RAG), model weights, evidence logs |
+
+### Market Dynamics: Wardley Stages, Power Asymmetry & Switching Costs
+
+| Property | Values | Semantic Meaning |
+| :--- | :--- | :--- |
+| **`evolution_stage`** | `genesis` | Novel, experimental, unproven concepts with high uncertainty |
+| | `custom_built` | Bespoke, differentiated implementations or rare capital assets (e.g. ASML lithography) |
+| | `product` | Standardized, commercially packaged software or hardware products |
+| | `commodity` | Ubiquitous utility or open commons (zero-marginal cost) |
+| **`power_asymmetry`** | `supplier_dominant` | Supplier dictates pricing, access, and terms (seller's market) |
+| | `buyer_dominant` | Buyer dictates terms and performance specifications (buyer's market) |
+| | `balanced` | Bilateral commercial parity |
+| | `captive` | Downstream participant is structurally trapped with near-zero alternative options |
+| **`switching_cost`** | `prohibitive` | Switching requires full architectural, physical, or legal refactoring |
+| | `high` | Switching requires extensive re-indexing, prompt re-tuning, and workflow rebuilding |
+| | `moderate` | Standard multi-cloud or modular API adaptation effort |
+| | `low` | Commoditized, drop-in replacement (e.g. OpenAI-compatible open-weight endpoints) |"""
+
+def build_full_unified_mermaid(model):
     lines = [
-        f"flowchart {view_def.get('direction', 'TB')}",
+        "flowchart TB",
         "    classDef gov fill:#FFF1F0,stroke:#F5222D,stroke-width:2px;",
         "    classDef econ fill:#F6FFED,stroke:#52C41A,stroke-width:2px;",
         "    classDef tech fill:#E6F7FF,stroke:#1890FF,stroke-width:2px;",
         "    classDef default fill:#F8FAFC,stroke:#64748B,stroke-width:1.5px;",
         ""
     ]
-    
     clusters = {c["id"]: c for c in model.get("clusters", [])}
     nodes_by_cluster = {}
-    for n in active_nodes.values():
+    for n in model["nodes"]:
         nodes_by_cluster.setdefault(n.get("cluster", "root"), []).append(n)
         
     for cid, nodes in nodes_by_cluster.items():
         clabel = clusters[cid]["label"] if cid in clusters else cid
         lines.append(f'    subgraph {cid} ["{clabel}"]')
         for n in nodes:
-            shape_code = format_node_shape(n["id"], n["label"], n.get("sublabel", ""), n.get("shape", "rect"))
+            shape_code = format_node_shape(n["id"], n["label"], n.get("sublabel", ""), n.get("kind", "organisation"))
             lines.append(f'        {shape_code}:::{get_node_class(n)}')
         lines.append("    end\n")
         
-    for e in active_edges:
+    for e in model["edges"]:
         lines.append(f'    {e["from"]} {edge_to_mermaid(e)} {e["to"]}')
         
     return "\n".join(lines)
 
-def main():
-    model_file = PROJECT_ROOT / "model" / "ai_ecosystem.yaml"
-    if not model_file.exists():
-        sys.exit(f"[ERROR] Model file not found at: {model_file}")
+def format_cardinality(n):
+    c_min = n.get("cardinality_log10_min")
+    c_max = n.get("cardinality_log10_max")
+    unit = n.get("cardinality_unit", "")
+    if c_min is not None and c_max is not None:
+        if c_min == c_max:
+            return f"10^{c_min:g} {unit}"
+        return f"10^{c_min:g}–10^{c_max:g} {unit}"
+    return "—"
 
-    with open(model_file, "r", encoding="utf-8") as f:
+def main():
+    if not MODEL_FILE.exists():
+        sys.exit(f"[ERROR] Model file not found at: {MODEL_FILE}")
+
+    with open(MODEL_FILE, "r", encoding="utf-8") as f:
         model = yaml.safe_load(f)
 
-    docs_path = PROJECT_ROOT / "docs" / "ecosystem"
-    docs_path.mkdir(parents=True, exist_ok=True)
+    if INTRO_TEMPLATE.exists():
+        intro_content = INTRO_TEMPLATE.read_text(encoding="utf-8").strip()
+    else:
+        intro_content = (
+            "# Canonical AI Ecosystem Model\n\n"
+            "A logical property graph integrating cognitive agent state (CoALA), "
+            "cybernetic control (Beer's VSM), macro-economics, standards bodies, and regulatory liability."
+        )
 
-    # Robust retrieval of styles
-    styles_def = model.get("styles") or model.get("metadata", {}).get("styles") or {}
-    if not styles_def and "shapes" in model.get("metadata", {}):
-        styles_def = model["metadata"]
-
-    key_chart = build_visual_key_mermaid(styles_def)
-    key_tables = build_notation_table(styles_def)
+    key_chart = build_visual_key_mermaid()
+    key_tables = build_notation_table()
+    full_mermaid = build_full_unified_mermaid(model)
 
     md = [
         "---",
-        "title: AI Ecosystem Multi-Lens Architecture",
+        "title: Canonical AI Ecosystem Model",
         "sidebar_position: 1",
         "slug: /",
         "---",
         "",
         "import useBaseUrl from '@docusaurus/useBaseUrl';",
-        "import Tabs from '@theme/Tabs';",
-        "import TabItem from '@theme/TabItem';",
         "",
-        "# AI Ecosystem: Multi-Lens Architecture & Governance",
+        intro_content,
         "",
         ":::tip Download Canonical Models",
-        "Download the raw model to explore and query in external visual modeling tools:",
+        "Download the raw model to query in external visual modeling tools:",
         "",
         '- <a href={useBaseUrl("/exports/ai_ecosystem.graphml")} download="ai_ecosystem.graphml">**Download for yEd** (.graphml)</a>',
         '- <a href={useBaseUrl("/exports/ai_ecosystem.drawio")} download="ai_ecosystem.drawio">**Download for draw.io** (.drawio)</a>',
@@ -193,65 +227,72 @@ def main():
         "<details>",
         "<summary><strong>📖 Visual Language & Architectural Key (Click to expand)</strong></summary>",
         "",
-    ]
-
-    if key_chart:
-        md.extend([
-            "```mermaid",
-            key_chart,
-            "```",
-            ""
-        ])
-
-    md.extend([
+        "```mermaid",
+        key_chart,
+        "```",
+        "",
         key_tables,
         "",
         "</details>",
         "",
-        ":::info Where is the \"AI Agent\" in this model?",
-        "An **AI Agent** is not a single monolithic entity or box. In this architecture, it is an **emergent composite loop** that arises when five distinct elements interact:",
+        "## Unified Ecosystem Architecture",
+        "The diagram below is generated from the full model instance using the `ai_ecosystem.yaml` file content and mermaid to render the diagram.",
+        "```mermaid",
+        full_mermaid,
+        "```",
         "",
-        "- 🧠 **The Brain (Reasoning Core)**: `Frontier Foundation Model` (`N_FRONTIER`) — Stateless next-token prediction and probabilistic planning.",
-        "- ⚙️ **The Controller & Drive Loop (The Ego)**: `Agent Governance Harness` (`N_HARNESS`) — The continuous while-loop, self-reflection, and deterministic policy guardrails.",
-        "- 📚 **The Memory (Semantic Context)**: `Enterprise Semantic Knowledge Base` (`N_KNOWLEDGE_STORE`) — Vector databases and private enterprise documents retrieved via RAG (CoALA architecture).",
-        "- 🛠️ **The Hands (Tool Actuation)**: `Capability & Tool Gateway` (`N_TOOL_GATEWAY`) $\\to$ `Target Systems` (`N_TARGET_SYS`) — Decoupled tool broker (MCP / OpenAPI) executing real-world read/write operations.",
-        "- ⚖️ **The Principal (Legal Agency)**: `Enterprise Deployer` (`N_ENTERPRISE`) & `Human Delegator` (`N_HUMAN_USER`) — The legal entity that confers agency, issues workload credentials (`N_IDP`), and retains vicarious legal liability.",
-        ":::",
+        "## 1. Named Cybernetic Feedback Loops",
         "",
-        "### Interactive Lenses",
-        "Select a lens below to explore the ecosystem interactively:",
+        "The model formalizes feedback loops with explicit state variables and mathematical polarity signs:",
         "",
-        "<Tabs>",
+        "| Loop ID | Type | Name | Dynamic Description | Edge Pathway |",
+        "| :--- | :---: | :--- | :--- | :--- |",
+    ]
+
+    for lp in model.get("loops", []):
+        ltype = "**Reinforcing (R)**" if lp.get("loop_type") == "reinforcing" else "*Balancing (B)*"
+        edges_str = " →<br/>".join([f"`{e}`" for e in lp.get("loop_edges", [])])
+        md.append(f"| `{lp['id']}` | {ltype} | **{lp.get('label', '')}** | {lp.get('description', '')} | {edges_str} |")
+
+    md.extend([
+        "",
+        "## 2. Viewpoint-Relative VSM Control Frames",
+        "",
+        "In Beer's Viable System Model (VSM), Systems 1–5 are not intrinsic node tags; they are roles relative to a chosen system-in-focus at a given recursion level:",
+        "",
     ])
 
-    for v in model.get("views", []):
-        vid = v["id"]
-        chart = build_view_mermaid(model, v)
-        desc = v.get("description", "")
-        md.append(f'<TabItem value="{vid}" label="{v["title"]}">\n')
-        if desc:
-            md.append(f"*{desc}*\n")
-        md.append("```mermaid")
-        md.append(chart)
-        md.append("```\n")
-        md.append("</TabItem>")
+    for fr in model.get("frames", []):
+        offset = fr.get("recursion_offset", 0)
+        rec_label = f"Recursion Level {offset:+} ({'Enterprise' if offset == 0 else 'Jurisdiction Meta-System'})"
+        md.append(f"### {fr.get('label', fr['id'])} — `{rec_label}`\n")
+        md.append(f"> {fr.get('description', '')}\n")
+        md.append("| VSM Role | Node | Architectural Rationale |")
+        md.append("| :--- | :--- | :--- |")
+        for r in fr.get("roles", []):
+            md.append(f"| `{r['role']}` | `{r['node']}` | {r.get('rationale', '')} |")
+        md.append("")
 
-    md.append("</Tabs>\n")
-    md.append("## Canonical Element Dictionary\n")
-    md.append("| Element | Cluster | Domains | Properties |")
-    md.append("| :--- | :--- | :--- | :--- |")
-    
+    md.extend([
+        "## 3. Canonical Element Dictionary",
+        "",
+        "| Element | Cluster | Kind | Wardley Stage | Ashby Variety | Jurisdictions |",
+        "| :--- | :--- | :--- | :--- | :--- | :--- |",
+    ])
+
     clusters_map = {c["id"]: c["label"] for c in model.get("clusters", [])}
     for n in model["nodes"]:
-        props = "<br/>".join([f"**{k}**: {v}" for k, v in n.get("properties", {}).items()])
-        domains = ", ".join(n.get("domains", []))
         cluster_name = clusters_map.get(n.get("cluster", ""), n.get("cluster", ""))
         sub = f"<br/><small>{n['sublabel']}</small>" if n.get("sublabel") else ""
-        md.append(f"| **{n['label']}**{sub}<br/>`{n['id']}` | {cluster_name} | {domains} | {props} |")
+        cardinality_str = format_cardinality(n)
+        jurisdictions_str = ", ".join(n.get("jurisdictions", ["global"]))
+        evolution = f"`{n.get('evolution_stage')}`" if n.get("evolution_stage") else "—"
+        
+        md.append(f"| **{n['label']}**{sub}<br/>`{n['id']}` | {cluster_name} | `{n.get('kind', '')}` | {evolution} | {cardinality_str} | `{jurisdictions_str}` |")
 
-    target = docs_path / "index.md"
-    target.write_text("\n".join(md), encoding="utf-8")
-    print(f"[OK] Documentation portal generated: {target.name}")
+    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_FILE.write_text("\n".join(md), encoding="utf-8")
+    print(f"[OK] Master documentation generated at: {OUTPUT_FILE}")
 
 if __name__ == "__main__":
     main()
