@@ -1,5 +1,4 @@
 ---
-
 id: inq-au-ai-governance-sovereign-hosting
 title: "Can Australia's Proposed Frontier AI Safety Regime and Local Model Hosting Realise Sovereign Governance?"
 sidebar_label: "AU AI Governance"
@@ -7,120 +6,76 @@ description: "Cybernetic and architectural assessment of Australia's November 20
 domains: [economic, technical, governance]
 target_audience: [Executives, Legal & Compliance, Enterprise Architects, Regulators]
 active_nodes:
-
-- N_LEGISLATURE
-
-- N_REGULATOR
-
-- N_SAFETY_INSTITUTE
-
-- N_STANDARDS_BODY
-
-- N_AUDITOR
-
-- N_INSURER
-
-- N_FRONTIER_LAB
-
-- N_FRONTIER_MODEL
-
-- N_OPEN_MODEL
-
-- N_CLOUD_HYPERSCALER
-
-- N_ENTERPRISE
-
-- N_AGENT
-
-- N_GUARDRAIL
-
-- N_AUDIT_STORE
-
-- N_OBSERVE
-
-- N_IDP
-
-- N_TOOL_GATEWAY
-
-- N_TARGET_SYS
-
-- N_AFFECTED_PARTY
-  active_edges:
-
-- from: N_LEGISLATURE
-  to: N_REGULATOR
-
-- from: N_SAFETY_INSTITUTE
-  to: N_REGULATOR
-
-- from: N_FRONTIER_LAB
-  to: N_SAFETY_INSTITUTE
-
-- from: N_FRONTIER_LAB
-  to: N_REGULATOR
-
-- from: N_REGULATOR
-  to: N_FRONTIER_LAB
-
-- from: N_REGULATOR
-  to: N_ENTERPRISE
-
-- from: N_FRONTIER_LAB
-  to: N_FRONTIER_MODEL
-
-- from: N_FRONTIER_LAB
-  to: N_OPEN_MODEL
-
-- from: N_CLOUD_HYPERSCALER
-  to: N_FRONTIER_MODEL
-
-- from: N_FRONTIER_LAB
-  to: N_ENTERPRISE
-
-- from: N_AGENT
-  to: N_FRONTIER_MODEL
-
-- from: N_AGENT
-  to: N_OPEN_MODEL
-
-- from: N_GUARDRAIL
-  to: N_AGENT
-
-- from: N_GUARDRAIL
-  to: N_AUDIT_STORE
-
-- from: N_AUDIT_STORE
-  to: N_AUDITOR
-
-- from: N_OBSERVE
-  to: N_AUDITOR
-
-- from: N_AUDITOR
-  to: N_ENTERPRISE
-
-- from: N_AUDITOR
-  to: N_INSURER
-
-- from: N_INSURER
-  to: N_ENTERPRISE
-
-- from: N_IDP
-  to: N_TOOL_GATEWAY
-
-- from: N_AGENT
-  to: N_TOOL_GATEWAY
-
-- from: N_TOOL_GATEWAY
-  to: N_TARGET_SYS
-
-- from: N_TARGET_SYS
-  to: N_AFFECTED_PARTY
-
-- from: N_ENTERPRISE
-  to: N_AFFECTED_PARTY
-  highlight_mode: dim_others
-  ---
-
+  - N_LEGISLATURE
+  - N_REGULATOR
+  - N_SAFETY_INSTITUTE
+  - N_STANDARDS_BODY
+  - N_AUDITOR
+  - N_INSURER
+  - N_FRONTIER_LAB
+  - N_FRONTIER_MODEL
+  - N_OPEN_MODEL
+  - N_CLOUD_HYPERSCALER
+  - N_ENTERPRISE
+  - N_AGENT
+  - N_GUARDRAIL
+  - N_AUDIT_STORE
+  - N_OBSERVE
+  - N_IDP
+  - N_TOOL_GATEWAY
+  - N_TARGET_SYS
+  - N_AFFECTED_PARTY
+active_edges:
+  - from: N_LEGISLATURE
+    to: N_REGULATOR
+  - from: N_SAFETY_INSTITUTE
+    to: N_REGULATOR
+  - from: N_FRONTIER_LAB
+    to: N_SAFETY_INSTITUTE
+  - from: N_FRONTIER_LAB
+    to: N_REGULATOR
+  - from: N_REGULATOR
+    to: N_FRONTIER_LAB
+  - from: N_REGULATOR
+    to: N_ENTERPRISE
+  - from: N_FRONTIER_LAB
+    to: N_FRONTIER_MODEL
+  - from: N_FRONTIER_LAB
+    to: N_OPEN_MODEL
+  - from: N_CLOUD_HYPERSCALER
+    to: N_FRONTIER_MODEL
+  - from: N_FRONTIER_LAB
+    to: N_ENTERPRISE
+  - from: N_AGENT
+    to: N_FRONTIER_MODEL
+  - from: N_AGENT
+    to: N_OPEN_MODEL
+  - from: N_GUARDRAIL
+    to: N_AGENT
+  - from: N_GUARDRAIL
+    to: N_AUDIT_STORE
+  - from: N_AUDIT_STORE
+    to: N_AUDITOR
+  - from: N_OBSERVE
+    to: N_AUDITOR
+  - from: N_AUDITOR
+    to: N_ENTERPRISE
+  - from: N_AUDITOR
+    to: N_INSURER
+  - from: N_INSURER
+    to: N_ENTERPRISE
+  - from: N_IDP
+    to: N_TOOL_GATEWAY
+  - from: N_AGENT
+    to: N_TOOL_GATEWAY
+  - from: N_TOOL_GATEWAY
+    to: N_TARGET_SYS
+  - from: N_TARGET_SYS
+    to: N_AFFECTED_PARTY
+  - from: N_ENTERPRISE
+    to: N_AFFECTED_PARTY
+highlight_mode: dim_others
+---
 
 
 # Can Australia's Proposed Frontier AI Safety Regime and Local Model Hosting Realise Sovereign Governance?
