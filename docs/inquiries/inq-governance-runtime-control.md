@@ -14,7 +14,6 @@ active_nodes:
   - N_TOOL_GATEWAY
   - N_TARGET_SYS
   - N_IDP
-  - N_AUDIT_STORE
 active_edges:
   - from: N_AGENT
     to: N_OBSERVE
@@ -71,7 +70,6 @@ flowchart TB
     N_TOOL_GATEWAY["Capability &amp; Tool Gateway<br/><small><i>Decoupled tool broker and context provider (MCP)</i></small>"]:::tech
     N_TARGET_SYS["Target Systems &amp; Operational APIs<br/><small><i>Databases, production ERP, financial rails</i></small>"]:::tech
     N_IDP["Enterprise Identity &amp; Auth (IdP)<br/><small><i>OAuth, OIDC, workload IAM, ephemeral tokens</i></small>"]:::tech
-    N_AUDIT_STORE["Sovereign Audit Ledger<br/><small><i>Tamper-evident WORM state and forensic store</i></small>"]:::tech
 
     N_AGENT -->|"Traces &amp; LLM evaluation metrics"| N_OBSERVE
     N_OBSERVE -->|"Evaluation results &amp; incident telemetry"| N_AI_GOVERNANCE
@@ -127,7 +125,7 @@ The delay contrast is an explanatory clue, **not** a measured service-level clai
 
 ## 5. Model Audit & Feedback Trail
 
-- **Entities Tested:** `N_AGENT`, `N_OBSERVE`, `N_AI_GOVERNANCE`, `N_ENTERPRISE`, `N_GUARDRAIL`, `N_TOOL_GATEWAY`, `N_TARGET_SYS`, `N_IDP`, and `N_AUDIT_STORE`. The primary structural reference is `F_ENTERPRISE`.
+- **Entities Tested:** `N_AGENT`, `N_OBSERVE`, `N_AI_GOVERNANCE`, `N_ENTERPRISE`, `N_GUARDRAIL`, `N_TOOL_GATEWAY`, `N_TARGET_SYS`, `N_IDP`, The primary structural reference is `F_ENTERPRISE`.
 - **Represented mechanisms (Type 1 at the model level):** Evidence flow to governance, policy refinement, enterprise advice and delegation, guardrail constraints, gateway execution, and target-system alarms. This classification describes canonical graph structure, not independent empirical proof that every deployment implements those controls.
 - **Counterfactual findings:** Removing `N_AI_GOVERNANCE` deletes four incident edges but preserves enterprise control and alarm paths. Removing `E_GOV_TO_GUARDRAIL` leaves a mixed advice/control route, not an uninterrupted authority chain.
 - **Grounding & Evidence Limits:** No claim is made that recommendations automatically bind S5, that S4 possesses unrestricted authority, or that gateway presence guarantees effective prevention. The model's delay values are qualitative. Real-world deployment evidence would be needed to distinguish an ineffective implementation (potential Type 3) from mere limits of graph representation.
