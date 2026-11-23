@@ -75,6 +75,14 @@ active_edges:
   - from: N_ENTERPRISE
     to: N_AFFECTED_PARTY
 highlight_mode: dim_others
+claim_evidence:
+  - id: C-AU-01
+    classification: derived
+    model_refs: [E_AUDIT_TO_AUDITOR, E_OBSERVE_TO_AUDITOR, E_AUDITOR_TO_INSURER]
+    assumptions:
+      - Independent assurance may be weaker where evidence is exclusively controlled by the assessed deployer.
+    limitations:
+      - The graph does not prove that open-weight hosting necessarily degrades audit independence or raises premiums.
 ---
 
 
@@ -194,7 +202,7 @@ flowchart TB
 
 - **Actuation Blast Radius (`Type 1`):** Across both hosting modes, real-world harm (`E_TARGET_HARM_AFFECTED`) occurs when `N_AGENT` calls operational tools through `N_TOOL_GATEWAY` (`E_AGENT_TO_GATEWAY_A2T`, MCP/OpenAPI) to mutate `N_TARGET_SYS` (`E_GATEWAY_TO_TARGET`). Localizing weights does not mitigate prompt injection or tool poisoning (`E_THREAT_TO_AGENT`); safety depends on pre-execution runtime enforcement via `N_GUARDRAIL` (`E_GUARDRAIL_TO_AGENT`) and call-time credential validation via `N_IDP` (`E_IDP_TO_GATEWAY`).
 
-- **Assurance & Underwriting Breakdown under Open Weights (`Type 3`):** In the `V_ASSURANCE` view, `N_AUDITOR` verifies enterprise compliance using tamper-evident logs from `N_AUDIT_STORE` (`E_AUDIT_TO_AUDITOR`) and continuous behavioural evaluations from `N_OBSERVE` (`E_OBSERVE_TO_AUDITOR`), feeding certification scope to `N_INSURER` (`E_AUDITOR_TO_INSURER`) to satisfy `E_INSURER_TO_ENT_GATE`. When `N_ENTERPRISE` self-hosts mutable `N_OPEN_MODEL` weights, `N_AUDITOR`'s structural constraint—that *evidence from enterprise-operated systems is not independent of the assessed enterprise*—degrades third-party assurance, forcing `N_INSURER` either to demand strict deterministic perimeter controls (`N_GUARDRAIL`, `N_IDP`, `N_TOOL_GATEWAY`) or to offset unverified weight-drift risk through higher premiums (`E_ENT_TO_INSURER_PREMIUM`).
+- **Assurance & Underwriting Breakdown under Open Weights (`Type 3`):** In the `V_ASSURANCE` view, `N_AUDITOR` verifies enterprise compliance using tamper-evident logs from `N_AUDIT_STORE` (`E_AUDIT_TO_AUDITOR`) and continuous behavioural evaluations from `N_OBSERVE` (`E_OBSERVE_TO_AUDITOR`), feeding certification scope to `N_INSURER` (`E_AUDITOR_TO_INSURER`) to satisfy `E_INSURER_TO_ENT_GATE`. When `N_ENTERPRISE` self-hosts mutable `N_OPEN_MODEL` weights, `N_AUDITOR`'s structural constraint—that *evidence from enterprise-operated systems is not independent of the assessed enterprise*—degrades third-party assurance, forcing `N_INSURER` either to demand strict deterministic perimeter controls <!-- claim: C-AU-01 --> (`N_GUARDRAIL`, `N_IDP`, `N_TOOL_GATEWAY`) or to offset unverified weight-drift risk through higher premiums (`E_ENT_TO_INSURER_PREMIUM`).
 
 ## 4. Technical, Governance & Economic Tensions
 
